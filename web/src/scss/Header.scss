@@ -34,10 +34,13 @@
 @media only screen and (max-width: 480px) {
 	.rightside {
 		margin-right: 20%;
+		position: relative;
+		right: 10%;
+		margin-top: 2%;
 	}
 	#logo {
-		position: relative;
-		right: 25%;
+		position: fixed;
+		left: -15% !important;
 	}
 }
 
@@ -47,6 +50,7 @@
 	cursor: pointer;
 	outline: none;
 	transition: all 200ms linear;
+	padding: 0;
 }
 .icon:hover {
 	color: blue;

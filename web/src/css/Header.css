@@ -26,17 +26,21 @@
 
 @media only screen and (max-width: 480px) {
   .rightside {
-    margin-right: 20%; }
-  #logo {
+    margin-right: 20%;
     position: relative;
-    right: 25%; } }
+    right: 10%;
+    margin-top: 2%; }
+  #logo {
+    position: fixed;
+    left: -15% !important; } }
 
 .icon {
   border: none;
   background: none;
   cursor: pointer;
   outline: none;
-  transition: all 200ms linear; }
+  transition: all 200ms linear;
+  padding: 0; }
 
 .icon:hover {
   color: blue; }
