@@ -8,6 +8,7 @@ import useWindowDimensions from './Components/Dimensions';
 
 function App() {
 	const [offset, setOffset] = useState(-110);
+	const [resize, setResize] = useState(false);
 	const [sliderWidth, setSliderWidth] = useState('20vw');
 
 	const { height, width } = useWindowDimensions();
@@ -15,6 +16,9 @@ function App() {
 	useEffect(() => {
 		if (width > 500 && width < 850) {
 			setSliderWidth('30vw');
+		}
+		if (width < 481) {
+			setResize(true);
 		}
 	}, []);
 
@@ -34,6 +38,7 @@ function App() {
 				top='0'
 				offsetFlag={offset}
 				width={sliderWidth}
+				resize={resize}
 			/>
 			<Body />
 			<Footer position='fixed' top='90vh' />

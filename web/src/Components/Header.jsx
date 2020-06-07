@@ -14,7 +14,7 @@ export const Header = props => {
 		if (props.width === '20vw') {
 			val = '13vw';
 		} else {
-			val = '20vw';
+			val = '24vw';
 		}
 		return val;
 	};
@@ -30,9 +30,14 @@ export const Header = props => {
 				<div id='logo' style={{ position: 'relative', left: logoPosition }}></div>
 			</div>
 			<div className='rightside'>
-				<FontAwesomeIcon className='icon' icon={faUser} size='2x' />
-				<FontAwesomeIcon className='icon' id='heart' icon={faHeart} size='2x' />
-				<FontAwesomeIcon className='icon' icon={faShoppingCart} size='2x' />
+				<FontAwesomeIcon className='icon' icon={faUser} size={props.resize ? '1x' : '2x'} />
+				<FontAwesomeIcon
+					className='icon'
+					id='heart'
+					icon={faHeart}
+					size={props.resize ? '1x' : '2x'}
+				/>
+				<FontAwesomeIcon className='icon' icon={faShoppingCart} size={props.resize ? '1x' : '2x'} />
 			</div>
 		</div>
 	);
