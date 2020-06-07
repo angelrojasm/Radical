@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
-import slide1 from '../images/IMG_0193.jpg';
-import slide2 from '../images/IMG_0273.jpg';
-import slide3 from '../images/IMG_0759.jpg';
+
 import '../css/Body.css';
 export const Body = props => {
 	return (
