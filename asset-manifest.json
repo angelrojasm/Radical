@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/Radical/static/css/main.0473f58b.chunk.css",
+    "main.js": "/Radical/static/js/main.8f67ccb4.chunk.js",
+    "main.js.map": "/Radical/static/js/main.8f67ccb4.chunk.js.map",
+    "runtime-main.js": "/Radical/static/js/runtime-main.f8c9825e.js",
+    "runtime-main.js.map": "/Radical/static/js/runtime-main.f8c9825e.js.map",
+    "static/js/2.e6f502bd.chunk.js": "/Radical/static/js/2.e6f502bd.chunk.js",
+    "static/js/2.e6f502bd.chunk.js.map": "/Radical/static/js/2.e6f502bd.chunk.js.map",
+    "index.html": "/Radical/index.html",
+    "precache-manifest.7b5408fa3e70beca3b17dcccd18f0f6d.js": "/Radical/precache-manifest.7b5408fa3e70beca3b17dcccd18f0f6d.js",
+    "service-worker.js": "/Radical/service-worker.js",
+    "static/css/main.0473f58b.chunk.css.map": "/Radical/static/css/main.0473f58b.chunk.css.map",
+    "static/js/2.e6f502bd.chunk.js.LICENSE.txt": "/Radical/static/js/2.e6f502bd.chunk.js.LICENSE.txt",
+    "static/media/IMG_0193.jpg": "/Radical/static/media/IMG_0193.e039c604.jpg",
+    "static/media/IMG_0273.jpg": "/Radical/static/media/IMG_0273.80a60abd.jpg",
+    "static/media/Body.css": "/Radical/static/media/IMG_1659.4ebc29c9.jpg",
+    "static/media/IMG_0759.jpg": "/Radical/static/media/IMG_0759.fffb4b42.jpg",
+    "static/media/Header.css": "/Radical/static/media/logo-white-revised.7caa98d7.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f8c9825e.js",
+    "static/js/2.e6f502bd.chunk.js",
+    "static/css/main.0473f58b.chunk.css",
+    "static/js/main.8f67ccb4.chunk.js"
+  ]
+}
