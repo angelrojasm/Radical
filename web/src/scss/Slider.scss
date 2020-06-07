@@ -1,0 +1,28 @@
+.slider {
+	height: 100vh;
+	color: black;
+	background-color: white;
+	width: 20vw;
+	transition: left 300ms ease-out;
+	z-index: 10;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	overflow: auto;
+
+	h2 {
+		margin-top: 15%;
+	}
+	.categories {
+		margin-top: 30%;
+		list-style-type: none;
+		margin-right: 12%;
+
+		li {
+			text-align: center;
+			margin: 10% 0;
+			font-size: x-large;
+		}
+	}
+}

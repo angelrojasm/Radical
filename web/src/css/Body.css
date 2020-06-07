@@ -1,0 +1,15 @@
+.slide {
+  height: 100vh;
+  width: 100vw; }
+
+.slide1 {
+  background: url("../images/IMG_0751.jpg") center no-repeat;
+  background-size: cover; }
+
+.slide2 {
+  background: url("../images/IMG_1095.jpg") center no-repeat;
+  background-size: cover; }
+
+.slide3 {
+  background: url("../images/IMG_1659.jpg") center no-repeat;
+  background-size: cover; }
