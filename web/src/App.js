@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Slider } from './Components/Slider';
 import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
 import { Body } from './Components/Body';
+import useWindowDimensions from './Components/Dimensions';
 
 function App() {
-	const [offset, setOffset] = useState(-30);
+	const [offset, setOffset] = useState(-110);
+	const [sliderWidth, setSliderWidth] = useState('20vw');
+
+	const { height, width } = useWindowDimensions();
+
+	useEffect(() => {
+		if (width > 500 && width < 850) {
+			setSliderWidth('30vw');
+		}
+	}, []);
 
 	const showSlider = () => {
 		setOffset(0);
 	};
 
 	const hideSlider = () => {
-		setOffset(-30);
+		width <= 500 ? setOffset(-110) : setOffset(-40);
 	};
 	return (
 		<div className='App'>
 			<Slider offset={offset} position='fixed' top='0' hideSlider={hideSlider} />
-			<Header showSlider={showSlider} position='fixed' top='0' />
+			<Header
+				showSlider={showSlider}
+				position='fixed'
+				top='0'
+				offsetFlag={offset}
+				width={sliderWidth}
+			/>
 			<Body />
 			<Footer position='fixed' top='90vh' />
 		</div>

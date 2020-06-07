@@ -9,11 +9,9 @@ export const Footer = props => {
 			<p> © Radical 2020</p>
 			<div className='right'>
 				<span>Find us on</span>
-				<div className='socials'>
-					<a href='https://www.instagram.com/radical_rd' target='_blank'>
-						<FontAwesomeIcon className='icons instagram' size='2x' icon={faInstagram} />
-					</a>
-				</div>
+				<a href='https://www.instagram.com/radical_rd' target='_blank'>
+					<FontAwesomeIcon className='icons instagram' size='2x' icon={faInstagram} />
+				</a>
 			</div>
 		</div>
 	);

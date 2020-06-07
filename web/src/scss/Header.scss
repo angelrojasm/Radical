@@ -21,6 +21,15 @@
 		margin: 0 25%;
 	}
 }
+@media only screen and (max-width: 750px) {
+	.rightside {
+		margin-right: 15%;
+	}
+	#logo {
+		position: relative;
+		right: 10%;
+	}
+}
 
 .icon {
 	border: none;
@@ -34,8 +43,8 @@
 }
 
 .toggle {
-	border: none;
 	outline: none;
+	z-index: 10;
 }
 #logo {
 	height: 50px;
@@ -43,6 +52,7 @@
 	margin-top: -2.5%;
 	background: url('../images/logo-white-revised.png') center no-repeat;
 	background-size: cover;
+	transition: all 200ms linear;
 }
 
 #header {

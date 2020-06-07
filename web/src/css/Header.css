@@ -17,6 +17,13 @@
   .rightside .icon {
     margin: 0 25%; }
 
+@media only screen and (max-width: 750px) {
+  .rightside {
+    margin-right: 15%; }
+  #logo {
+    position: relative;
+    right: 10%; } }
+
 .icon {
   border: none;
   background: none;
@@ -28,15 +35,16 @@
   color: blue; }
 
 .toggle {
-  border: none;
-  outline: none; }
+  outline: none;
+  z-index: 10; }
 
 #logo {
   height: 50px;
   width: 250px;
   margin-top: -2.5%;
   background: url("../images/logo-white-revised.png") center no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  transition: all 200ms linear; }
 
 #header {
   display: flex;

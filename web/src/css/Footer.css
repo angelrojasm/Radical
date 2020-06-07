@@ -39,17 +39,19 @@ p {
 	*/ }
 
 .right {
-  width: 35%;
+  width: 50%;
   display: flex;
   margin-left: 0;
-  margin-right: -8%;
+  margin-right: 0;
+  position: relative;
+  left: 10vw;
   justify-content: center;
   align-items: center; }
   .right * {
     margin-right: 3%; }
 
 #footer {
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   z-index: 2; }
