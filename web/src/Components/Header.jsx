@@ -12,14 +12,16 @@ export const Header = props => {
 	const handleSlide = () => {
 		let val;
 		if (props.width === '20vw') {
-			val = '13vw';
+			val = '14vw';
 		} else {
 			val = '24vw';
 		}
 		return val;
 	};
 	useEffect(() => {
-		props.offsetFlag === 0 ? setLogoPosition(handleSlide) : setLogoPosition(0);
+		props.offsetFlag === 0 && props.dimensionWidth > 481
+			? setLogoPosition(handleSlide)
+			: setLogoPosition(0);
 	}, [props.offsetFlag]);
 
 	return (
@@ -30,14 +32,14 @@ export const Header = props => {
 				<div id='logo' style={{ position: 'relative', left: logoPosition }}></div>
 			</div>
 			<div className='rightside'>
-				<FontAwesomeIcon className='icon' icon={faUser} size={props.resize ? '1x' : '2x'} />
+				<FontAwesomeIcon className='icon' icon={faUser} size={props.resize ? 'lg' : '2x'} />
 				<FontAwesomeIcon
 					className='icon'
 					id='heart'
 					icon={faHeart}
-					size={props.resize ? '1x' : '2x'}
+					size={props.resize ? 'lg' : '2x'}
 				/>
-				<FontAwesomeIcon className='icon' icon={faShoppingCart} size={props.resize ? '1x' : '2x'} />
+				<FontAwesomeIcon className='icon' icon={faShoppingCart} size={props.resize ? 'lg' : '2x'} />
 			</div>
 		</div>
 	);

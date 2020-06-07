@@ -38,6 +38,7 @@ function App() {
 				top='0'
 				offsetFlag={offset}
 				width={sliderWidth}
+				dimensionWidth={width}
 				resize={resize}
 			/>
 			<Body />
