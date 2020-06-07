@@ -1,43 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c8aab8e3e80416bbe043a13e8f76cd29",
+    "revision": "73923d2ff04dcc257938aa965cc73835",
     "url": "/Radical/index.html"
   },
   {
-    "revision": "89504640d0e4a89c6e93",
+    "revision": "d83e3b725f6e07bbe4bc",
     "url": "/Radical/static/css/main.79309d08.chunk.css"
   },
   {
-    "revision": "39d6b9ec57dc784a175a",
-    "url": "/Radical/static/js/2.11528668.chunk.js"
+    "revision": "e870d088e9378394ada5",
+    "url": "/Radical/static/js/2.e147ae1e.chunk.js"
   },
   {
     "revision": "5ac48c47bb3912b14c2d8de4f56d5ae8",
-    "url": "/Radical/static/js/2.11528668.chunk.js.LICENSE.txt"
+    "url": "/Radical/static/js/2.e147ae1e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "89504640d0e4a89c6e93",
-    "url": "/Radical/static/js/main.173ef99a.chunk.js"
+    "revision": "d83e3b725f6e07bbe4bc",
+    "url": "/Radical/static/js/main.e9d152ff.chunk.js"
   },
   {
     "revision": "3755914104630d5c5a0d",
     "url": "/Radical/static/js/runtime-main.f8c9825e.js"
   },
   {
-    "revision": "e039c6049af4d6b2ef497dac741e89d4",
-    "url": "/Radical/static/media/IMG_0193.e039c604.jpg"
-  },
-  {
-    "revision": "80a60abd3f3c2cce5512e40c9fe6e511",
-    "url": "/Radical/static/media/IMG_0273.80a60abd.jpg"
-  },
-  {
     "revision": "c27e1840c34fa25c76521d0c40f8f44f",
     "url": "/Radical/static/media/IMG_0751.c27e1840.jpg"
-  },
-  {
-    "revision": "fffb4b42153ae0fa9117d06362101e07",
-    "url": "/Radical/static/media/IMG_0759.fffb4b42.jpg"
   },
   {
     "revision": "4a3d3473e0cff92a49ce2251f6a9e80b",
