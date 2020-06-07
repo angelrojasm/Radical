@@ -8,11 +8,11 @@ p {
 }
 
 .instagram {
-	color: white;
+	color: black;
 	height: 28px;
 	border-radius: 7px;
 	padding: 2px;
-	background: #f09433;
+	/*	background: #f09433;
 	background: -moz-linear-gradient(
 		45deg,
 		#f09433 0%,
@@ -38,6 +38,7 @@ p {
 		#bc1888 100%
 	);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+	*/
 }
 
 .right {
@@ -57,5 +58,5 @@ p {
 	width: 100vw;
 	display: flex;
 	justify-content: space-between;
-	z-index: 15;
+	z-index: 2;
 }

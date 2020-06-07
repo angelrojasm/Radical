@@ -21,7 +21,7 @@ export const Header = props => {
 			</div>
 			<div className='rightside'>
 				<FontAwesomeIcon className='icon' icon={faUser} size='2x' />
-				<FontAwesomeIcon className='icon' icon={faHeart} size='2x' />
+				<FontAwesomeIcon className='icon' id='heart' icon={faHeart} size='2x' />
 				<FontAwesomeIcon className='icon' icon={faShoppingCart} size='2x' />
 			</div>
 		</div>

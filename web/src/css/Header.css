@@ -45,3 +45,6 @@
   width: 100%;
   height: 10vh;
   z-index: 2; }
+
+#heart:hover {
+  color: red; }
