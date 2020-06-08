@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Radical/static/css/main.9e5b366e.chunk.css",
-    "main.js": "/Radical/static/js/main.f1e3c507.chunk.js",
-    "main.js.map": "/Radical/static/js/main.f1e3c507.chunk.js.map",
+    "main.css": "/Radical/static/css/main.740c223f.chunk.css",
+    "main.js": "/Radical/static/js/main.6682811d.chunk.js",
+    "main.js.map": "/Radical/static/js/main.6682811d.chunk.js.map",
     "runtime-main.js": "/Radical/static/js/runtime-main.f8c9825e.js",
     "runtime-main.js.map": "/Radical/static/js/runtime-main.f8c9825e.js.map",
     "static/js/2.31dab0f6.chunk.js": "/Radical/static/js/2.31dab0f6.chunk.js",
     "static/js/2.31dab0f6.chunk.js.map": "/Radical/static/js/2.31dab0f6.chunk.js.map",
     "index.html": "/Radical/index.html",
-    "precache-manifest.22a254f495120347d57bf17e6ce84de8.js": "/Radical/precache-manifest.22a254f495120347d57bf17e6ce84de8.js",
+    "precache-manifest.a29f2df92e396559ef39de2cc9f32236.js": "/Radical/precache-manifest.a29f2df92e396559ef39de2cc9f32236.js",
     "service-worker.js": "/Radical/service-worker.js",
-    "static/css/main.9e5b366e.chunk.css.map": "/Radical/static/css/main.9e5b366e.chunk.css.map",
+    "static/css/main.740c223f.chunk.css.map": "/Radical/static/css/main.740c223f.chunk.css.map",
     "static/js/2.31dab0f6.chunk.js.LICENSE.txt": "/Radical/static/js/2.31dab0f6.chunk.js.LICENSE.txt",
     "static/media/Body.css": "/Radical/static/media/IMG_1659.4ebc29c9.jpg",
     "static/media/Header.css": "/Radical/static/media/logo-white-revised.7caa98d7.png"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.f8c9825e.js",
     "static/js/2.31dab0f6.chunk.js",
-    "static/css/main.9e5b366e.chunk.css",
-    "static/js/main.f1e3c507.chunk.js"
+    "static/css/main.740c223f.chunk.css",
+    "static/js/main.6682811d.chunk.js"
   ]
 }
