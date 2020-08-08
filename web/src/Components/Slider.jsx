@@ -3,6 +3,7 @@ import '../css/Slider.css';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/react-fontawesome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 export const Slider = props => {
 	const [position, setPosition] = useState(props.offset);
@@ -16,7 +17,7 @@ export const Slider = props => {
 	};
 
 	const handleClick = () => {
-		setPosition(-110);
+		setPosition(-100);
 	};
 
 	return (
@@ -29,10 +30,18 @@ export const Slider = props => {
 				<strong>Categorias</strong>
 			</h2>
 			<ul className='categories'>
-				<li>TSHIRTS</li>
-				<li>JEAN JACKETS</li>
-				<li>GORRAS</li>
-				<li>PERSONALIZADOS</li>
+				<li id='hello'>
+					<Link to={{ pathname: '/categories/t-shirts' }}>TSHIRTS</Link>
+				</li>
+				<li>
+					<Link to={{ pathname: '/categories/jean-jackets' }}>JEAN JACKETS</Link>
+				</li>
+				<li>
+					<Link to={{ pathname: '/categories/caps' }}>GORRAS</Link>
+				</li>
+				<li>
+					<Link to={{ pathname: '/categories/custom-design' }}>PERSONALIZADOS</Link>
+				</li>
 			</ul>
 		</div>
 	);

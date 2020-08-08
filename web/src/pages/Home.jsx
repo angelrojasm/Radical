@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Slider } from '../Components/Slider';
 import { Header } from '../Components/Header';
 import { Footer } from '../Components/Footer';
-import { Body } from '../Components/Body';
+import { BackgroundCarousel } from '../Components/BackgroundCarousel';
 import useWindowDimensions from '../Components/Dimensions';
 
 const Home = props => {
-	const [offset, setOffset] = useState(-110);
+	const [offset, setOffset] = useState(-20);
 	const [resize, setResize] = useState(false);
 	const [sliderWidth, setSliderWidth] = useState('20vw');
 
@@ -26,7 +26,7 @@ const Home = props => {
 	};
 
 	const hideSlider = () => {
-		setOffset(-110);
+		setOffset(-20);
 	};
 	return (
 		<div className='Home'>
@@ -40,7 +40,7 @@ const Home = props => {
 				dimensionWidth={width}
 				resize={resize}
 			/>
-			<Body />
+			<BackgroundCarousel />
 			<Footer position='fixed' top='90vh' />
 		</div>
 	);
