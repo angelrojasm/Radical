@@ -22,7 +22,8 @@
       left: -3%;
       text-align: center;
       margin: 10% 0;
-      font-size: x-large; }
+      font-size: x-large;
+      font-weight: bold; }
 
 .exit {
   display: none;
@@ -35,7 +36,7 @@
 .exit:hover {
   color: blue; }
 
-@media only screen and (min-width: 501px) and (max-width: 850px) {
+@media only screen and (min-width: 601px) and (max-width: 850px) {
   .slider {
     width: 30vw;
     overflow: hidden; }
@@ -54,6 +55,6 @@
       margin-top: 10%;
       margin-right: 12%; }
       .slider .categories li {
-        margin-top: 5%; }
+        margin: 2% 0; }
   .exit {
     display: block; } }

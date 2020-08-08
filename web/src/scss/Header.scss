@@ -35,8 +35,27 @@
 	.rightside {
 		margin-right: 20%;
 		position: relative;
+		right: 3%;
+		margin-top: 2%;
+		.icon {
+			margin: 0 15%;
+		}
+	}
+	#logo {
+		position: fixed;
+		left: -15% !important;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.rightside {
+		margin-right: 20%;
+		position: relative;
 		right: 10%;
 		margin-top: 2%;
+		.icon {
+			margin: 0 15%;
+		}
 	}
 	#logo {
 		position: fixed;

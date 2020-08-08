@@ -29,10 +29,10 @@ export const Slider = props => {
 				<strong>Categorias</strong>
 			</h2>
 			<ul className='categories'>
-				<li>Tshirts</li>
-				<li>Jean Jackets</li>
-				<li>Gorras</li>
-				<li>Personalizados</li>
+				<li>TSHIRTS</li>
+				<li>JEAN JACKETS</li>
+				<li>GORRAS</li>
+				<li>PERSONALIZADOS</li>
 			</ul>
 		</div>
 	);

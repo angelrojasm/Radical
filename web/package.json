@@ -11,11 +11,13 @@
 		"@testing-library/jest-dom": "^4.2.4",
 		"@testing-library/react": "^9.5.0",
 		"@testing-library/user-event": "^7.2.1",
+		"concurrently": "^5.3.0",
 		"node-sass": "^4.14.1",
 		"react": "^16.13.1",
 		"react-bootstrap": "^1.0.1",
 		"react-dom": "^16.13.1",
 		"react-fontawesome": "^1.7.1",
+		"react-router-dom": "^5.2.0",
 		"react-scripts": "3.4.1"
 	},
 	"scripts": {
@@ -24,6 +26,7 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"sass": "node-sass --watch ./src/scss -o ./src/css",
+		"dev": "concurrently \"npm start\" \"npm run sass\"",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build"
 	},

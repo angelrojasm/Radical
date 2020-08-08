@@ -11,11 +11,7 @@ export const Header = props => {
 
 	const handleSlide = () => {
 		let val;
-		if (props.width === '20vw') {
-			val = '14vw';
-		} else {
-			val = '24vw';
-		}
+		props.width === '20vw' ? (val = '15vw') : (val = '21vw');
 		return val;
 	};
 	useEffect(() => {
