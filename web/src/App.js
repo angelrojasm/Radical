@@ -15,7 +15,6 @@ function App() {
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>
-			<Footer position='fixed' bottom='0' />
 		</>
 	);
 }

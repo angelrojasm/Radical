@@ -17,7 +17,7 @@ const Slider = props => {
 	};
 
 	const handleClick = () => {
-		setPosition(-100);
+		setPosition(-30);
 	};
 
 	return (
@@ -31,16 +31,16 @@ const Slider = props => {
 			</h2>
 			<ul className='categories'>
 				<li id='hello'>
-					<Link to={{ pathname: '/categories/t-shirts' }}>TSHIRTS</Link>
+					<Link to={{ pathname: '/categories/T-shirts' }}>TSHIRTS</Link>
 				</li>
 				<li>
-					<Link to={{ pathname: '/categories/jean-jackets' }}>JEAN JACKETS</Link>
+					<Link to={{ pathname: '/categories/Jean Jackets' }}>JEAN JACKETS</Link>
 				</li>
 				<li>
-					<Link to={{ pathname: '/categories/caps' }}>GORRAS</Link>
+					<Link to={{ pathname: '/categories/Caps' }}>GORRAS</Link>
 				</li>
 				<li>
-					<Link to={{ pathname: '/categories/custom-design' }}>PERSONALIZADOS</Link>
+					<Link to={{ pathname: '/categories/Custom Design' }}>PERSONALIZADOS</Link>
 				</li>
 			</ul>
 		</div>

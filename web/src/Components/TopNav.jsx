@@ -4,7 +4,7 @@ import Slider from './Slider';
 import useWindowDimensions from '../Components/Dimensions';
 
 const TopNav = props => {
-	const [offset, setOffset] = useState(-20);
+	const [offset, setOffset] = useState(-30);
 	const [resize, setResize] = useState(false);
 	const [sliderWidth, setSliderWidth] = useState('20vw');
 
@@ -24,7 +24,7 @@ const TopNav = props => {
 	};
 
 	const hideSlider = () => {
-		setOffset(-20);
+		setOffset(-30);
 	};
 	return (
 		<>

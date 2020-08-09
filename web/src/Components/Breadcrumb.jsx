@@ -6,10 +6,7 @@ const Breadcrumb = props => {
 			<li className='breadcrumb-item'>
 				<a href='/'>Radical</a>
 			</li>
-			<li className='breadcrumb-item'>Categorias</li>
-			<li className='breadcrumb-item active' aria-current='page'>
-				{props.categoryName}
-			</li>
+			<li className='breadcrumb-item active'>{props.categoryName}</li>
 		</ol>
 	);
 };

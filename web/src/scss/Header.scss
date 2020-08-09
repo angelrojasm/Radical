@@ -103,10 +103,11 @@
 		z-index: 10;
 	}
 	#logo {
+		cursor: pointer;
 		height: 50px;
 		width: 250px;
 		margin-top: -2.5%;
-		background: url('../images/logo-white-revised.png') center no-repeat;
+		background: url('http://du9yuz2ex8zdk.cloudfront.net/logo-white-revised.png') center no-repeat;
 		background-size: cover;
 		transition: all 300ms 50ms ease-out;
 	}
