@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-  height: 70vh;
+  width: 100vw;
+  height: 10vh;
+  align-self: center;
   z-index: 2;
   overflow: visible; }
   #header a {

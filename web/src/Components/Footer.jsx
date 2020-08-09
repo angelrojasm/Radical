@@ -3,9 +3,9 @@ import '../css/Footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
-export const Footer = props => {
+const Footer = props => {
 	return (
-		<div id='footer' style={{ position: props.position, top: props.top }}>
+		<div id='footer' style={{ position: props.position, bottom: props.bottom }}>
 			<p> © Radical 2020</p>
 			<div className='right'>
 				<span>Find us on</span>
@@ -16,3 +16,5 @@ export const Footer = props => {
 		</div>
 	);
 };
+
+export default Footer;

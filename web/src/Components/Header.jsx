@@ -4,10 +4,22 @@ import { faUser, faBars, faShoppingCart, faHeart } from '@fortawesome/free-solid
 import { Link } from 'react-router-dom';
 import '../css/Header.css';
 
-export const Header = props => {
+const Header = props => {
 	const [logoPosition, setLogoPosition] = useState(0);
 	function handleMouseOver() {
 		props.showSlider();
+	}
+	function styleHeader() {
+		return props.isBordered
+			? {
+					position: props.position,
+					top: props.top,
+					backgroundColor: 'white',
+					boxShadow: '0px 17px 15px -15px rgba(201,195,201,1)',
+
+					//borderBottom: '2px solid gray',
+			  }
+			: { position: props.position, top: props.top };
 	}
 
 	const handleSlide = () => {
@@ -22,7 +34,7 @@ export const Header = props => {
 	}, [props.offsetFlag]);
 
 	return (
-		<div id='header' style={{ position: props.position, top: props.top }}>
+		<div id='header' style={styleHeader()}>
 			<div className='leftside'>
 				<FontAwesomeIcon className='toggle' icon={faBars} size='2x' onMouseOver={handleMouseOver} />
 
@@ -76,3 +88,5 @@ export const Header = props => {
 		</div>
 	);
 };
+
+export default Header;

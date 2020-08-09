@@ -1,0 +1,25 @@
+#category > * {
+  position: relative;
+  top: 10vh; }
+
+#category .body-container {
+  margin: 0 auto;
+  margin-top: 2%;
+  width: 85vw;
+  height: fit-content; }
+
+#category #intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid gainsboro; }
+
+#category #products-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-content: center;
+  text-align: center; }
+
+#category #sort-bar {
+  margin-right: 15%; }

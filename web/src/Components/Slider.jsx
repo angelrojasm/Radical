@@ -5,7 +5,7 @@ import '@fortawesome/react-fontawesome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
-export const Slider = props => {
+const Slider = props => {
 	const [position, setPosition] = useState(props.offset);
 
 	useEffect(() => {
@@ -46,3 +46,4 @@ export const Slider = props => {
 		</div>
 	);
 };
+export default Slider;
