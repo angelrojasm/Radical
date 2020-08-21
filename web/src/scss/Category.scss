@@ -25,16 +25,24 @@
 		text-align: center;
 	}
 	#sort-bar {
+		line-height: 200%;
 		width: 20%;
 		border: 1.5px solid black;
-		border-radius: 10px;
+		border-radius: 5px;
 		margin-right: 15%;
 		display: flex;
-		justify-content: space-evenly;
+		justify-content: space-around;
 		align-items: center;
 
 		p {
 			margin: auto 0;
+		}
+
+		button {
+			font-weight: bold;
+			border: none;
+			background-color: transparent;
+			outline: none;
 		}
 	}
 }

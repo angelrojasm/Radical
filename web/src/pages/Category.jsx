@@ -5,6 +5,8 @@ import TopNav from '../Components/TopNav';
 import ItemList from '../Components/ItemList';
 import Footer from '../Components/Footer';
 import '../css/Category.css';
+import Pagination from '../Components/Pagination';
+import { useHistory } from 'react-router-dom';
 
 const products = [
 	{
@@ -50,25 +52,41 @@ const products = [
 ];
 
 const Category = props => {
+	const history = useHistory();
+	const [paginationIndex, setPaginationIndex] = useState(1);
+	const [itemCount, setItemCount] = useState(6);
+
+	function switchNextPage() {
+		setPaginationIndex(paginationIndex + 1);
+	}
+	function switchPreviousPage() {
+		setPaginationIndex(paginationIndex - 1);
+	}
+	function goToProfile(title, link) {
+		props.history.push({
+			pathname: `/categories/${props.match.params.name}/${title}`,
+			state: { image: link },
+		});
+	}
 	return (
 		<div id='category'>
-			<TopNav isBordered={true} />
+			<TopNav id='topnav' isBordered={true} />
 			<div className='body-container'>
 				<div id='intro'>
 					<div id='products-meta'>
 						<Breadcrumb categoryName={props.match.params.name} />
 						<h1>{props.match.params.name}</h1>
-						<p>Showing: 1-7 out of 15 items</p>
+						<p>Showing: 1-8 out of 15 items</p>
 					</div>
 					<div id='sort-bar'>
 						<p>Sort By</p>
 						<div className='dropdown'>
 							<button
 								type='button'
-								id='user-dropdown'
-								className='dropdown-button'
+								id='sort-dropdown'
+								className='dropdown-button dropdown-toggle'
 								data-toggle='dropdown'>
-								{props.location.search === '' ? 'Sample Data' : props.location.search.split('=')[1]}
+								{props.location.search === '' ? 'Sample Data' : props.location.search.split('=')[1]}{' '}
 							</button>
 							<div className='dropdown-menu'>
 								<a
@@ -87,7 +105,13 @@ const Category = props => {
 					</div>
 				</div>
 				<div id='products-body'>
-					<ItemList items={products} />
+					<ItemList
+						items={products}
+						index={paginationIndex}
+						count={itemCount}
+						redirect={goToProfile}
+					/>
+					<Pagination next={switchNextPage} prev={switchPreviousPage} />
 				</div>
 			</div>
 			<Footer position='relative' bottom='0' />

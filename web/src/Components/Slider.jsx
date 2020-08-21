@@ -23,7 +23,7 @@ const Slider = props => {
 	return (
 		<div
 			className='slider'
-			style={{ position: props.position, left: position + '%' }}
+			style={{ position: props.position, left: position + '%', top: '0' }}
 			onMouseLeave={handleMouseLeave}>
 			<FontAwesomeIcon className='exit' icon={faTimes} size='lg' onClick={handleClick} />
 			<h2>
@@ -31,16 +31,16 @@ const Slider = props => {
 			</h2>
 			<ul className='categories'>
 				<li id='hello'>
-					<Link to={{ pathname: '/categories/T-shirts' }}>TSHIRTS</Link>
+					<a href='/categories/T-shirts'>TSHIRTS</a>
 				</li>
 				<li>
-					<Link to={{ pathname: '/categories/Jean Jackets' }}>JEAN JACKETS</Link>
+					<a href='/categories/Jean Jackets'>JEAN JACKETS</a>
 				</li>
 				<li>
-					<Link to={{ pathname: '/categories/Caps' }}>GORRAS</Link>
+					<a href='/categories/Caps'>GORRAS</a>
 				</li>
 				<li>
-					<Link to={{ pathname: '/categories/Custom Design' }}>PERSONALIZADOS</Link>
+					<a href='Custom Designs'>PERSONALIZADOS</a>
 				</li>
 			</ul>
 		</div>

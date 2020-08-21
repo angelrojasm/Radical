@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBars, faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../css/Header.css';
 
 const Header = props => {
-	const history = useHistory();
 	const [logoPosition, setLogoPosition] = useState(0);
 	function handleMouseOver() {
 		props.showSlider();
@@ -17,8 +16,6 @@ const Header = props => {
 					top: props.top,
 					backgroundColor: 'white',
 					boxShadow: '0px 17px 15px -15px rgba(201,195,201,1)',
-
-					//borderBottom: '2px solid gray',
 			  }
 			: { position: props.position, top: props.top };
 	}
@@ -39,12 +36,7 @@ const Header = props => {
 			<div className='leftside'>
 				<FontAwesomeIcon className='toggle' icon={faBars} size='2x' onMouseOver={handleMouseOver} />
 
-				<div
-					id='logo'
-					onClick={() => {
-						history.push('/');
-					}}
-					style={{ position: 'relative', left: logoPosition }}></div>
+				<div id='logo' style={{ position: 'relative', left: logoPosition }}></div>
 			</div>
 			<div className='rightside'>
 				<div className='dropdown'>

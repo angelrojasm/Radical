@@ -1,7 +1,7 @@
 #item {
   margin: 1.5%;
-  width: 25%;
-  height: 90%;
+  width: 20%;
+  height: 70%;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all 0.3s linear; }
@@ -16,11 +16,14 @@
     width: 100%;
     display: flex;
     justify-content: space-around; }
+  #item .like {
+    cursor: pointer; }
   #item #image-container {
     position: relative; }
   #item #item-image {
     height: 70%;
-    width: 100%; }
+    width: 100%;
+    cursor: pointer; }
     #item #item-image:hover ~ #image-button {
       visibility: visible;
       opacity: 1; }
@@ -43,6 +46,6 @@
   #item #info-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     margin-top: 5%; }

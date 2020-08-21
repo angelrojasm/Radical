@@ -28,7 +28,7 @@ const TopNav = props => {
 	};
 	return (
 		<>
-			<Slider offset={offset} position='fixed' top='0' hideSlider={hideSlider} />
+			<Slider offset={offset} position='fixed' hideSlider={hideSlider} />
 			<Header
 				isBordered={props.isBordered}
 				showSlider={showSlider}

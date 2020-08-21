@@ -73,7 +73,6 @@
     outline: none;
     z-index: 10; }
   #header #logo {
-    cursor: pointer;
     height: 50px;
     width: 250px;
     margin-top: -2.5%;
