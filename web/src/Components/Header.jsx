@@ -36,7 +36,9 @@ const Header = props => {
 			<div className='leftside'>
 				<FontAwesomeIcon className='toggle' icon={faBars} onMouseOver={handleMouseOver} />
 
-				<div id='logo' style={{ position: 'relative', left: logoPosition }}></div>
+				<a href='#/'>
+					<div id='logo' style={{ position: 'relative', left: logoPosition }}></div>
+				</a>
 			</div>
 			<div className='rightside'>
 				<div className='dropdown'>
