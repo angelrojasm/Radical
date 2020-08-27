@@ -84,7 +84,7 @@ const Category = props => {
 							<button
 								type='button'
 								id='sort-dropdown'
-								className='dropdown-button dropdown-toggle'
+								className='dropdown-button btn-sm dropdown-toggle'
 								data-toggle='dropdown'>
 								{props.location.search === '' ? 'Sample Data' : props.location.search.split('=')[1]}{' '}
 							</button>

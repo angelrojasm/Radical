@@ -68,3 +68,24 @@
 		margin-top: 5%;
 	}
 }
+
+@media only screen and (max-width: 600px) {
+	#item {
+		margin-top: 5%;
+		height: 35%;
+		width: 85%;
+
+		.like {
+			font-size: 2em;
+			margin-right: 2%;
+		}
+
+		h6 {
+			font-size: 1.5em;
+		}
+
+		p {
+			font-size: 1.5em;
+		}
+	}
+}

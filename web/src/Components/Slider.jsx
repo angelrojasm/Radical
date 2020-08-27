@@ -3,7 +3,6 @@ import '../css/Slider.css';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/react-fontawesome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
 
 const Slider = props => {
 	const [position, setPosition] = useState(props.offset);
@@ -17,13 +16,13 @@ const Slider = props => {
 	};
 
 	const handleClick = () => {
-		setPosition(-30);
+		setPosition(-100);
 	};
 
 	return (
 		<div
 			className='slider'
-			style={{ position: props.position, left: position + '%', top: '0' }}
+			style={{ position: props.position, left: position + '%', top: '0', width: props.width }}
 			onMouseLeave={handleMouseLeave}>
 			<FontAwesomeIcon className='exit' icon={faTimes} size='lg' onClick={handleClick} />
 			<h2>

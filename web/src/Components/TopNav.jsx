@@ -4,7 +4,7 @@ import Slider from './Slider';
 import useWindowDimensions from '../Components/Dimensions';
 
 const TopNav = props => {
-	const [offset, setOffset] = useState(-30);
+	const [offset, setOffset] = useState(-100);
 	const [resize, setResize] = useState(false);
 	const [sliderWidth, setSliderWidth] = useState('20vw');
 
@@ -14,21 +14,21 @@ const TopNav = props => {
 		if (width > 500 && width < 850) {
 			setSliderWidth('30vw');
 		}
-		if (width < 481) {
-			setResize(true);
+		if (width < 450) {
+			setSliderWidth('100vw');
 		}
-	}, []);
+	});
 
 	const showSlider = () => {
 		setOffset(0);
 	};
 
 	const hideSlider = () => {
-		setOffset(-30);
+		setOffset(-100);
 	};
 	return (
 		<>
-			<Slider offset={offset} position='fixed' hideSlider={hideSlider} />
+			<Slider offset={offset} position='fixed' width={sliderWidth} hideSlider={hideSlider} />
 			<Header
 				isBordered={props.isBordered}
 				showSlider={showSlider}

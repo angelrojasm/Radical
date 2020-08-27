@@ -5,13 +5,25 @@
   justify-content: space-between;
   z-index: 2;
   background-color: transparent; }
-  #footer p {
-    margin-left: 5%;
-    margin-top: 1%; }
-  #footer .facebook {
-    color: blue; }
+  #footer .leftside {
+    display: flex;
+    color: white;
+    width: 50%;
+    margin-left: 2.5vw;
+    justify-content: flex-start; }
+    #footer .leftside p {
+      margin: auto 0; }
+  #footer .rightside {
+    color: white;
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2.5vw;
+    align-items: center; }
+    #footer .rightside * {
+      margin-right: 3%; }
   #footer .instagram {
-    color: black;
+    color: white;
     height: 28px;
     border-radius: 7px;
     padding: 2px;
@@ -42,14 +54,3 @@
 	);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
 	*/ }
-  #footer .right {
-    width: 50%;
-    display: flex;
-    margin-left: 0;
-    margin-right: 0;
-    position: relative;
-    left: 13vw;
-    justify-content: center;
-    align-items: center; }
-    #footer .right * {
-      margin-right: 3%; }

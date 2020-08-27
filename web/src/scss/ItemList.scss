@@ -4,3 +4,11 @@
 	justify-content: space-evenly;
 	flex-wrap: wrap;
 }
+
+@media only screen and (max-width: 600px) {
+	#item-list {
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+	}
+}

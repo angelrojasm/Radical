@@ -6,17 +6,32 @@
 	z-index: 2;
 	background-color: transparent;
 
-	p {
-		margin-left: 5%;
-		margin-top: 1%;
-	}
+	.leftside {
+		display: flex;
+		color: white;
+		width: 50%;
+		margin-left: 2.5vw;
+		justify-content: flex-start;
 
-	.facebook {
-		color: blue;
+		p {
+			margin: auto 0;
+		}
+	}
+	.rightside {
+		color: white;
+		width: 50%;
+		display: flex;
+		justify-content: flex-end;
+		margin-right: 2.5vw;
+		align-items: center;
+
+		* {
+			margin-right: 3%;
+		}
 	}
 
 	.instagram {
-		color: black;
+		color: white;
 		height: 28px;
 		border-radius: 7px;
 		padding: 2px;
@@ -47,20 +62,5 @@
 	);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
 	*/
-	}
-
-	.right {
-		width: 50%;
-		display: flex;
-		margin-left: 0;
-		margin-right: 0;
-		position: relative;
-		left: 13vw;
-		justify-content: center;
-		align-items: center;
-
-		* {
-			margin-right: 3%;
-		}
 	}
 }

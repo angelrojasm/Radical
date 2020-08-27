@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const Pagination = props => {
 	return (
-		<div id='pagination'>
+		<div id='pagination' style={{ marginTop: '7.5%' }}>
 			<div>
 				<ul className='pagination justify-content-center'>
 					<li className='page-item'>

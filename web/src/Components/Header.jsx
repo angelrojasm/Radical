@@ -22,7 +22,7 @@ const Header = props => {
 
 	const handleSlide = () => {
 		let val;
-		props.width === '20vw' ? (val = '15vw') : (val = '21vw');
+		props.width === '20vw' ? (val = '17vw') : (val = '22vw');
 		return val;
 	};
 	useEffect(() => {
@@ -34,7 +34,7 @@ const Header = props => {
 	return (
 		<div id='header' style={styleHeader()}>
 			<div className='leftside'>
-				<FontAwesomeIcon className='toggle' icon={faBars} size='2x' onMouseOver={handleMouseOver} />
+				<FontAwesomeIcon className='toggle' icon={faBars} onMouseOver={handleMouseOver} />
 
 				<div id='logo' style={{ position: 'relative', left: logoPosition }}></div>
 			</div>
@@ -45,7 +45,7 @@ const Header = props => {
 						id='user-dropdown'
 						className='dropdown-button'
 						data-toggle='dropdown'>
-						<FontAwesomeIcon className='icon' icon={faUser} size={props.resize ? 'lg' : '2x'} />
+						<FontAwesomeIcon className='icon' icon={faUser} />
 					</button>
 					<div className='dropdown-menu'>
 						<Link
@@ -68,19 +68,10 @@ const Header = props => {
 					to={{
 						pathname: '/likes',
 					}}>
-					<FontAwesomeIcon
-						className='icon'
-						id='heart'
-						icon={faHeart}
-						size={props.resize ? 'lg' : '2x'}
-					/>
+					<FontAwesomeIcon className='icon' id='heart' icon={faHeart} />
 				</Link>
 				<Link to={{ pathname: '/cart' }}>
-					<FontAwesomeIcon
-						className='icon'
-						icon={faShoppingCart}
-						size={props.resize ? 'lg' : '2x'}
-					/>
+					<FontAwesomeIcon className='icon' icon={faShoppingCart} />
 				</Link>
 			</div>
 		</div>
