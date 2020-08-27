@@ -1,0 +1,59 @@
+#login-component #login-header {
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  top: 3%; }
+
+#login-component #login-form-container {
+  position: relative;
+  top: 20vh;
+  margin: 0 auto;
+  background-color: white;
+  width: 35%;
+  height: 65%;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  overflow: auto; }
+  #login-component #login-form-container #form-title {
+    margin-top: 5%;
+    text-align: center; }
+
+#login-component label {
+  font-weight: 500; }
+
+#login-component .form-group {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 8%;
+  width: 70%;
+  font-size: large; }
+
+#login-component .register-form-group {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 8%;
+  width: 70%;
+  font-size: large; }
+
+#login-component .btn {
+  margin-left: 35%;
+  width: 30%;
+  margin-top: 8%;
+  margin-bottom: 5%; }
+
+#login-component #sign-up-label {
+  margin: 0 auto;
+  margin-top: 3%;
+  font-size: 13.5px;
+  width: fit-content; }
+
+#login-component #sign-up-link {
+  color: #1976d2;
+  cursor: pointer; }
+  #login-component #sign-up-link:hover {
+    text-decoration: underline; }
+
+@media only screen and (max-width: 450px) {
+  #login-component #login-form-container {
+    position: relative;
+    width: 85%;
+    top: 17.5vh; } }

@@ -1,0 +1,67 @@
+$hyperlink-color: #1976d2;
+
+#register-component {
+	#register-header {
+		text-align: center;
+		margin: 0 auto;
+		position: relative;
+		top: 1%;
+	}
+
+	#register-form-container {
+		position: relative;
+		top: 12.5vh;
+		margin: 0 auto;
+		background-color: white;
+		width: 35%;
+		height: 85%;
+		box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+		overflow: auto;
+
+		#form-title {
+			text-align: center;
+			margin-top: 5%;
+		}
+	}
+
+	label {
+		font-weight: 500;
+	}
+
+	.register-form-group {
+		text-align: center;
+		margin: 0 auto;
+		margin-top: 8%;
+		width: 70%;
+		font-size: large;
+	}
+
+	.btn {
+		margin-left: 35%;
+		width: 30%;
+		margin-top: 8%;
+		margin-bottom: 5%;
+	}
+
+	#sign-up-label {
+		margin: 0 auto;
+		margin-top: 3%;
+		font-size: 13.5px;
+
+		width: fit-content;
+	}
+	#sign-up-link {
+		color: $hyperlink-color;
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	@media only screen and (max-width: 450px) {
+		#register-form-container {
+			position: relative;
+			width: 85%;
+			top: 20vh;
+		}
+	}
+}
