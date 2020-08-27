@@ -7,14 +7,12 @@
   background-color: transparent; }
   #footer .leftside {
     display: flex;
-    color: white;
     width: 50%;
     margin-left: 2.5vw;
     justify-content: flex-start; }
     #footer .leftside p {
       margin: auto 0; }
   #footer .rightside {
-    color: white;
     width: 50%;
     display: flex;
     justify-content: flex-end;
@@ -23,7 +21,6 @@
     #footer .rightside * {
       margin-right: 3%; }
   #footer .instagram {
-    color: white;
     height: 28px;
     border-radius: 7px;
     padding: 2px;

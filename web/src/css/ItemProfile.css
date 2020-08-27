@@ -58,3 +58,59 @@
         #item-profile #body .flex #product-info-body #options #icon-div {
           display: flex;
           justify-content: flex-start; }
+
+@media only screen and (max-width: 450px) {
+  #item-profile #body {
+    width: 100vw;
+    margin: 0 auto;
+    height: fit-content; }
+    #item-profile #body .flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: fit-content; }
+      #item-profile #body .flex #profile-image {
+        margin: 0 auto;
+        width: 85vw;
+        height: 50vh; }
+      #item-profile #body .flex #product-info-body {
+        text-align: center;
+        width: 100vw; }
+        #item-profile #body .flex #product-info-body h2 {
+          font-size: 2em; }
+        #item-profile #body .flex #product-info-body h3 {
+          font-size: 1.5em; }
+        #item-profile #body .flex #product-info-body h4 {
+          font-size: 1em; }
+        #item-profile #body .flex #product-info-body #ratings {
+          width: 80%;
+          margin: 0 auto; }
+          #item-profile #body .flex #product-info-body #ratings .star {
+            font-size: 1.25em; }
+        #item-profile #body .flex #product-info-body #size {
+          width: 80%;
+          margin: 0 auto;
+          margin-top: 5%; }
+          #item-profile #body .flex #product-info-body #size h4 {
+            position: relative;
+            top: 0.75vh; }
+        #item-profile #body .flex #product-info-body #options {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center; }
+          #item-profile #body .flex #product-info-body #options button {
+            margin-bottom: 4%;
+            height: 7vh;
+            width: 50vw;
+            font-size: 1.35em;
+            font-weight: normal; }
+          #item-profile #body .flex #product-info-body #options #icon-div {
+            width: 100%;
+            justify-content: center; }
+            #item-profile #body .flex #product-info-body #options #icon-div * {
+              margin: 0 2%; }
+            #item-profile #body .flex #product-info-body #options #icon-div h4 {
+              position: relative;
+              top: 0.5vh;
+              font-size: 1.05em; } }

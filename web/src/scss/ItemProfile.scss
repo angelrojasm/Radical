@@ -81,4 +81,83 @@
 			}
 		}
 	}
+	@media only screen and (max-width: 450px) {
+		#body {
+			width: 100vw;
+			margin: 0 auto;
+			height: fit-content;
+
+			.flex {
+				display: flex;
+				flex-direction: column;
+
+				align-items: center;
+				height: fit-content;
+
+				#profile-image {
+					margin: 0 auto;
+					width: 85vw;
+					height: 50vh;
+				}
+
+				#product-info-body {
+					text-align: center;
+					width: 100vw;
+
+					h2 {
+						font-size: 2em;
+					}
+					h3 {
+						font-size: 1.5em;
+					}
+					h4 {
+						font-size: 1em;
+					}
+
+					#ratings {
+						width: 80%;
+						margin: 0 auto;
+						.star {
+							font-size: 1.25em;
+						}
+					}
+					#size {
+						width: 80%;
+						margin: 0 auto;
+						margin-top: 5%;
+						h4 {
+							position: relative;
+							top: 0.75vh;
+						}
+					}
+					#options {
+						display: flex;
+						flex-direction: column;
+						justify-content: flex-start;
+						align-items: center;
+
+						button {
+							margin-bottom: 4%;
+							height: 7vh;
+							width: 50vw;
+							font-size: 1.35em;
+							font-weight: normal;
+						}
+						#icon-div {
+							width: 100%;
+							justify-content: center;
+							* {
+								margin: 0 2%;
+							}
+							h4 {
+								position: relative;
+								top: 0.5vh;
+								font-size: 1.05em;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
