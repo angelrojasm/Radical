@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Radical/static/css/main.effbe1c8.chunk.css",
-    "main.js": "/Radical/static/js/main.5b8bfbef.chunk.js",
-    "main.js.map": "/Radical/static/js/main.5b8bfbef.chunk.js.map",
+    "main.js": "/Radical/static/js/main.7a51053c.chunk.js",
+    "main.js.map": "/Radical/static/js/main.7a51053c.chunk.js.map",
     "runtime-main.js": "/Radical/static/js/runtime-main.f8c9825e.js",
     "runtime-main.js.map": "/Radical/static/js/runtime-main.f8c9825e.js.map",
     "static/js/2.25f2ddf8.chunk.js": "/Radical/static/js/2.25f2ddf8.chunk.js",
     "static/js/2.25f2ddf8.chunk.js.map": "/Radical/static/js/2.25f2ddf8.chunk.js.map",
     "index.html": "/Radical/index.html",
-    "precache-manifest.50e952d47f8afc31fda5bea79971eb30.js": "/Radical/precache-manifest.50e952d47f8afc31fda5bea79971eb30.js",
+    "precache-manifest.57fc9f98436e6fb36559ebdd53d1fd4f.js": "/Radical/precache-manifest.57fc9f98436e6fb36559ebdd53d1fd4f.js",
     "service-worker.js": "/Radical/service-worker.js",
     "static/css/main.effbe1c8.chunk.css.map": "/Radical/static/css/main.effbe1c8.chunk.css.map",
     "static/js/2.25f2ddf8.chunk.js.LICENSE.txt": "/Radical/static/js/2.25f2ddf8.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.f8c9825e.js",
     "static/js/2.25f2ddf8.chunk.js",
     "static/css/main.effbe1c8.chunk.css",
-    "static/js/main.5b8bfbef.chunk.js"
+    "static/js/main.7a51053c.chunk.js"
   ]
 }
