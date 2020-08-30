@@ -30,16 +30,16 @@ const Slider = props => {
 			</h2>
 			<ul className='categories'>
 				<li id='hello'>
-					<a href='#/categories/T-shirts'>TSHIRTS</a>
+					<a href='/categories/T-shirts'>TSHIRTS</a>
 				</li>
 				<li>
-					<a href='#/categories/Jean Jackets'>JEAN JACKETS</a>
+					<a href='/categories/Jean Jackets'>JEAN JACKETS</a>
 				</li>
 				<li>
-					<a href='#/categories/Caps'>GORRAS</a>
+					<a href='/categories/Caps'>GORRAS</a>
 				</li>
 				<li>
-					<a href='#/categories/Custom Designs'>PERSONALIZADOS</a>
+					<a href='/categories/Custom Designs'>PERSONALIZADOS</a>
 				</li>
 			</ul>
 		</div>

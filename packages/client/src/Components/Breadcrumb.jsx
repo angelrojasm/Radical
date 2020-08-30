@@ -4,12 +4,12 @@ const Breadcrumb = props => {
 	return (
 		<ol className='breadcrumb bg-transparent'>
 			<li className='breadcrumb-item'>
-				<a href='#/'>Radical</a>
+				<a href='/'>Radical</a>
 			</li>
 			{props.isProfile ? (
 				<>
 					<li className='breadcrumb-item'>
-						<a href={`#/categories/${props.categoryName}`}>{props.categoryName}</a>
+						<a href={`/categories/${props.categoryName}`}>{props.categoryName}</a>
 					</li>
 					<li className='breadcrumb-item active'>{props.itemName}</li>
 				</>

@@ -36,7 +36,7 @@ const Header = props => {
 			<div className='leftside'>
 				<FontAwesomeIcon className='toggle' icon={faBars} onMouseOver={handleMouseOver} />
 
-				<a href='#/'>
+				<a href='/'>
 					<div id='logo' style={{ position: 'relative', left: logoPosition }}></div>
 				</a>
 			</div>

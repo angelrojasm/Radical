@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Slider from './Slider';
-import useWindowDimensions from '../Components/Dimensions';
+import useWindowDimensions from './Dimensions';
 
 const TopNav = props => {
 	const [offset, setOffset] = useState(-100);
