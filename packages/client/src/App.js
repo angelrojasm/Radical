@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BroswerRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Home from './pages/Home';
 import Category from './pages/Category';
 import ItemProfile from './pages/ItemProfile';
