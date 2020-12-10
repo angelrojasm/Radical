@@ -1,0 +1,44 @@
+#cart-item {
+	height: 30vh;
+	width: 30vw;
+	display: flex;
+	justify-content: space-between;
+
+	img {
+		width: 40%;
+		height: 100%;
+	}
+
+	.show-mobile {
+		display: none;
+	}
+	#item-meta {
+		display: flex;
+		flex-direction: column;
+	}
+}
+@media only screen and (max-width: 450px) {
+	.show-mobile {
+		display: block;
+	}
+
+	#cart-item {
+		justify-content: start;
+		height: 100%;
+		width: 100%;
+
+		img {
+			margin: 0 1%;
+			height: 100%;
+			width: 45%;
+		}
+		#item-meta {
+			font-size: 3vw;
+			width: fit-content;
+			#title {
+				font-weight: bold;
+				font-size: 3.25vw;
+			}
+		}
+	}
+}

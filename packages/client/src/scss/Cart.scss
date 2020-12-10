@@ -1,0 +1,149 @@
+html {
+	overflow-x: hidden;
+}
+#cart {
+	& > * {
+		position: relative;
+		top: 10vh;
+	}
+	width: 100vw;
+	margin: 0 auto;
+
+	td {
+		padding: 1% 0;
+	}
+
+	hr {
+		width: 79vw;
+		background-color: black;
+	}
+	.show-desktop {
+		display: block;
+	}
+	.show-mobile {
+		display: none;
+	}
+	.body {
+		border-bottom: 1px solid black;
+	}
+	#cart-meta {
+		display: flex;
+		flex-direction: column;
+		width: 20vw;
+		height: fit-content;
+		margin-top: 2vh;
+		margin-left: 5vw;
+		text-align: center;
+	}
+
+	#cart-table {
+		width: fit-content;
+		height: 60vh;
+		margin: 0 auto;
+		padding-right: 2vw;
+		overflow-y: scroll;
+		#table-header {
+			th {
+				padding: 5px;
+			}
+
+			background-color: lightgray;
+			border: 1px solid lightgray;
+		}
+	}
+	#quantity-input {
+		width: 3vw;
+	}
+
+	#price-section {
+		height: 30vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	#delete-icon {
+		display: flex;
+		justify-content: space-evenly;
+		#delete {
+			color: red;
+			margin-top: 5%;
+		}
+		span {
+			color: gray;
+			margin-top: 5%;
+			font-size: 1vw;
+		}
+	}
+	#total-price {
+		margin-top: 1%;
+		width: 85vw;
+		text-align: end;
+		font-weight: bold;
+	}
+	#checkout-button {
+		margin-left: 75%;
+		padding: 1%;
+		width: 10%;
+		background-color: lightcoral;
+		line-height: 1.25em;
+		border: 1px solid black;
+	}
+
+	@media only screen and (max-width: 450px) {
+		html {
+			overflow-x: hidden;
+		}
+		hr {
+			width: 90%;
+		}
+		.show-desktop {
+			display: none;
+		}
+
+		.show-mobile {
+			display: block;
+		}
+
+		#cart-meta {
+			width: fit-content;
+			margin: 3% auto 0 auto;
+		}
+
+		#cart-item-entry {
+			width: 90vw;
+			height: 40vh;
+			display: flex;
+			justify-content: space-between;
+			padding: 2% 0;
+		}
+
+		#cart-items {
+			height: 60vh;
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
+
+		#price-section {
+			height: 40vh;
+
+			p {
+				font-size: 3.5vw;
+			}
+
+			#delete-icon {
+				position: relative;
+				bottom: 5%;
+				span {
+					color: gray;
+					font-size: 2.5vw;
+				}
+			}
+		}
+		#checkout-button {
+			width: fit-content;
+			margin-left: 61.5%;
+		}
+	}
+}

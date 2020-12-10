@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Category from './pages/Category';
 import ItemProfile from './pages/ItemProfile';
 import Auth from './pages/Auth';
+import Cart from './pages/Cart';
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 					<Route path='/categories/:name/:item' exact component={ItemProfile} />
 					<Route path='/categories/:name?orderby=:value' exact component={Category} />
 					<Route path='/login' exact component={Auth} />
+					<Route path ="/cart" exact component={Cart} />
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>
