@@ -88,17 +88,52 @@ $blackBorder: 1px solid black;
 
 		#info-panel {
 			height: fit-content;
-			width: 70vw;
+			width: 70%;
 		}
 	}
 
 	@media only screen and (max-width: 450px) {
-		#meta-sub {
-			font-size: 0.75em;
-		}
-
 		#main-panels {
 			height: 80%;
+			width: 100%;
+
+			#options-panel {
+				width: 30%;
+
+				#meta-sub {
+					font-size: 0.8em;
+				}
+
+				#user-meta {
+					#user-logo {
+						height: 8vw;
+						width: 8vw;
+						font-size: 4.25vw;
+					}
+
+					#meta-title {
+						font-size: 4vw;
+					}
+				}
+
+				#option-categories {
+					#info-security {
+						p {
+							margin-left: 7%;
+							font-size: 2.5vw;
+						}
+					}
+					#shipping-info {
+						p {
+							margin-left: 7%;
+							font-size: 2.5vw;
+						}
+					}
+				}
+			}
+			#info-panel {
+				width: 65%;
+			}
 		}
 	}
 }

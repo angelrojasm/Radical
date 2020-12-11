@@ -32,3 +32,7 @@
     outline: none; }
   #shipping-info-panel #edit-input {
     margin: 0%; }
+
+@media only screen and (max-width: 450px) {
+  #shipping-info-panel .attribute {
+    margin-top: 10%; } }
