@@ -1,12 +1,12 @@
 #user-profile {
-  background-color: lightgray;
+  background-color: #f4f4f4;
   height: 100vh;
   width: 100vw; }
   #user-profile > * {
     position: relative;
     top: 13vh; }
   #user-profile #main-panels {
-    margin-left: 4%;
+    margin-left: 2%;
     height: 90%;
     width: 100%;
     display: flex; }
@@ -37,19 +37,32 @@
       #user-profile #main-panels #options-panel #option-categories > * {
         height: 9vh;
         display: flex;
-        align-items: center; }
+        align-items: center;
+        cursor: pointer; }
+      #user-profile #main-panels #options-panel #option-categories .icon {
+        margin-left: 2%; }
+      #user-profile #main-panels #options-panel #option-categories .selected-option {
+        background-color: #333333; }
+        #user-profile #main-panels #options-panel #option-categories .selected-option p,
+        #user-profile #main-panels #options-panel #option-categories .selected-option .icon {
+          color: white; }
       #user-profile #main-panels #options-panel #option-categories #info-security {
-        justify-content: space-between; }
+        justify-content: start; }
         #user-profile #main-panels #options-panel #option-categories #info-security p {
           font-size: 1.25vw;
           margin: auto 0;
-          margin-right: 5%; }
+          margin-left: 4%; }
       #user-profile #main-panels #options-panel #option-categories #shipping-info {
         justify-content: start; }
         #user-profile #main-panels #options-panel #option-categories #shipping-info p {
           font-size: 1.25vw;
           margin: auto 0;
-          margin-left: 5%; }
+          margin-left: 3%; }
     #user-profile #main-panels #info-panel {
       height: fit-content;
       width: 70vw; }
+  @media only screen and (max-width: 450px) {
+    #user-profile #meta-sub {
+      font-size: 0.75em; }
+    #user-profile #main-panels {
+      height: 80%; } }

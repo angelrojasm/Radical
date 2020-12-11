@@ -5,12 +5,12 @@ $blackBorder: 1px solid black;
 		position: relative;
 		top: 13vh;
 	}
-	background-color: lightgray;
+	background-color: #f4f4f4;
 	height: 100vh;
 	width: 100vw;
 
 	#main-panels {
-		margin-left: 4%;
+		margin-left: 2%;
 		height: 90%;
 		width: 100%;
 		display: flex;
@@ -53,14 +53,26 @@ $blackBorder: 1px solid black;
 					height: 9vh;
 					display: flex;
 					align-items: center;
+					cursor: pointer;
 				}
 
+				.icon {
+					margin-left: 2%;
+				}
+				.selected-option {
+					p,
+					.icon {
+						color: white;
+					}
+
+					background-color: #333333;
+				}
 				#info-security {
-					justify-content: space-between;
+					justify-content: start;
 					p {
 						font-size: 1.25vw;
 						margin: auto 0;
-						margin-right: 5%;
+						margin-left: 4%;
 					}
 				}
 				#shipping-info {
@@ -68,7 +80,7 @@ $blackBorder: 1px solid black;
 					p {
 						font-size: 1.25vw;
 						margin: auto 0;
-						margin-left: 5%;
+						margin-left: 3%;
 					}
 				}
 			}
@@ -77,6 +89,16 @@ $blackBorder: 1px solid black;
 		#info-panel {
 			height: fit-content;
 			width: 70vw;
+		}
+	}
+
+	@media only screen and (max-width: 450px) {
+		#meta-sub {
+			font-size: 0.75em;
+		}
+
+		#main-panels {
+			height: 80%;
 		}
 	}
 }

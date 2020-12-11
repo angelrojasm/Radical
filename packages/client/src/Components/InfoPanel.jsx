@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '../css/InfoPanel.css'
 import EditInput from '../Components/EditInput'
 
+
 const InfoPanel = (props) => {
     const [name,setName] = useState('Jose')
     const [email,setEmail] = useState('Jose@gmail.com')
