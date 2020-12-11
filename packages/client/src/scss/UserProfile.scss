@@ -1,0 +1,82 @@
+$blackBorder: 1px solid black;
+
+#user-profile {
+	& > * {
+		position: relative;
+		top: 13vh;
+	}
+	background-color: lightgray;
+	height: 100vh;
+	width: 100vw;
+
+	#main-panels {
+		margin-left: 4%;
+		height: 90%;
+		width: 100%;
+		display: flex;
+
+		#options-panel {
+			height: 100%;
+			width: 15%;
+
+			#user-meta {
+				margin-right: 8%;
+				& > * {
+					margin: 0%;
+				}
+
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				#user-logo {
+					height: 5vw;
+					width: 5vw;
+					border-radius: 100%;
+					margin: 0%;
+					padding: 5%;
+					background-color: black;
+					color: white;
+					font-weight: bold;
+					font-size: 2.5vw;
+					text-align: center;
+				}
+
+				#meta-title {
+					font-weight: bold;
+					font-size: 2vw;
+				}
+			}
+
+			#option-categories {
+				& > * {
+					height: 9vh;
+					display: flex;
+					align-items: center;
+				}
+
+				#info-security {
+					justify-content: space-between;
+					p {
+						font-size: 1.25vw;
+						margin: auto 0;
+						margin-right: 5%;
+					}
+				}
+				#shipping-info {
+					justify-content: start;
+					p {
+						font-size: 1.25vw;
+						margin: auto 0;
+						margin-left: 5%;
+					}
+				}
+			}
+		}
+
+		#info-panel {
+			height: fit-content;
+			width: 70vw;
+		}
+	}
+}

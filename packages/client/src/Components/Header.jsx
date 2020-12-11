@@ -60,7 +60,7 @@ const Header = props => {
 						<Link
 							className='dropdown-item'
 							to={{
-								pathname: '/profile',
+								pathname: '/myprofile',
 							}}>
 							My Profile
 						</Link>

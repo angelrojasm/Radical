@@ -11,6 +11,9 @@
   #cart-item #item-meta {
     display: flex;
     flex-direction: column; }
+    #cart-item #item-meta #title {
+      font-weight: bold;
+      font-size: 1.25vw; }
 
 @media only screen and (max-width: 450px) {
   .show-mobile {

@@ -5,6 +5,7 @@ import Category from './pages/Category';
 import ItemProfile from './pages/ItemProfile';
 import Auth from './pages/Auth';
 import Cart from './pages/Cart';
+import UserProfile from './pages/UserProfile'
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 					<Route path='/categories/:name?orderby=:value' exact component={Category} />
 					<Route path='/login' exact component={Auth} />
 					<Route path ="/cart" exact component={Cart} />
+					<Route path="/myprofile" exact component={UserProfile} />
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>
