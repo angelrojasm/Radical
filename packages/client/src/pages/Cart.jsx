@@ -100,7 +100,7 @@ function fillItemList(){
                     <CartItem image={baseUrl + item.image} title={item.title} />
                     <div id="price-section">
                             <p>
-                                <strong>{item.price}</strong>
+                                <strong>RD${item.price}</strong>
                             </p>
                             <div id="delete-icon">
                                 <FontAwesomeIcon id="delete" icon={faTrash} />

@@ -1,0 +1,144 @@
+#likes {
+	& > * {
+		position: relative;
+		top: 10vh;
+	}
+	width: 100vw;
+	margin: 0 auto;
+
+	td {
+		padding: 1% 0;
+	}
+
+	hr {
+		width: 79vw;
+		background-color: black;
+	}
+
+	.body {
+		border-bottom: 1px solid black;
+	}
+	#likes-meta {
+		display: flex;
+		flex-direction: column;
+		width: 20vw;
+		height: fit-content;
+		margin-top: 2vh;
+		margin-left: 5vw;
+		text-align: center;
+	}
+
+	#likes-item-entry {
+		width: 100%;
+		height: fit-content;
+		display: flex;
+		justify-content: space-between;
+		padding: 2% 0;
+	}
+
+	#likes-items {
+		margin: 0 auto;
+		margin-bottom: 5%;
+		height: fit-content;
+		width: 70%;
+	}
+
+	#price-section {
+		margin-right: 15%;
+		height: 30vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	#delete-icon {
+		* {
+			margin-right: 15%;
+		}
+		display: flex;
+		justify-content: space-evenly;
+		#delete {
+			color: red;
+			margin-top: 5%;
+		}
+		span {
+			color: gray;
+			margin-top: 5%;
+			font-size: 1vw;
+		}
+	}
+	#total-price {
+		margin-top: 1%;
+		width: 85vw;
+		text-align: end;
+		font-weight: bold;
+	}
+	#checkout-button {
+		margin-left: 75%;
+		padding: 1%;
+		width: 10%;
+		background-color: lightcoral;
+		line-height: 1.25em;
+		border: 1px solid black;
+	}
+
+	@media only screen and (max-width: 450px) {
+		html {
+			overflow-x: hidden;
+		}
+		hr {
+			width: 90%;
+		}
+		.show-desktop {
+			display: none;
+		}
+
+		.show-mobile {
+			display: none;
+		}
+
+		#likes-item-entry {
+			width: 90vw;
+			height: 40vh;
+			display: flex;
+			justify-content: space-between;
+			padding: 2% 0;
+		}
+
+		#likes-items {
+			height: fit-content;
+			width: 90vw;
+		}
+
+		#likes-meta {
+			width: fit-content;
+			margin: 3% auto 0 auto;
+		}
+
+		#price-section {
+			height: 35vh;
+			margin-right: 5%;
+
+			p {
+				font-size: 3.5vw;
+			}
+
+			#delete-icon {
+				* {
+					margin-right: 15%;
+				}
+				position: relative;
+				bottom: 5%;
+				span {
+					color: gray;
+					font-size: 2.5vw;
+				}
+			}
+		}
+		#checkout-button {
+			width: fit-content;
+			margin-left: 61.5%;
+		}
+	}
+}

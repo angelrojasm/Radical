@@ -48,7 +48,6 @@ return (
             <p className="attribute-title">Sector</p>
                 <EditInput id="edit-input" value={sector} changeValue={changeSector}/>
         </div>
-
     </div>
 </div>
 )
