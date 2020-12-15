@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom'
 import TopNav from '../Components/TopNav';
 import Footer from '../Components/Footer';
 import CartItem from '../Components/CartItem'
@@ -138,7 +139,7 @@ return (
     </div>
     <hr/>
     <p id="total-price">Total: $1,800.00</p>
-    <button id="checkout-button">CHECKOUT</button>
+    <Link to={{pathname: '/checkout'}}><button id="checkout-button">CHECKOUT</button></Link>
     <Footer position="relative" bottom="0" />
     </div>
 )

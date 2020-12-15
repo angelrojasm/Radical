@@ -29,6 +29,7 @@
 	}
 
 	#likes-item-entry {
+		box-sizing: border-box;
 		width: 100%;
 		height: fit-content;
 		display: flex;
@@ -74,14 +75,6 @@
 		text-align: end;
 		font-weight: bold;
 	}
-	#checkout-button {
-		margin-left: 75%;
-		padding: 1%;
-		width: 10%;
-		background-color: lightcoral;
-		line-height: 1.25em;
-		border: 1px solid black;
-	}
 
 	@media only screen and (max-width: 450px) {
 		html {
@@ -99,6 +92,7 @@
 		}
 
 		#likes-item-entry {
+			box-sizing: border-box;
 			width: 90vw;
 			height: 40vh;
 			display: flex;

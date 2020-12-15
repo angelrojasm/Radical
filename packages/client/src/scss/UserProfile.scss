@@ -30,6 +30,7 @@ $blackBorder: 1px solid black;
 				align-items: center;
 
 				#user-logo {
+					box-sizing: border-box;
 					height: 5vw;
 					width: 5vw;
 					border-radius: 100%;

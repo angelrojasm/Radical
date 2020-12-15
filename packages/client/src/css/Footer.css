@@ -21,6 +21,7 @@
     #footer .rightside * {
       margin-right: 3%; }
   #footer .instagram {
+    box-sizing: border-box;
     height: 28px;
     border-radius: 7px;
     padding: 2px;

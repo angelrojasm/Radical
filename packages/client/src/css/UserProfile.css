@@ -21,6 +21,7 @@
         #user-profile #main-panels #options-panel #user-meta > * {
           margin: 0%; }
         #user-profile #main-panels #options-panel #user-meta #user-logo {
+          box-sizing: border-box;
           height: 5vw;
           width: 5vw;
           border-radius: 100%;

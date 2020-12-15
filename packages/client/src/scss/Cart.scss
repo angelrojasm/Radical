@@ -37,6 +37,7 @@ html {
 	}
 
 	#cart-table {
+		box-sizing: border-box;
 		width: fit-content;
 		height: 60vh;
 		margin: 0 auto;
@@ -83,9 +84,10 @@ html {
 		font-weight: bold;
 	}
 	#checkout-button {
-		margin-left: 75%;
+		box-sizing: border-box;
+		margin-left: 70%;
 		padding: 1%;
-		width: 10%;
+		width: fit-content;
 		background-color: lightcoral;
 		line-height: 1.25em;
 		border: 1px solid black;
@@ -112,6 +114,7 @@ html {
 		}
 
 		#cart-item-entry {
+			box-sizing: border-box;
 			width: 90vw;
 			height: 40vh;
 			display: flex;

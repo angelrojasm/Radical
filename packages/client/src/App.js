@@ -7,6 +7,7 @@ import Auth from './pages/Auth';
 import Cart from './pages/Cart';
 import UserProfile from './pages/UserProfile'
 import Likes from './pages/Likes'
+import Checkout from './pages/Checkout'
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 					<Route path ="/cart" exact component={Cart} />
 					<Route path="/myprofile" exact component={UserProfile} />
 					<Route path="/likes" exact component={Likes} />
+					<Route path="/checkout" exact component={Checkout} />
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>
