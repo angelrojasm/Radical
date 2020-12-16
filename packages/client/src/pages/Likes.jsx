@@ -65,15 +65,15 @@ function fillItemList(){
 const Likes = (props) => {
 return (
     <div id='likes'>
-    <TopNav isBordered={true} />
-    <div id="likes-meta">
-        <h3>Liked Items</h3>
-        <p>3 Items in View</p>
-    </div>
-    <div id="likes-items">
-        {fillItemList()}
-    </div>
-    <Footer id="footer" position="relative" bottom="0" />
+        <TopNav isBordered={true} />
+        <div id="likes-meta">
+            <h3>Liked Items</h3>
+            <p>3 Items in View</p>
+        </div>
+        <div id="likes-items">
+            {fillItemList()}
+        </div>
+        <Footer id="footer" position="relative" bottom="0" />
     </div>
 )
 }
