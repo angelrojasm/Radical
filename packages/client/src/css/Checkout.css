@@ -57,55 +57,13 @@
       #checkout #main-container #checkout-info #order-button {
         box-sizing: border-box;
         margin-bottom: 3%;
+        border-radius: 3px;
         width: 100%;
         background-color: #22dd77;
         border: darkgreen;
         color: white;
-        height: 2em; }
-    #checkout #main-container #order-info {
-      margin-top: 5.5%;
-      box-sizing: border-box;
-      width: 40%;
-      height: fit-content;
-      border: 1px solid lightgray;
-      border-radius: 1px;
-      background-color: white; }
-      #checkout #main-container #order-info hr {
-        width: 90%; }
-      #checkout #main-container #order-info .section-title {
-        font-weight: bold;
-        margin: 5% 0 5% 5%; }
-      #checkout #main-container #order-info .item-div {
-        margin-left: 5%;
-        width: 90%;
-        display: flex;
-        justify-content: space-between; }
-        #checkout #main-container #order-info .item-div p {
-          font-weight: bold;
-          font-size: 0.8em; }
-        #checkout #main-container #order-info .item-div .item-meta {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start; }
-          #checkout #main-container #order-info .item-div .item-meta .item-title {
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 2%; }
-          #checkout #main-container #order-info .item-div .item-meta .item-desc {
-            font-size: 0.75em;
-            color: gray;
-            margin-bottom: 2%; }
-      #checkout #main-container #order-info #total-price-div *:not(hr) {
-        text-align: end;
-        margin-right: 5%; }
-      #checkout #main-container #order-info #total-price-div hr {
-        width: 100%; }
-      #checkout #main-container #order-info #total-price-div #order-total {
-        font-size: 0.85em;
-        margin-bottom: 1.5%; }
-      #checkout #main-container #order-info #total-price-div #shipping-cost {
-        font-size: 0.75em;
-        margin-bottom: 1.5%; }
+        height: 2em;
+        font-size: 1.15em; }
   @media only screen and (max-width: 580px) {
     #checkout #main-container {
       width: 100%;

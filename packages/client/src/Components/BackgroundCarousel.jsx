@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import '../css/BackgroundCarousel.css';
-export const BackgroundCarousel = props => {
+const BackgroundCarousel = props => {
 	return (
 		<div id='carouselExample' className='carousel slide' data-ride='carousel'>
 			<ol className='carousel-indicators'>
@@ -23,3 +23,5 @@ export const BackgroundCarousel = props => {
 		</div>
 	);
 };
+
+export default BackgroundCarousel;

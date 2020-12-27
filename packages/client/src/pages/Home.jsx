@@ -1,7 +1,6 @@
 import React from 'react';
-import { BackgroundCarousel } from '../Components/BackgroundCarousel';
-import TopNav from '../Components/TopNav';
-import Footer from '../Components/Footer';
+import {Footer, TopNav, BackgroundCarousel} from '../Components/index'
+
 import useWindowDimensions from '../Components/Dimensions';
 
 const Home = () => {

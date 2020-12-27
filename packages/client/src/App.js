@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Home from './pages/Home';
-import Category from './pages/Category';
-import ItemProfile from './pages/ItemProfile';
-import Auth from './pages/Auth';
-import Cart from './pages/Cart';
-import UserProfile from './pages/UserProfile'
-import Likes from './pages/Likes'
-import Checkout from './pages/Checkout'
+import {Home, Category, ItemProfile, Auth, Cart, UserProfile,Likes,Checkout} from './pages/index'
+
 
 function App() {
 	return (

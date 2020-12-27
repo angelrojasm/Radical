@@ -1,0 +1,63 @@
+#order-info {
+  margin-top: 5.5%;
+  box-sizing: border-box;
+  width: 40%;
+  height: 60vh;
+  overflow-y: scroll;
+  border: 1px solid lightgray;
+  border-radius: 1px;
+  background-color: white; }
+  #order-info hr {
+    width: 90%; }
+  #order-info .section-title {
+    font-weight: bold;
+    margin: 5% 0 5% 5%; }
+  #order-info .item-div {
+    margin-left: 5%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between; }
+    #order-info .item-div p {
+      font-weight: bold;
+      font-size: 0.8em; }
+    #order-info .item-div .item-meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; }
+      #order-info .item-div .item-meta .item-title {
+        font-weight: bold;
+        font-size: 0.9em;
+        margin-bottom: 2%; }
+      #order-info .item-div .item-meta .item-desc {
+        font-size: 0.75em;
+        color: gray;
+        margin-bottom: 2%; }
+  #order-info #total-price-div *:not(hr) {
+    text-align: end;
+    margin-right: 5%; }
+  #order-info #total-price-div hr {
+    width: 100%; }
+  #order-info #total-price-div #order-total {
+    font-size: 0.85em;
+    margin-bottom: 1.5%; }
+  #order-info #total-price-div #shipping-cost {
+    font-size: 0.75em;
+    margin-bottom: 1.5%; }
+
+@media only screen and (max-width: 580px) {
+  #order-info {
+    width: 40%; }
+    #order-info .item-div p {
+      font-size: 0.6em; }
+    #order-info .item-div .item-meta .item-title {
+      font-size: 0.7em; }
+    #order-info .item-div .item-meta .item-desc {
+      font-size: 0.55em; }
+    #order-info #total-price-div #order-total {
+      font-size: 0.75em;
+      margin-bottom: 1.5%; }
+    #order-info #total-price-div #shipping-cost {
+      font-size: 0.6em;
+      margin-bottom: 1.5%; }
+    #order-info #total-price-div #total-price {
+      font-size: 0.8em; } }

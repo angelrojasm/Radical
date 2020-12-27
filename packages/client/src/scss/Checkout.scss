@@ -20,6 +20,7 @@
 		#checkout-info {
 			width: 40%;
 			height: 90vh;
+
 			.section {
 				* {
 					margin: 0;
@@ -84,75 +85,13 @@
 			#order-button {
 				box-sizing: border-box;
 				margin-bottom: 3%;
+				border-radius: 3px;
 				width: 100%;
 				background-color: #22dd77;
 				border: darkgreen;
 				color: white;
 				height: 2em;
-			}
-		}
-
-		#order-info {
-			margin-top: 5.5%;
-			box-sizing: border-box;
-			width: 40%;
-			height: fit-content;
-			border: 1px solid lightgray;
-			border-radius: 1px;
-			background-color: white;
-
-			hr {
-				width: 90%;
-			}
-			.section-title {
-				font-weight: bold;
-				margin: 5% 0 5% 5%;
-			}
-
-			.item-div {
-				margin-left: 5%;
-				width: 90%;
-				display: flex;
-				justify-content: space-between;
-
-				p {
-					font-weight: bold;
-					font-size: 0.8em;
-				}
-				.item-meta {
-					display: flex;
-					flex-direction: column;
-					justify-content: flex-start;
-
-					.item-title {
-						font-weight: bold;
-						font-size: 0.9em;
-						margin-bottom: 2%;
-					}
-					.item-desc {
-						font-size: 0.75em;
-						color: gray;
-						margin-bottom: 2%;
-					}
-				}
-			}
-			#total-price-div {
-				*:not(hr) {
-					text-align: end;
-					margin-right: 5%;
-				}
-
-				hr {
-					width: 100%;
-				}
-				#order-total {
-					font-size: 0.85em;
-					margin-bottom: 1.5%;
-				}
-				#shipping-cost {
-					font-size: 0.75em;
-					margin-bottom: 1.5%;
-				}
+				font-size: 1.15em;
 			}
 		}
 	}

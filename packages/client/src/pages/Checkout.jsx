@@ -1,19 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import TopNav from '../Components/TopNav'
-import Footer from '../Components/Footer'
+import {TopNav, Footer, OrderRecap, ModalPopup} from '../Components/index'
 import useForm from '../hooks/useForm'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
 import { faInfoCircle, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { Button, Modal, Spinner } from 'react-bootstrap'
+import {useHistory} from 'react-router-dom'
 import '../css/Checkout.css'
 
 const Checkout = (props) => {
+    const history = useHistory();
+    const [loading,setLoading] = useState()
+    const [show,setShow] = useState()
     const [billingInfo,setBillingInfo] = useForm({
         name: '',
         email: '',
-        street: '',
+        street: '',  
         sector: '',
         city: '',
         residency: ''
@@ -23,6 +27,10 @@ const Checkout = (props) => {
     const [shippingCost, setShippingCost] = useState('200.00')
     const [file,setFile] = useState()
 
+    function handleApprove() {
+        alert('ute pago')
+        history.push('/')
+    }
     useEffect(() => {
         shippingOption === 'delivery'? setShippingCost('200.00'): setShippingCost('0.00')
     },[shippingOption])
@@ -97,7 +105,7 @@ const Checkout = (props) => {
                                 value="delivery" name="shipping-option" id="delivery" onChange={(e) => {
                                 setShippingOption(e.target.value)
                                 }}/>
-                                <label htmlFor="paypal">Delivery - Local (RD$200.00)</label>
+                                <label htmlFor="paypal">Delivery(RD$200.00)</label>
                             </div>
                             <div className="radio-option">    
                                 <input type="radio" value="pickup"
@@ -107,43 +115,43 @@ const Checkout = (props) => {
                                 <label htmlFor="transfer">Pick Up (RD$0.00)</label>
                             </div>
                     </div>
-                    <Popup trigger={<button id="order-button">Place Order</button>} modal position="right center">
-                            <div>Payment has Completed! We will be contacting you soon</div>
-                        </Popup>
+                    {paymentOption === 'transfer' && (
+                        <div id="transfer-modal">
+                        <Button style={{
+                            backgroundColor: '#22dd77',
+                            width: '100%',
+                            border: 'none',
+                            fontSize: '1.15em'
+                            }} onClick={(e) => {setShow(true); setLoading(true)}}>
+                        Place Order
+                        </Button>
+                        <Modal
+                            show={show}
+                            onHide={(e) => {
+                                setShow(false)
+                            }}
+                            backdrop="static"
+                            keyboard={false}
+                            
+                        >
+                            <Modal.Header closeButton>
+                                <strong>Payment Section</strong>
+                            </Modal.Header>
+                            <Modal.Body>
+                                {loading && (
+                                <>    
+                                    <Spinner style={{marginLeft: '45%'}} animation="border" variant="primary" />
+                                    <p style={{textAlign: 'center'}}>Placing Order...</p> 
+                                </>
+                                )}
+                            </Modal.Body>
+                        </Modal>
+                    </div>
+                    )}
+                    
+                    {paymentOption === 'paypal' && <ModalPopup shippingCost={shippingCost} onApprove={handleApprove} />}
                 </div>
-                <div id="order-info">
-                    <p className="section-title">Order Summary</p>
-                    <div className="item-div">
-                        <div className="item-meta">
-                            <p className="item-title">1 x Long Sleeved White tee</p>
-                            <p className="item-desc">Radical Long sleeved white tee</p>
-                        </div>
-                        <p>RD$100.00</p>
-                    </div>
-                    <hr/>
-                    <div className="item-div">
-                        <div className="item-meta">
-                            <p className="item-title">1 x Long Sleeved White tee</p>
-                            <p className="item-desc">Radical Long sleeved white tee</p>
-                        </div>
-                        <p>RD$100.00</p>
-                    </div>
-                    <hr/>
-                    <div className="item-div">
-                        <div className="item-meta">
-                            <p className="item-title">1 x Long Sleeved White tee</p>
-                            <p className="item-desc">Radical Long sleeved white tee</p>
-                        </div>
-                        <p>RD$100.00</p>
-                    </div>
-                    <hr style={{width: "100%"}}/>
-                    <div id="total-price-div">
-                        <p id="order-total">Sub Total: <strong>RD$300.00</strong></p>
-                        <p id="shipping-cost">Shipping: <strong>RD${shippingCost}</strong></p>
-                        <hr/>
-                            <p id="total-price">Total: <strong>RD${shippingCost === '200.00'?'500.00': '300.00'}</strong></p>
-                    </div>
-                </div>
+                <OrderRecap shippingCost={shippingCost}/>
             </div>
             <Footer />
         </div>
