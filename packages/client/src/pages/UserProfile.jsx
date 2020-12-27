@@ -5,6 +5,7 @@ import InfoPanel from '../Components/InfoPanel'
 import ShippingInfoPanel from '../Components/ShippingInfoPanel'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLock, faShippingFast} from '@fortawesome/free-solid-svg-icons'
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 import '../css/UserProfile.css'
 
 const UserProfile = props => {
@@ -30,7 +31,7 @@ const UserProfile = props => {
 						<div id="info-security" onClick={(e) => {
 							e.preventDefault();
 							togglePanels();
-						}} className={showPersonalInfo && "selected-option"}>
+						}} className={showPersonalInfo?"selected-option": undefined}>
 							<FontAwesomeIcon className="icon" icon={faLock} />
 							<p>Personal Information</p>
 						</div>
@@ -51,4 +52,9 @@ const UserProfile = props => {
 		</div>
 	);
 };
-export default UserProfile;
+
+
+export default withAuthenticationRequired(UserProfile, {
+	// Show a message while the user waits to be redirected to the login page.
+	onRedirecting: () => (<div>Redirecting...</div>)
+  });

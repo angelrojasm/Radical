@@ -12,7 +12,6 @@ function App() {
 					<Route path='/categories/:name' exact component={Category} />
 					<Route path='/categories/:name/:item' exact component={ItemProfile} />
 					<Route path='/categories/:name?orderby=:value' exact component={Category} />
-					<Route path='/login' exact component={Auth} />
 					<Route path ="/cart" exact component={Cart} />
 					<Route path="/myprofile" exact component={UserProfile} />
 					<Route path="/likes" exact component={Likes} />
