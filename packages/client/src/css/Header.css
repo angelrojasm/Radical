@@ -21,6 +21,14 @@
     border: none;
     outline: none;
     background-color: transparent; }
+  #header .my-dropdown-item {
+    width: 90%;
+    margin: 0% 12.5%;
+    border: none;
+    background-color: transparent;
+    text-decoration: none; }
+    #header .my-dropdown-item:hover {
+      background-color: #f4f4f4; }
   #header .leftside,
   #header .rightside {
     display: flex;

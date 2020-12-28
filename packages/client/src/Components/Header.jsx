@@ -62,9 +62,9 @@ const Header = props => {
 						<FontAwesomeIcon className='icon' icon={faUser} />
 					</button>
 					<div className='dropdown-menu'>
-						{loggedIn? <p style={{textAlign: 'center'}}onClick={() => logout({ returnTo: window.location.origin })}>Logout</p>:
-						<p style={{marginLeft: '5%'}} onClick={() => loginWithPopup
-							()}>Login / Register</p>
+						{loggedIn? <button className="my-dropdown-item" onClick={() => logout({ returnTo: window.location.origin })}>Logout</button>:
+						<button className="my-dropdown-item" onClick={() => loginWithPopup
+							()}>Log in</button>
 						 }
 						<Link
 							className='dropdown-item'
