@@ -22,5 +22,11 @@ exports.getUser = async(req,res) => {
 }
 
 exports.updateField = async(req,res) => {
-    res.send(await User.updateOne({[req.body.field]: req.body.value}))
+    try {
+        await User.updateOne({[req.body.field]: req.body.value})
+        res.status(200).send('ok')
+    }
+    catch(e) {
+        res.send(e)
+    }
 }
