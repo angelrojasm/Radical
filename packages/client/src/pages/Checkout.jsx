@@ -8,13 +8,16 @@ import { faPaypal } from '@fortawesome/free-brands-svg-icons';
 import { faInfoCircle, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import { Button, Modal, Spinner } from 'react-bootstrap'
 import {useHistory} from 'react-router-dom'
+import {useAuth0} from '@auth0/auth0-react'
+import api from '../api/api'
 import '../css/Checkout.css'
 
 const Checkout = (props) => {
+    const {user, isAuthenticated} = useAuth0();
     const history = useHistory();
     const [loading,setLoading] = useState()
     const [show,setShow] = useState()
-    const [billingInfo,setBillingInfo] = useForm({
+    const [billingInfo,setBillingInfo] = useState({
         name: '',
         email: '',
         street: '',  
@@ -32,9 +35,23 @@ const Checkout = (props) => {
         history.push('/')
     }
     
-    useEffect(() => {
-        
-    })
+    useEffect(() =>{
+		async function getdata() {
+            if(isAuthenticated) {
+                let userId = user.sub.split("|")[1]
+                let obj = await api.user().get(userId)
+                setBillingInfo({
+                    name: `${obj.content.firstName} ${obj.content.lastName}`,
+                    email: obj.content.email,
+                    street: obj.content.street,
+                    sector: obj.content.sector,
+                    city: obj.content.city,
+                    residency: obj.content.residency
+                })
+            }
+		}
+		getdata()
+	},[])
     
     useEffect(() => {
         shippingOption === 'delivery'? setShippingCost('200.00'): setShippingCost('0.00')
@@ -50,30 +67,48 @@ const Checkout = (props) => {
                         <p className="section-title">Billing Information</p>
                         <div className="attribute">
                             <p className="attribute-title">Name</p>
-                            <input type="text" className="input" value ={billingInfo.name} name="name" onChange={(e) => {setBillingInfo(e)}}/>
+                            <input type="text" className="input" value ={billingInfo.name} name="name" onChange={(e) => {setBillingInfo({
+                                ...billingInfo,
+                                [e.target.name]: e.target.value
+                            })}}/>
                         </div>
 
                         <div className="attribute">
                             <p className="attribute-title">Email</p>
-                            <input type="email" className="input" value ={billingInfo.email} name="email" onChange={(e) => {setBillingInfo(e)}}/>
+                            <input type="email" className="input" value ={billingInfo.email} name="email" onChange={(e) => {setBillingInfo({
+                                ...billingInfo,
+                                [e.target.name]: e.target.value
+                            })}}/>
                         </div>
                         <div className="attribute">
                             <p className="attribute-title">Address</p>
-                            <input type="text" className="input" value ={billingInfo.street} name="street" onChange={(e) => {setBillingInfo(e)}}/>
+                            <input type="text" className="input" value ={billingInfo.street} name="street" onChange={(e) => {setBillingInfo({
+                                ...billingInfo,
+                                [e.target.name]: e.target.value
+                            })}}/>
                         </div>
                         <div id="city-info">
                             <div className="attribute">
                                 <p className="attribute-title">City</p>
-                                <input type="text" className="input" value ={billingInfo.city} name="city" onChange={(e) => {setBillingInfo(e)}}/>
+                                <input type="text" className="input" value ={billingInfo.city} name="city" onChange={(e) => {setBillingInfo({
+                                ...billingInfo,
+                                [e.target.name]: e.target.value
+                            })}}/>
                             </div>
                             <div className="attribute">
                                 <p className="attribute-title">Sector</p>
-                                <input type="text" className="input" value ={billingInfo.sector} name="sector" onChange={(e) => {setBillingInfo(e)}}/>                
+                                <input type="text" className="input" value ={billingInfo.sector} name="sector" onChange={(e) => {setBillingInfo({
+                                ...billingInfo,
+                                [e.target.name]: e.target.value
+                            })}}/>
                             </div>
                         </div>
                         <div className="attribute">
                             <p className="attribute-title">Residency</p>
-                            <input type="text" className="input" value ={billingInfo.residency} name="residency" onChange={(e) => {setBillingInfo(e)}}/>
+                            <input type="text" className="input" value ={billingInfo.residency} name="residency" onChange={(e) => {setBillingInfo({
+                                ...billingInfo,
+                                [e.target.name]: e.target.value
+                            })}}/>
                         </div>
                     </div>
                     <div className="section">
