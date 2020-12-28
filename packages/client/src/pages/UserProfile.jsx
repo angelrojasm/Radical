@@ -6,25 +6,47 @@ import ShippingInfoPanel from '../Components/ShippingInfoPanel'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faLock, faShippingFast} from '@fortawesome/free-solid-svg-icons'
 import { withAuthenticationRequired } from '@auth0/auth0-react';
+import {useAuth0} from '@auth0/auth0-react'
+import api from '../api/api'
 import '../css/UserProfile.css'
 
 const UserProfile = props => {
-	const [showPersonalInfo, setShowPersonalInfo] = useState(false)
+	const {user} = useAuth0()
+	const [key,setKey] = useState(0)
+	const [loggedUser, setLoggedUser] = useState({
+		"firstName": "",
+        "lastName": "",
+        "phone": "",
+        "street": "",
+        "city": "",
+        "sector": "",
+        "residency": "",
+	})
+	const [showPersonalInfo, setShowPersonalInfo] = useState(true)
 
 	function togglePanels() {
 		let x = !showPersonalInfo
 		setShowPersonalInfo(x)
 	}
 
+	useEffect(() =>{
+		async function getdata() {
+			let userId = user.sub.split("|")[1]
+			let obj = await api.user().get(userId)
+			setLoggedUser(obj.content)
+		}
+		getdata()
+	},[])
+
 	return (
-		<div id='user-profile'>
+		<div key={key}id='user-profile'>
 			<TopNav isBordered={true} />
 			<div id="main-panels">
 				<div id="options-panel">
 					<div id="user-meta">
-						<p id="user-logo">J</p>
-						<p id="meta-title">Jose's Account</p>
-						<p id="meta-sub">Thanks for choosing Radical, Jose!</p>
+						<p id="user-logo">{loggedUser.firstName.length > 0? loggedUser.firstName[0].toUpperCase(): ''}</p>
+						<p id="meta-title">{loggedUser.firstName}'s Account</p>
+						<p id="meta-sub">Thanks for choosing Radical, {loggedUser.firstName}</p>
 					</div>
 					<hr style={{width: '80%'}}/>
 					<div id="option-categories">
@@ -45,7 +67,7 @@ const UserProfile = props => {
 					</div>
 				</div>
 				<div id="info-panel">
-	{showPersonalInfo? <InfoPanel />: <ShippingInfoPanel /> }
+	{showPersonalInfo? <InfoPanel user={loggedUser} />: <ShippingInfoPanel user={loggedUser} /> }
 				</div>		
 			</div>
 			<Footer position="relative" bottom="1vh" />

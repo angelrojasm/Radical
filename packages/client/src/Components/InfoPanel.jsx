@@ -3,12 +3,19 @@ import '../css/InfoPanel.css'
 import EditInput from '../Components/EditInput'
 
 
-const InfoPanel = (props) => {
-    const [firstName,setFirstName] = useState('Jose')
-    const [lastName,setLastName] = useState('Perez')
-    const [email,setEmail] = useState('Jose@gmail.com')
-    const [phone,setPhone] = useState('(809) 123-4567')
+const InfoPanel = ({user}) => {
+    const [firstName,setFirstName] = useState()
+    const [lastName,setLastName] = useState()
+    const [email,setEmail] = useState()
+    const [phone,setPhone] = useState()
 
+
+    useEffect(() => {
+        setFirstName(user.firstName)
+        setLastName(user.lastName)
+        setEmail(user.email)
+        setPhone(user.phone)
+    },[user])
 
     function changeFirstName(value) {
         setFirstName(value)
@@ -16,9 +23,6 @@ const InfoPanel = (props) => {
 
     function changeLastName(value) {
         setLastName(value)
-    }
-    function changeEmail(value) {
-        setEmail(value)
     }
 
     function changePhone(value) {
@@ -33,22 +37,22 @@ return (
         <p className="section-title">Session Info</p>
         <div className="attribute">
             <p className="attribute-title">Email</p>
-            <EditInput id="edit-input" value={email} changeValue={changeEmail}/>
+            <p className="edit-input">{email}</p>
         </div>
     </div>
     <div id="personal-info-section" className="section">
         <p className="section-title">Personal Info</p>
         <div className="attribute">
             <p className="attribute-title">First Name</p>
-            <EditInput id="edit-input" value={firstName} changeValue={changeFirstName}/>
+            <EditInput className="edit-input" field="firstName" value={firstName} changeValue={changeFirstName}/>
         </div>
         <div className="attribute">
             <p className="attribute-title">Last Name</p>
-            <EditInput id="edit-input" value={lastName} changeValue={changeLastName}/>
+            <EditInput className="edit-input" field="lastName" value={lastName} changeValue={changeLastName}/>
         </div>
         <div className="attribute">
             <p className="attribute-title">Phone</p>
-                <EditInput id="edit-input" value={phone} changeValue={changePhone}/>
+                <EditInput className="edit-input" field="phone" value={phone} changeValue={changePhone}/>
         </div>
     </div>
 </div>

@@ -34,7 +34,7 @@
           text-align: center; }
         #user-profile #main-panels #options-panel #user-meta #meta-title {
           font-weight: bold;
-          font-size: 2vw; }
+          font-size: 1.5vw; }
       #user-profile #main-panels #options-panel #option-categories > * {
         height: 9vh;
         display: flex;

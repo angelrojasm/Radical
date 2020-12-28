@@ -31,9 +31,16 @@ const Checkout = (props) => {
         alert('ute pago')
         history.push('/')
     }
+    
+    useEffect(() => {
+        
+    })
+    
     useEffect(() => {
         shippingOption === 'delivery'? setShippingCost('200.00'): setShippingCost('0.00')
     },[shippingOption])
+
+    
     return (
         <div id='checkout' >
             <TopNav isBordered={true} />

@@ -3,7 +3,11 @@ require('../mongoose-connection');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-	userId: String, // String is shorthand for {type: String}
+	userId: String,
+	email: String,
+	firstName: String,
+	lastName: String,
+	phone: String,
 	street: String,
 	city: String,
 	sector: String,

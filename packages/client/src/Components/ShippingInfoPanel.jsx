@@ -3,12 +3,18 @@ import '../css/ShippingInfoPanel.css'
 import EditInput from '../Components/EditInput'
 
 
-const ShippingInfoPanel = (props) => {
-    const [street,setStreet] = useState('Calle Tiradentes #1')
-    const [residency,setResidency] = useState('Apt XYZ-2B')
-    const [city,setCity] = useState('Santo Domingo, DN')
-    const [sector,setSector] = useState('Paraiso')
+const ShippingInfoPanel = ({user}) => {
+    const [street,setStreet] = useState()
+    const [residency,setResidency] = useState()
+    const [city,setCity] = useState()
+    const [sector,setSector] = useState()
 
+    useEffect(() => {
+        setStreet(user.street)
+        setResidency(user.residency)
+        setCity(user.city)
+        setSector(user.sector)
+    },[user])
 
     function changeStreet(value) {
         setStreet(value)
@@ -34,19 +40,19 @@ return (
     <div id="sign-in-section" className="section">
         <div className="attribute">
             <p className="attribute-title">Street</p>
-            <EditInput id="edit-input" value={street} changeValue={changeStreet}/>
+            <EditInput id="edit-input" field="street" value={street} changeValue={changeStreet}/>
         </div>
         <div className="attribute">
             <p className="attribute-title">Residency</p>
-            <EditInput id="edit-input" value={residency} changeValue={changeResidency}/>
+            <EditInput id="edit-input" field="residency" value={residency} changeValue={changeResidency}/>
         </div>
         <div className="attribute">
             <p className="attribute-title">City</p>
-                <EditInput id="edit-input" value={city} changeValue={changeCity}/>
+                <EditInput id="edit-input" field="city" value={city} changeValue={changeCity}/>
         </div>
         <div className="attribute">
             <p className="attribute-title">Sector</p>
-                <EditInput id="edit-input" value={sector} changeValue={changeSector}/>
+                <EditInput id="edit-input" field="sector" value={sector} changeValue={changeSector}/>
         </div>
     </div>
 </div>
