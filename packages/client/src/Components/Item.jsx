@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import '../css/Item.css';
+import '../scss/Item.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as regHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';

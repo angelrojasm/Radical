@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../css/Footer.css';
+import '../scss/Footer.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
@@ -19,7 +19,10 @@ const Footer = props => {
 			</div>
 			<div className='rightside' style={{ color: color }}>
 				<span>Find us on</span>
-				<a href='https://www.instagram.com/radical_rd' target='_blank' rel='noopener noreferrer'>
+				<a
+					href='https://www.instagram.com/radical_rd'
+					target='_blank'
+					rel='noopener noreferrer'>
 					<FontAwesomeIcon
 						className='icons instagram'
 						style={{ color: color }}

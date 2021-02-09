@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Topnav from '../Components/TopNav';
 import Breadcrumb from '../Components/Breadcrumb';
 import Footer from '../Components/Footer';
-import '../css/ItemProfile.css';
+import '../scss/ItemProfile.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faHeart as Heart } from '@fortawesome/free-regular-svg-icons';
 

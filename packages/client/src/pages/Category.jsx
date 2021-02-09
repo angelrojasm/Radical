@@ -4,7 +4,7 @@ import Breadcrumb from '../Components/Breadcrumb';
 import TopNav from '../Components/TopNav';
 import ItemList from '../Components/ItemList';
 import Footer from '../Components/Footer';
-import '../css/Category.css';
+import '../scss/Category.scss';
 import Pagination from '../Components/Pagination';
 import { useHistory } from 'react-router-dom';
 
@@ -86,7 +86,9 @@ const Category = props => {
 								id='sort-dropdown'
 								className='dropdown-button btn-sm dropdown-toggle'
 								data-toggle='dropdown'>
-								{props.location.search === '' ? 'Sample Data' : props.location.search.split('=')[1]}{' '}
+								{props.location.search === ''
+									? 'Sample Data'
+									: props.location.search.split('=')[1]}{' '}
 							</button>
 							<div className='dropdown-menu'>
 								<a

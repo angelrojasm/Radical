@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../css/Slider.css';
+import '../scss/Slider.scss';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/react-fontawesome';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

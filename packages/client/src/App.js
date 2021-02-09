@@ -5,6 +5,7 @@ import {useAuth0} from '@auth0/auth0-react'
 import api from './api/api'
 
 function App() {
+
 	const {user, isAuthenticated} = useAuth0()
 
 	useEffect(() => {

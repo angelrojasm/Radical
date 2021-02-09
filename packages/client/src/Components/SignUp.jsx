@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/signup.css';
+import '../scss/signup.scss';
 import { Link, useHistory } from 'react-router-dom';
 
 const SignUp = props => {

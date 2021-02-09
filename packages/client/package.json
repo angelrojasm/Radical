@@ -27,8 +27,7 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"sass": "node-sass --watch ./src/scss -o ./src/css",
-		"dev": "concurrently \"npm start\" \"npm run sass\"",
+		"dev": "npm start",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build"
 	},

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import '../css/login.css';
+import '../scss/login.scss';
 
 const Login = props => {
 	const [email, setEmail] = useState('');

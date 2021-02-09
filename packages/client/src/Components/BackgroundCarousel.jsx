@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import '../css/BackgroundCarousel.css';
+import '../scss/BackgroundCarousel.scss';
 const BackgroundCarousel = props => {
 	return (
 		<div id='carouselExample' className='carousel slide' data-ride='carousel'>

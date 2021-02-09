@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBars, faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
-import '../css/Header.css';
+import { useAuth0 } from '@auth0/auth0-react';
+import '../scss/Header.scss';
 
 const Header = props => {
 	const [logoPosition, setLogoPosition] = useState(0);
-	const { loginWithRedirect,loginWithPopup,isAuthenticated, logout, user } = useAuth0();
-	const [loggedIn, setLoggedIn] = useState(false)
+	const { loginWithRedirect, loginWithPopup, isAuthenticated, logout, user } = useAuth0();
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
-		console.log(isAuthenticated)
-		isAuthenticated? setLoggedIn(true): setLoggedIn(false)
-		if(isAuthenticated) {
-			console.log(user)
+		console.log(isAuthenticated);
+		isAuthenticated ? setLoggedIn(true) : setLoggedIn(false);
+		if (isAuthenticated) {
+			console.log(user);
 		}
-	},[isAuthenticated])
+	}, [isAuthenticated]);
 
 	function handleMouseOver() {
 		props.showSlider();
@@ -62,10 +62,17 @@ const Header = props => {
 						<FontAwesomeIcon className='icon' icon={faUser} />
 					</button>
 					<div className='dropdown-menu'>
-						{loggedIn? <button className="my-dropdown-item" onClick={() => logout({ returnTo: window.location.origin })}>Logout</button>:
-						<button className="my-dropdown-item" onClick={() => loginWithPopup
-							()}>Log in</button>
-						 }
+						{loggedIn ? (
+							<button
+								className='my-dropdown-item'
+								onClick={() => logout({ returnTo: window.location.origin })}>
+								Logout
+							</button>
+						) : (
+							<button className='my-dropdown-item' onClick={() => loginWithPopup()}>
+								Log in
+							</button>
+						)}
 						<Link
 							className='dropdown-item'
 							to={{
