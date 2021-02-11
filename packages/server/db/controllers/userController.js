@@ -1,4 +1,4 @@
-const User = require('../mongoose/models/user')
+const User = require('../models/user')
 
 exports.createUser = async(req,res) => {
     console.log(req.body)

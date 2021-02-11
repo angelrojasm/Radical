@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-require('../mongoose-connection');
+require('../index');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
