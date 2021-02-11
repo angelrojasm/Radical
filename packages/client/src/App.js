@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import {Home, Category, ItemProfile, Auth, Cart, UserProfile,Likes,Checkout} from './pages/index'
 import {useAuth0} from '@auth0/auth0-react'
 import api from './api/api'
-
+import Testing from './Testing'
 function App() {
 
 	const {user, isAuthenticated} = useAuth0()
@@ -45,6 +45,7 @@ function App() {
 				</Switch>
 			</Router>
 		</>
+		//<Testing />
 	);
 }
 
