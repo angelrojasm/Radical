@@ -2,7 +2,6 @@ const Likes = require('../models/likes')
 const LikesItem = require('../models/likesItem')
 
 exports.createLikes = async(req,res) => {
-    console.log(req.body)
     try {
         await Likes.create({
             userId: req.body.userId,

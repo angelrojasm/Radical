@@ -5,6 +5,8 @@ const port = 3001;
 const path = require('path');
 const userRouter = require('./routers/userRouter')
 const itemRouter = require('./routers/itemRouter')
+const cartRouter = require('./routers/cartRouter')
+const likesRouter = require('./routers/likesRouter')
 const fileUpload = require('express-fileupload')
 
 app.use(express.json());
@@ -12,6 +14,8 @@ app.use(cors());
 app.use(fileUpload())
 app.use('/user',userRouter);
 app.use('/item',itemRouter)
+app.use('/cart',cartRouter);
+app.use('/likes', likesRouter);
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('../client/build'));

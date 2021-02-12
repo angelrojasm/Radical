@@ -2,7 +2,7 @@ const Cart = require('../models/cart')
 const CartItem = require('../models/cartItem')
 
 exports.createCart = async(req,res) => {
-    console.log(req.body)
+
     try {
         await Cart.create({
             userId: req.body.userId,
