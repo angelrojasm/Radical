@@ -1,5 +1,6 @@
 const Likes = require('../models/likes')
 const LikesItem = require('../models/likesItem')
+const Item = require('../models/item')
 
 exports.createLikes = async(req,res) => {
     try {
@@ -24,8 +25,11 @@ exports.getLikes = async(req,res) => {
                 res.send({error: true, content: likesItems})
             }
             else {
-
-                res.send({error: false, content: likesItems})
+                let items = []
+                for(const element of likesItems) {
+                    items.push(await Item.findById(element.itemId))
+                };
+                res.send({error: false, content: items})
             }
         }
 }

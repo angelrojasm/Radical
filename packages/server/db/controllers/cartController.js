@@ -1,5 +1,6 @@
 const Cart = require('../models/cart')
 const CartItem = require('../models/cartItem')
+const Item = require('../models/item')
 
 exports.createCart = async(req,res) => {
 
@@ -25,10 +26,13 @@ exports.getCart = async(req,res) => {
                 res.send({error: true, content: cartItems})
             }
             else {
-
-                res.send({error: false, content: cartItems})
-            }
-        }
+                let items = []
+                for(const element of cartItems) {
+                    items.push(await Item.findById(element.itemId))
+                };
+                res.send({error: false, content: items})
+            } 
+        } 
 }
 
 
