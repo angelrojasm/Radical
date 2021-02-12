@@ -1,5 +1,5 @@
-const Cart = require('../models/user')
-const CartItem = require('../models/item')
+const Cart = require('../models/cart')
+const CartItem = require('../models/cartItem')
 
 exports.createCart = async(req,res) => {
     console.log(req.body)
