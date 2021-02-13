@@ -72,21 +72,3 @@ exports.removeItemFromLikes = async(req,res) => {
             }
         }
 }
-
-exports.clearLikes = async(req,res) => {
-    let likes = await Likes.findOne({userId: req.body.userId}) 
-    if(likes === null) {
-        res.send({error: true, content: likes})
-    }
-        else {
-            try {
-                await LikesItem.deleteMany({
-                   likesId: likes._id
-                })
-                res.send({eror: false})
-            }
-            catch(e) {
-                res.send({error: true, details: e})
-            }
-        }
-}

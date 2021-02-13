@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 
 var orderSchema = new Schema({
     userId: String,
-    total: Number
+    total: Number,
+    date: Date
 	
 	
 });

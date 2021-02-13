@@ -7,6 +7,7 @@ const userRouter = require('./routers/userRouter')
 const itemRouter = require('./routers/itemRouter')
 const cartRouter = require('./routers/cartRouter')
 const likesRouter = require('./routers/likesRouter')
+const orderRouter = require('./routers/orderRouter')
 const fileUpload = require('express-fileupload')
 
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use('/user',userRouter);
 app.use('/item',itemRouter)
 app.use('/cart',cartRouter);
 app.use('/likes', likesRouter);
+app.use('/order', orderRouter);
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('../client/build'));

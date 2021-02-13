@@ -59,5 +59,81 @@ export default {
                   return data
             },
         }
+    },
+    cart(route = '/cart') {
+        return {
+            getItems: async(userId) => {
+                let response = await axios.get(`${route}?userId=${userId}`)
+                return response.data
+            },
+            create: async(userId) => {
+                let response = await axios.post(route,{userId: userId})
+                return response.data
+            },
+            addItem: async(userId,itemId) => {
+                let response = await axios.post(`${route}/add`, {
+                    userId: userId,
+                    itemId: itemId
+                })
+                return response.data
+            },
+            removeItem: async(userId,itemId) => {
+                let response = await axios.delete(`${route}/remove`, {
+                    userId: userId,
+                    itemId: itemId
+                })
+                return response.data
+            },
+            clear: async(userId) => {
+                let response = await axios.delete(`${route}/clear`, {
+                    userId: userId
+                })
+                return response.data
+            }
+        }
+    },
+    likes(route = '/likes') {
+        return {
+            getItems: async(userId) => {
+                let response = await axios.get(`${route}?userId=${userId}`)
+                return response.data
+            },
+            create: async(userId) => {
+                let response = await axios.post(route,{userId: userId})
+                return response.data
+            },
+            addItem: async(userId,itemId) => {
+                let response = await axios.post(`${route}/add`, {
+                    userId: userId,
+                    itemId: itemId
+                })
+                return response.data
+            },
+            removeItem: async(userId,itemId) => {
+                let response = await axios.delete(`${route}/remove`, {
+                    userId: userId,
+                    itemId: itemId
+                })
+                return response.data
+            }
+        }
+    },
+    order(route = '/order') {
+        return {
+            getHistory: async() => {
+                let response = await axios.get(`${route}/history`)
+                return response.data
+            },
+            getItems: async(userId) => {
+                return this.cart.getItems(userId)
+            },
+            create: async(userId, total) => {
+                let response = await axios.post(route,{
+                    userId: userId,
+                    total: total
+                })
+                return response.data
+            },
+        }
     }
 }

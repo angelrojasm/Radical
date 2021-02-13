@@ -1,11 +1,8 @@
 const Item = require('../models/item')
 require('express-fileupload')
-const s3 = require('../../aws/controller/s3')
 
 exports.createItem = async(req,res) => {
     try {
-        
-        //let data = await s3.getFile('5avenue.jpg');
         
         let temp = new Buffer.from(req.files.image.data).toString('base64');
         let imgString = "data:image/png;base64," + temp
