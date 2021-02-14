@@ -23,6 +23,8 @@ function App() {
 						lastName = user.family_name
 					}
 					api.user().create(userId,user.email,firstName,lastName)
+					api.cart().create(userId)
+					api.likes().create(userId)
 					
 				}
 			}
@@ -30,7 +32,7 @@ function App() {
 		getdata();
 	},[user])
 	return (
-		/*<>
+		<>
 			<Router>
 				<Switch>
 					<Route path='/' exact component={Home} />
@@ -44,8 +46,7 @@ function App() {
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>
-		</>*/
-		<Testing />
+		</>
 	);
 }
 
