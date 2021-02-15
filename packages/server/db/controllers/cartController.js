@@ -1,99 +1,75 @@
-const Cart = require('../models/cart')
-const CartItem = require('../models/cartItem')
-const Item = require('../models/item')
-const s3 = require('../../aws/controller/s3')
+const Cart = require('../models/cart');
+const CartItem = require('../models/cartItem');
 
-exports.createCart = async(req,res) => {
+exports.createCart = async (req, res) => {
+	try {
+		await Cart.create({
+			userId: req.body.userId,
+		});
+		res.send({ eror: false });
+	} catch (e) {
+		res.send({ error: true, details: e });
+	}
+};
 
-    try {
-        await Cart.create({
-            userId: req.body.userId,
-        })
-        res.send({eror: false})
-    }
-    catch(e) {
-        res.send({error: true, details: e})
-    }
-}
+exports.getCart = async (req, res) => {
+	try {
+		let cart = await Cart.findOne({ userId: req.query.userId });
+		let cartItems = await CartItem.find({ cartId: cart._id }).populate('itemId');
+		res.send({ error: false, content: cartItems });
+	} catch (error) {
+		res.send({ error: true, details: e });
+	}
+};
 
-exports.getCart = async(req,res) => {
-    let cart = await Cart.findOne({userId: req.query.userId}) 
-    if(cart === null) {
-        res.send({error: true, content: cart})
-    }
-        else {
-            let cartItems = await CartItem.find({cartId: cart._id})
-            if(cartItems === null) {
-                res.send({error: true, content: cartItems})
-            }
-            else {
-                let items = []
-                for(const element of cartItems) {
-                    let itemEntry = await Item.findById(element.itemId) 
-                    let imgData = await s3.getFile(itemEntry.fileName)
-                    items.push({
-                        imgData: imgData,
-                        imgMeta: itemEntry
-                    })
-                };
-                res.send({error: false, content: items})
-            } 
-        } 
-}
+exports.addItemToCart = async (req, res) => {
+	let cart = await Cart.findOne({ userId: req.body.userId });
+	if (cart === null) {
+		res.send({ error: true, content: cart });
+	} else {
+		try {
+			await CartItem.create({
+				itemId: req.body.itemId,
+				cartId: cart._id,
+				quantity: req.body.quantity,
+				size: req.body.size,
+			});
+			res.send({ eror: false });
+		} catch (e) {
+			res.send({ error: true, details: e });
+		}
+	}
+};
 
+exports.removeItemFromCart = async (req, res) => {
+	let cart = await Cart.findOne({ userId: req.body.userId });
+	if (cart === null) {
+		res.send({ error: true, content: cart });
+	} else {
+		try {
+			await CartItem.deleteOne({
+				itemId: req.body.itemId,
+				cartId: cart._id,
+			});
+			res.send({ eror: false });
+		} catch (e) {
+			res.send({ error: true, details: e });
+		}
+	}
+};
 
-exports.addItemToCart = async(req,res) => {
-    let cart = await Cart.findOne({userId: req.body.userId}) 
-    if(cart === null) {
-        res.send({error: true, content: cart})
-    }
-        else {
-            try {
-                await CartItem.create({
-                   itemId: req.body.itemId,
-                   cartId: cart._id
-                })
-                res.send({eror: false})
-            }
-            catch(e) {
-                res.send({error: true, details: e})
-            }
-        }
-}
-
-exports.removeItemFromCart = async(req,res) => {
-    let cart = await Cart.findOne({userId: req.body.userId}) 
-    if(cart === null) {
-        res.send({error: true, content: cart})
-    }
-        else {
-            try {
-                await CartItem.deleteOne({
-                   itemId: req.body.itemId,
-                   cartId: cart._id
-                })
-                res.send({eror: false})
-            }
-            catch(e) {
-                res.send({error: true, details: e})
-            }
-        }
-}
-
-exports.clearCart = async(req,res) => {
-    let cart = await Cart.findOne({userId: req.body.userId}) 
-    if(cart === null) {
-        res.send({error: true, content: cart})
-    }
-        else {
-            try {
-                await CartItem.deleteMany({
-                   cartId: cart._id
-                })
-                res.send({eror: false})
-            }
-            catch(e) {
-                res.send({error: true, details: e})
-            }
-        }
-}
+exports.clearCart = async (req, res) => {
+	let cart = await Cart.findOne({ userId: req.body.userId });
+	if (cart === null) {
+		res.send({ error: true, content: cart });
+	} else {
+		try {
+			await CartItem.deleteMany({
+				cartId: cart._id,
+			});
+			res.send({ eror: false });
+		} catch (e) {
+			res.send({ error: true, details: e });
+		}
+	}
+};

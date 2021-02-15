@@ -3,8 +3,8 @@ require('../index');
 var Schema = mongoose.Schema;
 
 var likesItemSchema = new Schema({
-    likesId: String,
-    itemId: String
+	likesId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'item' }],
+	itemId: String,
 });
 
 var likesItem = mongoose.model('likesItem', likesItemSchema);

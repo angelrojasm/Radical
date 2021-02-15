@@ -3,11 +3,10 @@ require('../index');
 var Schema = mongoose.Schema;
 
 var cartItemSchema = new Schema({
-    itemId: String,
-    cartId: String,
-    quantity: Number,
-    size: String
-	
+	itemId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'item' }],
+	cartId: String,
+	quantity: Number,
+	size: String,
 });
 
 var cartItem = mongoose.model('cartItem', cartItemSchema);
