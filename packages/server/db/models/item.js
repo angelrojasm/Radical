@@ -3,7 +3,10 @@ require('../index');
 var Schema = mongoose.Schema;
 
 var itemSchema = new Schema({
-	image: String,
+	fileName: String,
+	category: String,
+	price: Number,
+	title: String
 	
 	
 });

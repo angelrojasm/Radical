@@ -32,7 +32,7 @@ function App() {
 		getdata();
 	},[user])
 	return (
-		<>
+		/*<>
 			<Router>
 				<Switch>
 					<Route path='/' exact component={Home} />
@@ -46,7 +46,8 @@ function App() {
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>
-		</>
+		</>*/
+		<Testing/>
 	);
 }
 

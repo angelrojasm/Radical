@@ -1,12 +1,10 @@
 const Item = require('../models/item')
 require('express-fileupload')
+const s3 = require('../../aws/controller/s3')
 
 exports.createItem = async(req,res) => {
     try {
-        
-        let temp = new Buffer.from(req.files.image.data).toString('base64');
-        let imgString = "data:image/png;base64," + temp
-        await Item.create({image: imgString})
+        await Item.create({fileName: req.body.fileName})
         res.send({error: false})
     } catch (e) {
         console.log(e)
@@ -17,7 +15,15 @@ exports.createItem = async(req,res) => {
 exports.getItem = async(req,res) => {
     try {
         let data = await Item.find()
-        res.send({error: false, images: data})
+        let temp = []
+        for(const item of data) {
+            let imgData = await s3.getFile(item.fileName)
+            temp.push({
+                imgData: imgData,
+                imgMeta: item
+            })
+        }
+        res.send({error: false, items: temp})
     } catch (e) {
         res.send({error: true, details: e})
     }

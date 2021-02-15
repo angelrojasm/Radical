@@ -1,6 +1,7 @@
 const Cart = require('../models/cart')
 const CartItem = require('../models/cartItem')
 const Item = require('../models/item')
+const s3 = require('../../aws/controller/s3')
 
 exports.createCart = async(req,res) => {
 
@@ -28,7 +29,12 @@ exports.getCart = async(req,res) => {
             else {
                 let items = []
                 for(const element of cartItems) {
-                    items.push(await Item.findById(element.itemId))
+                    let itemEntry = await Item.findById(element.itemId) 
+                    let imgData = await s3.getFile(itemEntry.fileName)
+                    items.push({
+                        imgData: imgData,
+                        imgMeta: itemEntry
+                    })
                 };
                 res.send({error: false, content: items})
             } 

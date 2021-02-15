@@ -1,4 +1,10 @@
 import axios from 'axios'
+
+function getSrcReadyString(bufferData,fileName) {
+    let base64string =
+    `data:image/${fileName.split('.')[1]};base64,${Buffer.from(bufferData).toString('base64')}`
+    return base64string
+}
 export default {
     user(route = '/user') {
         return {
@@ -45,6 +51,10 @@ export default {
             get: async() => {
                 let response = await fetch(`${route}`);
                 let data = await response.json()
+                for(let i = 0; i < data.items.length; i++) {
+                    let item = data.items[i]
+                    data.items[i].imgData.data = getSrcReadyString(item.imgData.data,item.imgMeta.fileName)
+                }
                 return data
             },
             create: async(form) => {

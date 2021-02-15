@@ -20,14 +20,19 @@ exports.getLikes = async(req,res) => {
         res.send({error: true, content: likes})
     }
         else {
-            let likesItems = await LikesItem.find({cartId: likes._id})
+            let likesItems = await LikesItem.find({likesId: likes._id})
             if(likesItems === null) {
                 res.send({error: true, content: likesItems})
             }
             else {
                 let items = []
                 for(const element of likesItems) {
-                    items.push(await Item.findById(element.itemId))
+                    let itemEntry = await Item.findById(element.itemId)
+                    let imgData = await s3.getFile(itemEntry.fileName)
+                    items.push({
+                        imgData: imgData,
+                        imgMeta: itemEntry
+                    })
                 };
                 res.send({error: false, content: items})
             }

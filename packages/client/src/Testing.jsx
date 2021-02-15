@@ -8,7 +8,7 @@ const Testing = props => {
 
 	const uploadImage = async () => {
 		let formData = new FormData();
-		formData.append('image', file);
+		formData.append('fileName', file.name);
 		let data = await api.item().create(formData);
 		//setImg(data);
 		console.log(data);
@@ -16,7 +16,8 @@ const Testing = props => {
 
 	const getImage = async () => {
 		let data = await api.item().get();
-		setImg(data.images[2].image);
+		console.log(data);
+		setImg(data.items[0].imgData.data);
 	};
 	return (
 		<div id='name'>
