@@ -47,7 +47,7 @@ exports.emailOrderInfo = async (req, res) => {
 	let orderInfo = [];
 	for (let i = 0; i < itemsArray.length; i++) {
 		orderInfo.push({
-			imageBuffer: await s3.getFile(itemsArray[i].fileName),
+			imageBuffer: 'http://du9yuz2ex8zdk.cloudfront.net/' + itemsArray[i].fileName,
 			size: cartItems[i].size,
 		});
 	}
@@ -60,24 +60,13 @@ exports.emailOrderInfo = async (req, res) => {
 		},
 	});
 
-	//generate attachments
-	let attachments = [];
-
-	for (let i = 0; i < orderInfo.length; i++) {
-		attachments.push({
-			filename: itemsArray[i].fileName,
-			content: new Buffer.from(orderInfo[i].imageBuffer, 'base64'),
-			cid: `myImage-${i}`,
-		});
-	}
-
 	//generate html
-	let html = '<h1>New Order!</h1>';
+	let html = '<h1>New Order! no downloading btw</h1>';
 
 	for (let i = 0; i < orderInfo.length; i++) {
 		html += `
     <h3>Item #${i + 1}<h3>
-    <img height="400" width="250" src="cid:myImage-${i}"/>
+    <img height="400" width="250" src="${orderInfo[i].imageBuffer}"/>
     <p>replace with item name: ${itemsArray[i].fileName}</p>
     <p>Size: ${cartItems[i].size}</p>
     `;
@@ -87,14 +76,13 @@ exports.emailOrderInfo = async (req, res) => {
 		to: 'angelrojasm6@gmail.com',
 		subject: 'Sending Email using Node.js',
 		html: html,
-		attachments: attachments,
 	};
 
 	transporter.sendMail(mailOptions, function (error, info) {
 		if (error) {
 			res.send(error);
 		} else {
-			res.send(info.response);
+			res.send(info);
 		}
 	});
 };
