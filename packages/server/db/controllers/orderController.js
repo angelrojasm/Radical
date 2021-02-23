@@ -37,6 +37,8 @@ exports.getOrderItems = async (req, res) => {
 };
 
 exports.emailOrderInfo = async (req, res) => {
+	var mailOptions;
+	let userData = await User.findOne({ userId: req.body.userId });
 	let cart = await Cart.findOne({ userId: req.body.userId });
 	let cartItems = await CartItem.find({ cartId: cart._id });
 	let itemsArray = [];
@@ -61,7 +63,19 @@ exports.emailOrderInfo = async (req, res) => {
 	});
 
 	//generate html
-	let html = '<h1>New Order! no downloading btw</h1>';
+	let html = `
+	<h1>
+		New Order!
+	</h1>
+	<h2>Client Details:</h2>
+		<h3>Client: <span>${userData.firstName} ${userData.lastName}</span></h3>
+		<h3>Email: <span>${userData.email}</span></h3>
+		<h3>Phone: <span>${userData.phone}</span></h3>
+		<h3>Address:</h3>
+			<p>${userData.residency}, ${userData.street}, ${userData.sector}. ${userData.city}</p>
+	<h2>Order Details:</h2>
+
+	`;
 
 	for (let i = 0; i < orderInfo.length; i++) {
 		html += `
@@ -71,13 +85,33 @@ exports.emailOrderInfo = async (req, res) => {
     <p>Size: ${cartItems[i].size}</p>
     `;
 	}
-	const mailOptions = {
-		from: 'watuchiha@gmail.com',
-		to: 'angelrojasm6@gmail.com',
-		subject: 'Sending Email using Node.js',
-		html: html,
-	};
+	html += `Payment Method: ${req.body.method}`;
+	if (req.body.method === 'transfer') {
+		html += `
+		<h2>Payment Receipt:</h2>
+		`;
+	}
 
+	if (req.body.method === 'transfer') {
+		mailOptions = {
+			from: 'watuchiha@gmail.com',
+			to: 'angelrojasm6@gmail.com',
+			subject: 'Sending Email using Node.js',
+			html: html,
+			attachments: {
+				filename: req.files.image.name,
+				cid: 'image',
+				content: req.files.image.data,
+			},
+		};
+	} else {
+		mailOptions = {
+			from: 'watuchiha@gmail.com',
+			to: 'angelrojasm6@gmail.com',
+			subject: 'Sending Email using Node.js',
+			html: html,
+		};
+	}
 	transporter.sendMail(mailOptions, function (error, info) {
 		if (error) {
 			res.send(error);
