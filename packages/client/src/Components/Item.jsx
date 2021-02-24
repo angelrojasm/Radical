@@ -28,10 +28,10 @@ const Item = props => {
 				<img
 					id='item-image'
 					alt='clothing article'
-					src={baseUrl + props.item.image}
+					src={baseUrl + props.item.fileName}
 					onClick={e => {
 						e.preventDefault();
-						let link = baseUrl + props.item.image;
+						let link = baseUrl + props.item.fileName;
 						props.redirect(props.item.title, link);
 					}}
 				/>

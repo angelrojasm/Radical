@@ -7,54 +7,27 @@ import Footer from '../Components/Footer';
 import '../scss/Category.scss';
 import Pagination from '../Components/Pagination';
 import { useHistory } from 'react-router-dom';
-
-const products = [
-	{
-		image: 'IMG_0284.jpg',
-		title: 'Long Sleeved Jacket (White)',
-		price: '700.00',
-	},
-	{
-		image: 'DSC_0528 copy.jpg',
-		title: "Women's Crop Top (Black)",
-		price: '500.00',
-	},
-	{
-		image: 'IMG_0197.jpg',
-		title: 'Personalized Cap (Black)',
-		price: '600.00',
-	},
-	{
-		image: 'DSC_0258 copy.jpg',
-		title: 'Short Sleeved Tee (White)',
-		price: '550.00',
-	},
-	{
-		image: 'IMG_1019.jpg',
-		title: 'Long Sleeved Jacket (Gray)',
-		price: '700.00',
-	},
-	{
-		image: 'IMG_0759.jpg',
-		title: 'Short Sleeved Tee (Black)',
-		price: '550.00',
-	},
-	{
-		image: 'IMG_0273.jpg',
-		title: 'Personalized Shorts (Black)',
-		price: '850.00',
-	},
-	{
-		image: 'IMG_0325.jpg',
-		title: 'Personalized Jeans',
-		price: '1000.00',
-	},
-];
+import api from '../api/api';
 
 const Category = props => {
 	const history = useHistory();
 	const [paginationIndex, setPaginationIndex] = useState(1);
 	const [itemCount, setItemCount] = useState(6);
+	const [products, setProducts] = useState([]);
+
+	useEffect(() => {
+		async function getData() {
+			let type = props.match.params.name;
+			let items = await api.item().get();
+			let itemArr = items.items;
+			console.log(itemArr);
+			let products = itemArr.filter(element => {
+				return element.category === type.toLowerCase();
+			});
+			setProducts(products);
+		}
+		getData();
+	}, []);
 
 	function switchNextPage() {
 		setPaginationIndex(paginationIndex + 1);
@@ -76,7 +49,10 @@ const Category = props => {
 					<div id='products-meta'>
 						<Breadcrumb categoryName={props.match.params.name} />
 						<h1>{props.match.params.name}</h1>
-						<p>Showing: 1-8 out of 15 items</p>
+						<p>
+							Showing: 1-{products.length >= itemCount ? itemCount : products.length} out of{' '}
+							{products.length} items
+						</p>
 					</div>
 					<div id='sort-bar'>
 						<p>Sort By</p>
@@ -113,7 +89,9 @@ const Category = props => {
 						count={itemCount}
 						redirect={goToProfile}
 					/>
-					<Pagination next={switchNextPage} prev={switchPreviousPage} />
+					{products.length > itemCount && (
+						<Pagination next={switchNextPage} prev={switchPreviousPage} />
+					)}
 				</div>
 			</div>
 			<Footer position='relative' bottom='0' />
