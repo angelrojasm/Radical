@@ -20,3 +20,12 @@ exports.getItem = async (req, res) => {
 		res.send({ error: true, details: e });
 	}
 };
+
+exports.getItemById = async (req, res) => {
+	try {
+		let data = await Item.findById(req.query.itemId);
+		res.send({ error: false, item: data });
+	} catch (e) {
+		res.send({ error: true, details: e });
+	}
+};

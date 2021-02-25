@@ -8,12 +8,14 @@ import '../scss/Category.scss';
 import Pagination from '../Components/Pagination';
 import { useHistory } from 'react-router-dom';
 import api from '../api/api';
+import WithAlert from '../hoc/withAlert';
 
 const Category = props => {
 	const history = useHistory();
 	const [paginationIndex, setPaginationIndex] = useState(1);
 	const [itemCount, setItemCount] = useState(6);
 	const [products, setProducts] = useState([]);
+	const [showAlert, setShowAlert] = useState(false);
 
 	useEffect(() => {
 		async function getData() {
@@ -29,6 +31,9 @@ const Category = props => {
 		getData();
 	}, []);
 
+	function toggleAlert() {
+		setShowAlert(true);
+	}
 	function switchNextPage() {
 		setPaginationIndex(paginationIndex + 1);
 	}
@@ -84,6 +89,7 @@ const Category = props => {
 				</div>
 				<div id='products-body'>
 					<ItemList
+						toggleAlert={toggleAlert}
 						items={products}
 						index={paginationIndex}
 						count={itemCount}

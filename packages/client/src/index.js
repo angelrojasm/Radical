@@ -3,16 +3,14 @@ import ReactDOM from 'react-dom';
 import './scss/index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider } from '@auth0/auth0-react';
 
-console.log(process.env)
 ReactDOM.render(
 	<React.StrictMode>
 		<Auth0Provider
-			domain="dev-cyxr1b-h.us.auth0.com"
+			domain='dev-cyxr1b-h.us.auth0.com'
 			clientId={process.env.REACT_APP_CLIENT_ID}
-			redirectUri={window.location.origin}
-		>
+			redirectUri={window.location.origin}>
 			<App />
 		</Auth0Provider>
 	</React.StrictMode>,

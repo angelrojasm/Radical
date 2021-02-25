@@ -15,7 +15,7 @@ exports.createCart = async (req, res) => {
 exports.getCart = async (req, res) => {
 	try {
 		let cart = await Cart.findOne({ userId: req.query.userId });
-		let cartItems = await CartItem.find({ cartId: cart._id }).populate('itemId');
+		let cartItems = await CartItem.find({ cartId: cart._id });
 		res.send({ error: false, content: cartItems });
 	} catch (error) {
 		res.send({ error: true, details: e });

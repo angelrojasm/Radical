@@ -6,127 +6,171 @@ import CartItem from '../Components/CartItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../scss/Cart.scss';
+import api from '../api/api';
+import { useAuth0 } from '@auth0/auth0-react';
+import db from '../localdb';
 
 const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
-const products = [
-	{
-		image: 'IMG_0284.jpg',
-		title: 'Long Sleeved Jacket (White)',
-		price: '700.00',
-	},
-	{
-		image: 'DSC_0528 copy.jpg',
-		title: "Women's Crop Top (Black)",
-		price: '500.00',
-	},
-	{
-		image: 'IMG_0197.jpg',
-		title: 'Personalized Cap (Black)',
-		price: '600.00',
-	},
-];
-
-function fillTable() {
-	return products.map((item, index) => {
-		if (index === products.length - 1) {
-			return (
-				<tr key={index} style={{ marginRight: '10vw' }}>
-					<td>
-						<CartItem image={baseUrl + item.image} title={item.title} />
-					</td>
-					<td>
-						<input
-							type='number'
-							name='Quantity'
-							id='quantity-input'
-							placeholder='1'
-							min='1'
-							step='1'
-						/>
-					</td>
-					<td>
-						<div id='price-section'>
-							<p>
-								<strong>RD${item.price}</strong>
-							</p>
-							<div id='delete-icon'>
-								<FontAwesomeIcon id='delete' icon={faTrash} />
-								<span>Remove</span>
-							</div>
-						</div>
-					</td>
-				</tr>
-			);
-		} else {
-			return (
-				<tr className='body' key={index} style={{ marginRight: '10vw' }}>
-					<td>
-						<CartItem image={baseUrl + item.image} title={item.title} />
-					</td>
-					<td>
-						<input
-							type='number'
-							name='Quantity'
-							id='quantity-input'
-							placeholder='1'
-							min='1'
-							step='1'
-						/>
-					</td>
-					<td>
-						<div id='price-section'>
-							<p>
-								<strong>RD${item.price}</strong>
-							</p>
-							<div id='delete-icon'>
-								<FontAwesomeIcon id='delete' icon={faTrash} />
-								<span>Remove</span>
-							</div>
-						</div>
-					</td>
-				</tr>
-			);
-		}
-	});
-}
-
-function fillItemList() {
-	return products.map((item, index) => {
-		if (index === products.length - 1) {
-			return (
-				<div key={index} id='cart-item-entry'>
-					<CartItem image={baseUrl + item.image} title={item.title} />
-					<div id='price-section'>
-						<p>
-							<strong>RD${item.price}</strong>
-						</p>
-						<div id='delete-icon'>
-							<FontAwesomeIcon id='delete' icon={faTrash} />
-							<span>Remove</span>
-						</div>
-					</div>
-				</div>
-			);
-		} else {
-			return (
-				<div key={index} className='body' id='cart-item-entry'>
-					<CartItem image={baseUrl + item.image} title={item.title} />
-					<div id='price-section'>
-						<p>
-							<strong>RD${item.price}</strong>
-						</p>
-						<div id='delete-icon'>
-							<FontAwesomeIcon id='delete' icon={faTrash} />
-							<span>Remove</span>
-						</div>
-					</div>
-				</div>
-			);
-		}
-	});
-}
 
 const Cart = props => {
+	const { user, isAuthenticated } = useAuth0();
+	const [products, setProducts] = useState([]);
+	const [canLoad, setCanLoad] = useState(false);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setCanLoad(true);
+		}, 100);
+	}, []);
+
+	useEffect(() => {
+		async function getOnlineData() {
+			let productsArr = await api.cart().getItems(user.sub.split('|')[1]);
+			let temp = [];
+			for (let i = 0; i < productsArr.content.length; i++) {
+				let entry = await api.item().getItem(productsArr.content[i].itemId);
+				temp.push({
+					data: entry.item,
+					size: productsArr.content[i].size,
+					quantity: productsArr.content[i].quantity,
+				});
+			}
+			setProducts(temp);
+		}
+		async function getLocalData() {
+			let productsArr = db.queryAll('cartItem');
+			let temp = [];
+			for (let i = 0; i < productsArr.length; i++) {
+				let entry = await api.item().getItem(productsArr[i].itemId);
+				temp.push({
+					data: entry.item,
+					size: productsArr[i].size,
+					quantity: productsArr[i].quantity,
+				});
+			}
+			setProducts(temp);
+		}
+		if (canLoad) {
+			isAuthenticated ? getOnlineData() : getLocalData();
+		}
+	}, [canLoad]);
+
+	function fillTable() {
+		return products.map((item, index) => {
+			if (index === products.length - 1) {
+				return (
+					<tr key={index} style={{ marginRight: '10vw' }}>
+						<td>
+							<CartItem
+								image={baseUrl + item.data.fileName}
+								title={item.data.title}
+								size={item.size}
+							/>
+						</td>
+						<td>
+							<input
+								type='number'
+								name='Quantity'
+								id='quantity-input'
+								value={item.quantity}
+								min='1'
+								step='1'
+							/>
+						</td>
+						<td>
+							<div id='price-section'>
+								<p>
+									<strong>RD${item.data.price}</strong>
+								</p>
+								<div id='delete-icon'>
+									<FontAwesomeIcon id='delete' icon={faTrash} />
+									<span>Remove</span>
+								</div>
+							</div>
+						</td>
+					</tr>
+				);
+			} else {
+				return (
+					<tr className='body' key={index} style={{ marginRight: '10vw' }}>
+						<td>
+							<CartItem
+								image={baseUrl + item.data.fileName}
+								title={item.data.title}
+								size={item.size}
+							/>
+						</td>
+						<td>
+							<input
+								type='number'
+								name='Quantity'
+								id='quantity-input'
+								value={item.quantity}
+								min='1'
+								step='1'
+							/>
+						</td>
+						<td>
+							<div id='price-section'>
+								<p>
+									<strong>RD${item.data.price}</strong>
+								</p>
+								<div id='delete-icon'>
+									<FontAwesomeIcon id='delete' icon={faTrash} />
+									<span>Remove</span>
+								</div>
+							</div>
+						</td>
+					</tr>
+				);
+			}
+		});
+	}
+	function fillItemList() {
+		return products.map((item, index) => {
+			if (index === products.length - 1) {
+				return (
+					<div key={index} id='cart-item-entry'>
+						<CartItem
+							image={baseUrl + item.data.fileName}
+							title={item.data.title}
+							size={item.size}
+						/>
+						<div id='price-section'>
+							<p>
+								<strong>RD${item.data.price}</strong>
+							</p>
+							<div id='delete-icon'>
+								<FontAwesomeIcon id='delete' icon={faTrash} />
+								<span>Remove</span>
+							</div>
+						</div>
+					</div>
+				);
+			} else {
+				return (
+					<div key={index} className='body' id='cart-item-entry'>
+						<CartItem
+							image={baseUrl + item.data.fileName}
+							title={item.data.title}
+							size={item.size}
+						/>
+						<div id='price-section'>
+							<p>
+								<strong>RD${item.data.price}</strong>
+							</p>
+							<div id='delete-icon'>
+								<FontAwesomeIcon id='delete' icon={faTrash} />
+								<span>Remove</span>
+							</div>
+						</div>
+					</div>
+				);
+			}
+		});
+	}
+
+	useEffect(() => {});
 	return (
 		<div id='cart'>
 			<TopNav isBordered={true} />

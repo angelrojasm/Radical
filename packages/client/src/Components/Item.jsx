@@ -38,7 +38,7 @@ const Item = props => {
 				<div
 					id='image-button'
 					onClick={() => {
-						console.log('clicked');
+						props.toggleAlert();
 					}}>
 					Add to Cart
 				</div>

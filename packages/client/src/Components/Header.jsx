@@ -11,11 +11,7 @@ const Header = props => {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
-		console.log(isAuthenticated);
 		isAuthenticated ? setLoggedIn(true) : setLoggedIn(false);
-		if (isAuthenticated) {
-			console.log(user);
-		}
 	}, [isAuthenticated]);
 
 	function handleMouseOver() {

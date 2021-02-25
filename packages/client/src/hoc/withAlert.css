@@ -1,0 +1,16 @@
+.absolute-alert {
+	z-index: 50;
+	transform: translateY(-100%);
+	width: 100%;
+	animation: appear 400ms ease-out forwards;
+}
+
+@keyframes appear {
+	to {
+		transform: translateY(0%);
+	}
+}
+
+.hidden {
+	display: none;
+}

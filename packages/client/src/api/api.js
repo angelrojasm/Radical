@@ -47,6 +47,11 @@ export default {
 				let data = await response.json();
 				return data;
 			},
+			getItem: async itemId => {
+				let response = await fetch(`${route}/find?itemId=${itemId}`);
+				let data = await response.json();
+				return data;
+			},
 			create: async form => {
 				let data = axios
 					.post(route, form)

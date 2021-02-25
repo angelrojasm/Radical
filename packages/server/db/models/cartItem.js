@@ -3,7 +3,7 @@ require('../index');
 var Schema = mongoose.Schema;
 
 var cartItemSchema = new Schema({
-	itemId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'item' }],
+	itemId: String,
 	cartId: String,
 	quantity: Number,
 	size: String,

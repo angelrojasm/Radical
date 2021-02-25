@@ -23,9 +23,9 @@ const CartItem = props => {
 
 			<div id='item-meta'>
 				<p id='title'>{props.title}</p>
-				<p>Color: Orange</p>
-				<p className='show-mobile'>Quantity: 1</p>
-				<p>Size: M</p>
+				{props.likes || <p>Color: Orange</p>}
+				<p className='show-mobile'>Quantity: {props.quantity} </p>
+				{props.likes || <p>Size: {props.size}</p>}
 			</div>
 		</div>
 	);

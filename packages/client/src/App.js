@@ -13,9 +13,20 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import api from './api/api';
 import Testing from './Testing';
+import db from './localdb';
 function App() {
 	const { user, isAuthenticated } = useAuth0();
 
+	useEffect(() => {
+		if (!isAuthenticated) {
+			if (db.isNew()) {
+				db.createTable('cartItem', ['itemId', 'quantity', 'size']);
+				db.insert('cartItem', { itemId: '6035819b560b9773bc715f80', quantity: '2', size: 'S' });
+				//db.insert("cartItem", {itemId: "", quantity: "", size: ""});
+				db.commit();
+			}
+		}
+	}, []);
 	useEffect(() => {
 		async function getdata() {
 			if (isAuthenticated) {

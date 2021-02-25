@@ -15,7 +15,7 @@ exports.createLikes = async (req, res) => {
 exports.getLikes = async (req, res) => {
 	try {
 		let likes = await Likes.findOne({ userId: req.query.userId });
-		let likesItems = await LikesItem.find({ likesId: likes._id }).populate('itemId');
+		let likesItems = await LikesItem.find({ likesId: likes._id });
 		res.send({ error: false, content: likesItems });
 	} catch (error) {
 		res.send({ error: true, details: e });
