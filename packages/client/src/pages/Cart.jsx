@@ -18,7 +18,6 @@ const Cart = props => {
 	const [canLoad, setCanLoad] = useState(false);
 	const [removeText, setRemoveText] = useState({});
 	const [cartMessage, setCartMessage] = useState('Loading Cart...');
-
 	useEffect(() => {
 		setTimeout(() => {
 			setCanLoad(true);
@@ -258,7 +257,18 @@ const Cart = props => {
 		});
 	}
 
-	useEffect(() => {});
+	function calculatePrice() {
+		let x = products;
+		let price = 0;
+
+		if (products.length !== 0) {
+			for (const item of x) {
+				price += Number(item.data.price) * Number(item.quantity);
+			}
+		}
+		return price;
+	}
+
 	return (
 		<div id='cart'>
 			<TopNav isBordered={true} />
@@ -286,7 +296,7 @@ const Cart = props => {
 				{products.length === 0 && <h4 style={{ textAlign: 'center' }}>{cartMessage}</h4>}
 			</div>
 			<hr />
-			<p id='total-price'>Total: $1,800.00</p>
+			<p id='total-price'>Total: RD${calculatePrice()}.00</p>
 			<Link to={{ pathname: '/checkout' }}>
 				<button id='checkout-button'>CHECKOUT</button>
 			</Link>

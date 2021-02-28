@@ -52,10 +52,10 @@ const Item = props => {
 			setCartText('Adding ...');
 			setTimeout(() => {
 				let records = db.queryAll('cartItem', {
-					query: { itemId: props.item._id },
+					query: { itemId: props.item._id, size: 'S' },
 				});
 				if (records.length > 0) {
-					db.update('cartItem', { itemId: props.item._id }, function (row) {
+					db.update('cartItem', { itemId: props.item._id, size: 'S' }, function (row) {
 						row.quantity += 1;
 
 						return row;
