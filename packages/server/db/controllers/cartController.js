@@ -28,7 +28,7 @@ exports.addItemToCart = async (req, res) => {
 		res.send({ error: true, content: cart });
 	} else {
 		try {
-			let x = await updateCartItemQuantity(cart._id, req.body.itemId);
+			let x = await updateCartItemQuantity(cart._id, req.body.itemId, req.body.size);
 			if (x === null) {
 				await CartItem.create({
 					itemId: req.body.itemId,
@@ -81,9 +81,9 @@ const getCartItem = async (cartId, itemId) => {
 	return await CartItem.findOne({ cartId: cartId, itemId: itemId });
 };
 
-const updateCartItemQuantity = async (cartId, itemId) => {
+const updateCartItemQuantity = async (cartId, itemId, size) => {
 	return await CartItem.findOneAndUpdate(
-		{ cartId: cartId, itemId: itemId },
+		{ cartId: cartId, itemId: itemId, size: size },
 		{ $inc: { quantity: 1 } }
 	);
 };

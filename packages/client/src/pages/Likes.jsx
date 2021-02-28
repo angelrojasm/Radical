@@ -119,7 +119,7 @@ const Likes = props => {
 				<p>{products.length} Items in View</p>
 			</div>
 			<div id='likes-items'>{fillItemList()}</div>
-			{products.length === 0 && <h3>No Items In Likes</h3>}
+			{products.length === 0 && <h4 style={{ textAlign: 'center' }}>No Items In Likes!</h4>}
 			<Footer id='footer' position='relative' bottom='0' />
 		</div>
 	);

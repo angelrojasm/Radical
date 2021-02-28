@@ -39,10 +39,12 @@ const LikesHeart = ({ itemId }) => {
 	}
 
 	async function addToLikes() {
-		if (isAuthenticated) {
-			let response = await api.likes().addItem(user.sub.split('|')[1], itemId);
-			if (!response.error) {
-				setIsLiked(true);
+		if (!isLiked) {
+			if (isAuthenticated) {
+				let response = await api.likes().addItem(user.sub.split('|')[1], itemId);
+				if (!response.error) {
+					setIsLiked(true);
+				}
 			}
 		}
 	}

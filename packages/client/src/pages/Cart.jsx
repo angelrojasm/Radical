@@ -17,6 +17,7 @@ const Cart = props => {
 	const [products, setProducts] = useState([]);
 	const [canLoad, setCanLoad] = useState(false);
 	const [removeText, setRemoveText] = useState({});
+	const [cartMessage, setCartMessage] = useState('Loading Cart...');
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -24,6 +25,13 @@ const Cart = props => {
 		}, 1400);
 	}, []);
 
+	useEffect(() => {
+		if (canLoad) {
+			if (products.length === 0) {
+				setCartMessage('Cart is Empty!');
+			}
+		}
+	}, [products]);
 	useEffect(() => {
 		async function getOnlineData() {
 			let productsArr = await api.cart().getItems(user.sub.split('|')[1]);
@@ -267,9 +275,15 @@ const Cart = props => {
 					</tr>
 				</thead>
 				<tbody>{fillTable()}</tbody>
+				{products.length === 0 && (
+					<h4 style={{ textAlign: 'center', position: 'relative', top: '40%' }}>
+						{cartMessage}
+					</h4>
+				)}
 			</table>
 			<div className='show-mobile' id='cart-items'>
 				{fillItemList()}
+				{products.length === 0 && <h4 style={{ textAlign: 'center' }}>{cartMessage}</h4>}
 			</div>
 			<hr />
 			<p id='total-price'>Total: $1,800.00</p>

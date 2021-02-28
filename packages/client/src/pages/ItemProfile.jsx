@@ -18,7 +18,7 @@ const ItemProfile = props => {
 		if (isAuthenticated) {
 			let response = await api
 				.cart()
-				.addItem(user.sub.split('|')[1], props.location.state.item._id, 1, 'S');
+				.addItem(user.sub.split('|')[1], props.location.state.item._id, 1, sizeSelect);
 			console.log(response);
 			if (response.error) {
 				setCartText('Error adding item');
@@ -34,7 +34,7 @@ const ItemProfile = props => {
 		} else {
 			setTimeout(() => {
 				let records = db.queryAll('cartItem', {
-					query: { itemId: props.location.state.item._id },
+					query: { itemId: props.location.state.item._id, size: sizeSelect },
 				});
 				if (records.length > 0) {
 					db.update('cartItem', { itemId: props.location.state.item._id }, function (row) {
@@ -47,7 +47,7 @@ const ItemProfile = props => {
 					db.insert('cartItem', {
 						itemId: props.location.state.item._id,
 						quantity: 1,
-						size: 'S',
+						size: sizeSelect,
 					});
 					db.commit();
 				}
@@ -90,7 +90,12 @@ const ItemProfile = props => {
 						<h3 id='price'>RD${props.location.state.item.price}.00</h3>
 						<div id='size'>
 							<h4>Size: </h4>
-							<select id='size-select'>
+							<select
+								id='size-select'
+								value={sizeSelect}
+								onChange={e => {
+									setSizeSelect(e.target.value);
+								}}>
 								<option value='S'>S</option>
 								<option value='M'>M</option>
 								<option value='L'>L</option>

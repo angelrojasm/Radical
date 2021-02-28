@@ -19,6 +19,14 @@
 			font-weight: bold;
 			font-size: 1.25vw;
 		}
+		#size-section {
+			display: flex;
+
+			p {
+				margin: auto 0;
+				margin-right: 15px;
+			}
+		}
 	}
 }
 @media only screen and (max-width: 450px) {

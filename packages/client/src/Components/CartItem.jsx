@@ -4,7 +4,7 @@ import '../scss/CartItem.scss';
 
 const CartItem = props => {
 	const history = useHistory();
-
+	const [sizeSelect, setSizeSelect] = useState(props.size);
 	function redirect(title, link) {
 		history.push({
 			pathname: `/categories/Tops/${title}`,
@@ -25,7 +25,21 @@ const CartItem = props => {
 				<p id='title'>{props.title}</p>
 				{props.likes || <p>Color: Orange</p>}
 				<p className='show-mobile'>Quantity: {props.quantity} </p>
-				{props.likes || <p>Size: {props.size}</p>}
+				{props.likes || (
+					<div id='size-section'>
+						<p>Size :</p>
+						<select
+							id='size-select'
+							value={sizeSelect}
+							onChange={e => {
+								setSizeSelect(e.target.value);
+							}}>
+							<option value='S'>S</option>
+							<option value='M'>M</option>
+							<option value='L'>L</option>
+						</select>
+					</div>
+				)}
 			</div>
 		</div>
 	);
