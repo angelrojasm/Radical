@@ -28,12 +28,15 @@ exports.addItemToCart = async (req, res) => {
 		res.send({ error: true, content: cart });
 	} else {
 		try {
-			await CartItem.create({
-				itemId: req.body.itemId,
-				cartId: cart._id,
-				quantity: req.body.quantity,
-				size: req.body.size,
-			});
+			let x = await updateCartItemQuantity(cart._id, req.body.itemId);
+			if (x === null) {
+				await CartItem.create({
+					itemId: req.body.itemId,
+					cartId: cart._id,
+					quantity: req.body.quantity,
+					size: req.body.size,
+				});
+			}
 			res.send({ eror: false });
 		} catch (e) {
 			res.send({ error: true, details: e });
@@ -72,4 +75,15 @@ exports.clearCart = async (req, res) => {
 			res.send({ error: true, details: e });
 		}
 	}
+};
+
+const getCartItem = async (cartId, itemId) => {
+	return await CartItem.findOne({ cartId: cartId, itemId: itemId });
+};
+
+const updateCartItemQuantity = async (cartId, itemId) => {
+	return await CartItem.findOneAndUpdate(
+		{ cartId: cartId, itemId: itemId },
+		{ $inc: { quantity: 1 } }
+	);
 };

@@ -7,7 +7,7 @@ const CartItem = props => {
 
 	function redirect(title, link) {
 		history.push({
-			pathname: `/categories/$T-shirts/${title}`,
+			pathname: `/categories/Tops/${title}`,
 			state: { image: link },
 		});
 	}

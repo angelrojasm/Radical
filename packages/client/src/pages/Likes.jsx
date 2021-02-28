@@ -13,22 +13,53 @@ const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
 const Likes = props => {
 	const { user, isAuthenticated } = useAuth0();
 	const [products, setProducts] = useState([]);
+	const [likeText, setLikeText] = useState({});
 
 	useEffect(() => {
-		console.log(isAuthenticated);
 		async function getData() {
 			let productsArr = await api.likes().getItems(user.sub.split('|')[1]);
 			let temp = [];
+			let templikeObj = {};
 			for (const item of productsArr.content) {
 				let entry = await api.item().getItem(item.itemId);
 				temp.push(entry.item);
+				templikeObj[`${entry.item._id}`] = 'Liked';
 			}
 			setProducts(temp);
+			setLikeText(templikeObj);
 		}
 		if (isAuthenticated) {
 			getData();
 		}
 	}, [isAuthenticated]);
+
+	async function removeFromLikes(itemId) {
+		setLikeText({
+			...likeText,
+			[`${itemId}`]: 'Removing...',
+		});
+		let response = await api.likes().removeItem(user.sub.split('|')[1], itemId);
+		if (response.error) {
+			setLikeText({
+				...likeText,
+				[`${itemId}`]: 'Error removing Item.',
+			});
+			setTimeout(() => {
+				setLikeText({
+					...likeText,
+					[`${itemId}`]: 'Liked',
+				});
+			}, 1500);
+		} else {
+			setLikeText({
+				...likeText,
+				[`${itemId}`]: 'Removed!',
+			});
+			setTimeout(() => {
+				window.location.reload();
+			}, 1500);
+		}
+	}
 
 	function fillItemList() {
 		return products.map((item, index) => {
@@ -38,11 +69,18 @@ const Likes = props => {
 						<CartItem likes={true} image={baseUrl + item.fileName} title={item.title} />
 						<div id='price-section'>
 							<p>
-								<strong>RD${item.price}</strong>
+								<strong>RD${item.price}.00</strong>
 							</p>
 							<div id='delete-icon'>
-								<FontAwesomeIcon id='delete' icon={faHeart} />
-								<span>Unlike</span>
+								<FontAwesomeIcon
+									id='delete'
+									icon={faHeart}
+									onClick={e => {
+										e.preventDefault();
+										removeFromLikes(item._id);
+									}}
+								/>
+								<span>{likeText === {} ? '' : likeText[`${item._id}`]}</span>
 							</div>
 						</div>
 					</div>
@@ -53,11 +91,18 @@ const Likes = props => {
 						<CartItem likes={true} image={baseUrl + item.fileName} title={item.title} />
 						<div id='price-section'>
 							<p>
-								<strong>RD${item.price}</strong>
+								<strong>RD${item.price}.00</strong>
 							</p>
 							<div id='delete-icon'>
-								<FontAwesomeIcon id='delete' icon={faHeart} />
-								<span>Unlike</span>
+								<FontAwesomeIcon
+									id='delete'
+									icon={faHeart}
+									onClick={e => {
+										e.preventDefault();
+										removeFromLikes(item._id);
+									}}
+								/>
+								<span>{likeText === {} ? '' : likeText[`${item._id}`]}</span>
 							</div>
 						</div>
 					</div>

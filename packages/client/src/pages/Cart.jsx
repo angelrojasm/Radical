@@ -16,17 +16,19 @@ const Cart = props => {
 	const { user, isAuthenticated } = useAuth0();
 	const [products, setProducts] = useState([]);
 	const [canLoad, setCanLoad] = useState(false);
+	const [removeText, setRemoveText] = useState({});
 
 	useEffect(() => {
 		setTimeout(() => {
 			setCanLoad(true);
-		}, 100);
+		}, 1400);
 	}, []);
 
 	useEffect(() => {
 		async function getOnlineData() {
 			let productsArr = await api.cart().getItems(user.sub.split('|')[1]);
 			let temp = [];
+			let tempText = {};
 			for (let i = 0; i < productsArr.content.length; i++) {
 				let entry = await api.item().getItem(productsArr.content[i].itemId);
 				temp.push({
@@ -34,12 +36,15 @@ const Cart = props => {
 					size: productsArr.content[i].size,
 					quantity: productsArr.content[i].quantity,
 				});
+				tempText[`${productsArr.content[i].itemId}`] = 'Remove';
 			}
 			setProducts(temp);
+			setRemoveText(tempText);
 		}
 		async function getLocalData() {
 			let productsArr = db.queryAll('cartItem');
 			let temp = [];
+			let tempText = {};
 			for (let i = 0; i < productsArr.length; i++) {
 				let entry = await api.item().getItem(productsArr[i].itemId);
 				temp.push({
@@ -47,14 +52,61 @@ const Cart = props => {
 					size: productsArr[i].size,
 					quantity: productsArr[i].quantity,
 				});
+				tempText[`${productsArr[i].itemId}`] = 'Remove';
 			}
 			setProducts(temp);
+			setRemoveText(tempText);
 		}
 		if (canLoad) {
 			isAuthenticated ? getOnlineData() : getLocalData();
 		}
 	}, [canLoad]);
 
+	async function removeFromCart(itemId) {
+		if (isAuthenticated) {
+			setRemoveText({
+				...removeText,
+				[`${itemId}`]: 'Removing...',
+			});
+			let response = await api.cart().removeItem(user.sub.split('|')[1], itemId);
+			if (response.error) {
+				setRemoveText({
+					...removeText,
+					[`${itemId}`]: 'Error removing Item.',
+				});
+				setTimeout(() => {
+					setRemoveText({
+						...removeText,
+						[`${itemId}`]: 'Remove',
+					});
+				}, 1500);
+			} else {
+				setRemoveText({
+					...removeText,
+					[`${itemId}`]: 'Removed!',
+				});
+				setTimeout(() => {
+					window.location.reload();
+				}, 1500);
+			}
+		} else {
+			setRemoveText({
+				...removeText,
+				[`${itemId}`]: 'Removing...',
+			});
+			setTimeout(() => {
+				db.deleteRows('cartItem', { itemId: itemId });
+				db.commit();
+			}, 1500);
+			setTimeout(() => {
+				setRemoveText({
+					...removeText,
+					[`${itemId}`]: 'Removed!',
+				});
+				window.location.reload();
+			}, 1500);
+		}
+	}
 	function fillTable() {
 		return products.map((item, index) => {
 			if (index === products.length - 1) {
@@ -80,11 +132,18 @@ const Cart = props => {
 						<td>
 							<div id='price-section'>
 								<p>
-									<strong>RD${item.data.price}</strong>
+									<strong>RD${item.data.price}.00</strong>
 								</p>
 								<div id='delete-icon'>
-									<FontAwesomeIcon id='delete' icon={faTrash} />
-									<span>Remove</span>
+									<FontAwesomeIcon
+										id='delete'
+										icon={faTrash}
+										onClick={e => {
+											e.preventDefault();
+											removeFromCart(item.data._id);
+										}}
+									/>
+									<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
 								</div>
 							</div>
 						</td>
@@ -113,11 +172,18 @@ const Cart = props => {
 						<td>
 							<div id='price-section'>
 								<p>
-									<strong>RD${item.data.price}</strong>
+									<strong>RD${item.data.price}.00</strong>
 								</p>
 								<div id='delete-icon'>
-									<FontAwesomeIcon id='delete' icon={faTrash} />
-									<span>Remove</span>
+									<FontAwesomeIcon
+										id='delete'
+										icon={faTrash}
+										onClick={e => {
+											e.preventDefault();
+											removeFromCart(item.data._id);
+										}}
+									/>
+									<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
 								</div>
 							</div>
 						</td>
@@ -138,11 +204,18 @@ const Cart = props => {
 						/>
 						<div id='price-section'>
 							<p>
-								<strong>RD${item.data.price}</strong>
+								<strong>RD${item.data.price}.00</strong>
 							</p>
 							<div id='delete-icon'>
-								<FontAwesomeIcon id='delete' icon={faTrash} />
-								<span>Remove</span>
+								<FontAwesomeIcon
+									id='delete'
+									icon={faTrash}
+									onClick={e => {
+										e.preventDefault();
+										removeFromCart(item.data._id);
+									}}
+								/>
+								<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
 							</div>
 						</div>
 					</div>
@@ -157,11 +230,18 @@ const Cart = props => {
 						/>
 						<div id='price-section'>
 							<p>
-								<strong>RD${item.data.price}</strong>
+								<strong>RD${item.data.price}.00</strong>
 							</p>
 							<div id='delete-icon'>
-								<FontAwesomeIcon id='delete' icon={faTrash} />
-								<span>Remove</span>
+								<FontAwesomeIcon
+									id='delete'
+									icon={faTrash}
+									onClick={e => {
+										e.preventDefault();
+										removeFromCart(item.data._id);
+									}}
+								/>
+								<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
 							</div>
 						</div>
 					</div>
@@ -176,7 +256,7 @@ const Cart = props => {
 			<TopNav isBordered={true} />
 			<div id='cart-meta'>
 				<h3>Shopping Cart</h3>
-				<p>3 Items in Cart</p>
+				<p>{products.length} Items in Cart</p>
 			</div>
 			<table className='show-desktop' id='cart-table'>
 				<thead>

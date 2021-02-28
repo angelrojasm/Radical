@@ -75,22 +75,24 @@ export default {
 				let response = await axios.post(route, { userId: userId });
 				return response.data;
 			},
-			addItem: async (userId, itemId) => {
+			addItem: async (userId, itemId, quantity, size) => {
 				let response = await axios.post(`${route}/add`, {
 					userId: userId,
 					itemId: itemId,
+					quantity: quantity,
+					size: size,
 				});
 				return response.data;
 			},
 			removeItem: async (userId, itemId) => {
-				let response = await axios.delete(`${route}/remove`, {
+				let response = await axios.post(`${route}/remove`, {
 					userId: userId,
 					itemId: itemId,
 				});
 				return response.data;
 			},
 			clear: async userId => {
-				let response = await axios.delete(`${route}/clear`, {
+				let response = await axios.post(`${route}/clear`, {
 					userId: userId,
 				});
 				return response.data;
@@ -115,7 +117,7 @@ export default {
 				return response.data;
 			},
 			removeItem: async (userId, itemId) => {
-				let response = await axios.delete(`${route}/remove`, {
+				let response = await axios.post(`${route}/remove`, {
 					userId: userId,
 					itemId: itemId,
 				});

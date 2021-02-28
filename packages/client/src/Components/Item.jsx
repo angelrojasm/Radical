@@ -4,23 +4,83 @@ import '../scss/Item.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as regHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-
+import api from '../api/api';
+import { useAuth0 } from '@auth0/auth0-react';
+import db from '../localdb';
+import { LikesHeart } from './index';
 const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
 
 const Item = props => {
-	const [heartisVisible, setHeartIsVisible] = useState('block');
-	const [solidHeartIsVisible, setSolidHeartIsVisible] = useState('none');
+	const { user, isAuthenticated } = useAuth0();
+	const [isHovering, setIsHovering] = useState(false);
+	const [isLiked, setIsLiked] = useState(false);
+	const [cartText, setCartText] = useState('Add to Cart');
 
 	function handleMouseIn(e) {
 		e.preventDefault();
-		setHeartIsVisible('none');
-		setSolidHeartIsVisible('block');
+		if (!isHovering) {
+			setIsHovering(true);
+		}
 	}
 
 	function handleMouseOut(e) {
 		e.preventDefault();
-		setSolidHeartIsVisible('none');
-		setHeartIsVisible('block');
+		if (isHovering) {
+			setIsHovering(false);
+		}
+	}
+
+	async function addToCart() {
+		const defaultText = cartText;
+		setCartText('Adding ...');
+		if (isAuthenticated) {
+			console.log('entre');
+			let response = await api.cart().addItem(user.sub.split('|')[1], props.item._id, 1, 'S');
+			console.log(response);
+			if (response.error) {
+				setCartText('Error adding item');
+				setTimeout(() => {
+					setCartText(defaultText);
+				}, 2000);
+			} else {
+				setCartText('Added To Cart!');
+				setTimeout(() => {
+					setCartText(defaultText);
+				}, 2000);
+			}
+		} else {
+			setCartText('Adding ...');
+			setTimeout(() => {
+				let records = db.queryAll('cartItem', {
+					query: { itemId: props.item._id },
+				});
+				if (records.length > 0) {
+					db.update('cartItem', { itemId: props.item._id }, function (row) {
+						row.quantity += 1;
+
+						return row;
+					});
+					db.commit();
+				} else {
+					db.insert('cartItem', { itemId: props.item._id, quantity: 1, size: 'S' });
+					db.commit();
+				}
+				setCartText('Added to Cart!');
+			}, 1000);
+
+			setTimeout(() => {
+				setCartText(defaultText);
+			}, 2000);
+		}
+	}
+
+	async function addToLikes() {
+		if (isAuthenticated) {
+			let response = await api.likes().addItem(user.sub.split('|')[1], props.item._id);
+			if (!response.error) {
+				setIsLiked(true);
+			}
+		}
 	}
 	return (
 		<div id='item'>
@@ -32,38 +92,24 @@ const Item = props => {
 					onClick={e => {
 						e.preventDefault();
 						let link = baseUrl + props.item.fileName;
-						props.redirect(props.item.title, link);
+						let item = props.item;
+						item.fileName = baseUrl + item.fileName;
+						props.redirect(props.item.title, link, item);
 					}}
 				/>
 				<div
 					id='image-button'
-					onClick={() => {
-						props.toggleAlert();
+					onClick={e => {
+						e.preventDefault();
+						addToCart();
 					}}>
-					Add to Cart
+					{cartText}
 				</div>
 			</div>
 			<div id='info-container'>
 				<div className='flex'>
 					<h6>{props.item.title}</h6>
-					<FontAwesomeIcon
-						className='like'
-						icon={regHeart}
-						onMouseEnter={e => {
-							handleMouseIn(e);
-						}}
-						style={{ display: heartisVisible }}
-						size='lg'
-					/>
-					<FontAwesomeIcon
-						className='like'
-						icon={solidHeart}
-						onMouseLeave={e => {
-							handleMouseOut(e);
-						}}
-						style={{ display: solidHeartIsVisible, color: 'red' }}
-						size='lg'
-					/>
+					<LikesHeart itemId={props.item._id} />
 				</div>
 				<p>
 					Price: <strong>${props.item.price}</strong>

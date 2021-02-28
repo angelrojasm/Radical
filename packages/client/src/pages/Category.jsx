@@ -22,7 +22,6 @@ const Category = props => {
 			let type = props.match.params.name;
 			let items = await api.item().get();
 			let itemArr = items.items;
-			console.log(itemArr);
 			let products = itemArr.filter(element => {
 				return element.category === type.toLowerCase();
 			});
@@ -40,10 +39,10 @@ const Category = props => {
 	function switchPreviousPage() {
 		setPaginationIndex(paginationIndex - 1);
 	}
-	function goToProfile(title, link) {
+	function goToProfile(title, link, item) {
 		props.history.push({
 			pathname: `/categories/${props.match.params.name}/${title}`,
-			state: { image: link },
+			state: { image: link, item: item },
 		});
 	}
 	return (
