@@ -91,6 +91,14 @@ export default {
 				});
 				return response.data;
 			},
+			updateItem: async (cartItemId, attribute, value) => {
+				let response = await axios.patch(`${route}`, {
+					cartItemId: cartItemId,
+					attribute: attribute,
+					value: value,
+				});
+				return response.data;
+			},
 			clear: async userId => {
 				let response = await axios.post(`${route}/clear`, {
 					userId: userId,

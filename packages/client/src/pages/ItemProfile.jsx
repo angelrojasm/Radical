@@ -37,11 +37,15 @@ const ItemProfile = props => {
 					query: { itemId: props.location.state.item._id, size: sizeSelect },
 				});
 				if (records.length > 0) {
-					db.update('cartItem', { itemId: props.location.state.item._id }, function (row) {
-						row.quantity += 1;
+					db.update(
+						'cartItem',
+						{ itemId: props.location.state.item._id, size: sizeSelect },
+						function (row) {
+							row.quantity += 1;
 
-						return row;
-					});
+							return row;
+						}
+					);
 					db.commit();
 				} else {
 					db.insert('cartItem', {

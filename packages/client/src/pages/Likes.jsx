@@ -14,6 +14,7 @@ const Likes = props => {
 	const { user, isAuthenticated } = useAuth0();
 	const [products, setProducts] = useState([]);
 	const [likeText, setLikeText] = useState({});
+	const [likesMessage, setLikesMessage] = useState('Loading Likes...');
 
 	useEffect(() => {
 		async function getData() {
@@ -30,9 +31,21 @@ const Likes = props => {
 		}
 		if (isAuthenticated) {
 			getData();
+			setTimeout(() => {
+				if (products.length === 0) {
+					setLikesMessage('No Items in Likes!');
+				}
+			}, 200);
 		}
 	}, [isAuthenticated]);
 
+	useEffect(() => {
+		setTimeout(() => {
+			if (!isAuthenticated) {
+				setLikesMessage('You must log in first in order to like items!');
+			}
+		}, 2000);
+	}, []);
 	async function removeFromLikes(itemId) {
 		setLikeText({
 			...likeText,
@@ -119,7 +132,7 @@ const Likes = props => {
 				<p>{products.length} Items in View</p>
 			</div>
 			<div id='likes-items'>{fillItemList()}</div>
-			{products.length === 0 && <h4 style={{ textAlign: 'center' }}>No Items In Likes!</h4>}
+			{products.length === 0 && <h4 style={{ textAlign: 'center' }}>{likesMessage}</h4>}
 			<Footer id='footer' position='relative' bottom='0' />
 		</div>
 	);

@@ -17,5 +17,7 @@ cartRouter.post('/remove', (req, res) => {
 cartRouter.post('/clear', (req, res) => {
 	cartController.clearCart(req, res);
 });
-
+cartRouter.patch('', (req, res) => {
+	cartController.updateCartItem(req, res);
+});
 module.exports = cartRouter;

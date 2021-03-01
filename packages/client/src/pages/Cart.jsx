@@ -4,20 +4,27 @@ import TopNav from '../Components/TopNav';
 import Footer from '../Components/Footer';
 import CartItem from '../Components/CartItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import '../scss/Cart.scss';
 import api from '../api/api';
 import { useAuth0 } from '@auth0/auth0-react';
 import db from '../localdb';
+import { Button, Modal, Spinner } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
 
 const Cart = props => {
+	const history = useHistory();
 	const { user, isAuthenticated } = useAuth0();
 	const [products, setProducts] = useState([]);
 	const [canLoad, setCanLoad] = useState(false);
 	const [removeText, setRemoveText] = useState({});
+	const [itemQuantities, setItemQuantities] = useState({});
+	const [itemSizes, setItemSizes] = useState({});
 	const [cartMessage, setCartMessage] = useState('Loading Cart...');
+	const [modalStatus, setModalStatus] = useState({ loading: false, error: false, success: false });
+	const [show, setShow] = useState();
 	useEffect(() => {
 		setTimeout(() => {
 			setCanLoad(true);
@@ -36,61 +43,75 @@ const Cart = props => {
 			let productsArr = await api.cart().getItems(user.sub.split('|')[1]);
 			let temp = [];
 			let tempText = {};
+			let tempQuantities = {};
+			let tempSizes = {};
 			for (let i = 0; i < productsArr.content.length; i++) {
 				let entry = await api.item().getItem(productsArr.content[i].itemId);
 				temp.push({
 					data: entry.item,
 					size: productsArr.content[i].size,
 					quantity: productsArr.content[i].quantity,
+					uniqueId: productsArr.content[i]._id,
 				});
-				tempText[`${productsArr.content[i].itemId}`] = 'Remove';
+				tempText[`${productsArr.content[i]._id}`] = 'Remove';
+				tempQuantities[`${productsArr.content[i]._id}`] = productsArr.content[i].quantity;
+				tempSizes[`${productsArr.content[i]._id}`] = productsArr.content[i].size;
 			}
 			setProducts(temp);
 			setRemoveText(tempText);
+			setItemQuantities(tempQuantities);
+			setItemSizes(tempSizes);
 		}
 		async function getLocalData() {
 			let productsArr = db.queryAll('cartItem');
 			let temp = [];
 			let tempText = {};
+			let tempQuantities = {};
+			let tempSizes = {};
 			for (let i = 0; i < productsArr.length; i++) {
 				let entry = await api.item().getItem(productsArr[i].itemId);
 				temp.push({
 					data: entry.item,
 					size: productsArr[i].size,
 					quantity: productsArr[i].quantity,
+					uniqueId: productsArr[i].ID,
 				});
-				tempText[`${productsArr[i].itemId}`] = 'Remove';
+				tempText[`${productsArr[i].ID}`] = 'Remove';
+				tempQuantities[`${productsArr[i].ID}`] = productsArr[i].quantity;
+				tempSizes[`${productsArr[i].ID}`] = productsArr[i].size;
 			}
 			setProducts(temp);
 			setRemoveText(tempText);
+			setItemQuantities(tempQuantities);
+			setItemSizes(tempSizes);
 		}
 		if (canLoad) {
 			isAuthenticated ? getOnlineData() : getLocalData();
 		}
 	}, [canLoad]);
 
-	async function removeFromCart(itemId) {
+	async function removeFromCart(itemId, id, size) {
 		if (isAuthenticated) {
 			setRemoveText({
 				...removeText,
-				[`${itemId}`]: 'Removing...',
+				[`${id}`]: 'Removing...',
 			});
 			let response = await api.cart().removeItem(user.sub.split('|')[1], itemId);
 			if (response.error) {
 				setRemoveText({
 					...removeText,
-					[`${itemId}`]: 'Error removing Item.',
+					[`${id}`]: 'Error removing Item.',
 				});
 				setTimeout(() => {
 					setRemoveText({
 						...removeText,
-						[`${itemId}`]: 'Remove',
+						[`${id}`]: 'Remove',
 					});
 				}, 1500);
 			} else {
 				setRemoveText({
 					...removeText,
-					[`${itemId}`]: 'Removed!',
+					[`${id}`]: 'Removed!',
 				});
 				setTimeout(() => {
 					window.location.reload();
@@ -99,20 +120,32 @@ const Cart = props => {
 		} else {
 			setRemoveText({
 				...removeText,
-				[`${itemId}`]: 'Removing...',
+				[`${id}`]: 'Removing...',
 			});
 			setTimeout(() => {
-				db.deleteRows('cartItem', { itemId: itemId });
+				db.deleteRows('cartItem', { itemId: itemId, size: size });
 				db.commit();
 			}, 1500);
 			setTimeout(() => {
 				setRemoveText({
 					...removeText,
-					[`${itemId}`]: 'Removed!',
+					[`${id}`]: 'Removed!',
 				});
 				window.location.reload();
 			}, 1500);
 		}
+	}
+	function handleChildComponentSizeChange(id, value) {
+		setItemSizes({
+			...itemSizes,
+			[`${id}`]: value,
+		});
+	}
+	function handleChildComponentQuantityChange(id, value) {
+		setItemQuantities({
+			...itemQuantities,
+			[`${id}`]: value,
+		});
 	}
 	function fillTable() {
 		return products.map((item, index) => {
@@ -124,6 +157,10 @@ const Cart = props => {
 								image={baseUrl + item.data.fileName}
 								title={item.data.title}
 								size={item.size}
+								quantity={item.quantity}
+								id={item.uniqueId}
+								changeSize={handleChildComponentSizeChange}
+								changeQuantity={handleChildComponentQuantityChange}
 							/>
 						</td>
 						<td>
@@ -131,7 +168,17 @@ const Cart = props => {
 								type='number'
 								name='Quantity'
 								id='quantity-input'
-								value={item.quantity}
+								value={
+									itemQuantities === {}
+										? item.quantity
+										: itemQuantities[`${item.uniqueId}`]
+								}
+								onChange={e => {
+									setItemQuantities({
+										...itemQuantities,
+										[`${item.uniqueId}`]: e.target.value,
+									});
+								}}
 								min='1'
 								step='1'
 							/>
@@ -147,10 +194,10 @@ const Cart = props => {
 										icon={faTrash}
 										onClick={e => {
 											e.preventDefault();
-											removeFromCart(item.data._id);
+											removeFromCart(item.data._id, item.uniqueId, item.size);
 										}}
 									/>
-									<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
+									<span>{removeText === {} ? '' : removeText[`${item.uniqueId}`]}</span>
 								</div>
 							</div>
 						</td>
@@ -164,6 +211,10 @@ const Cart = props => {
 								image={baseUrl + item.data.fileName}
 								title={item.data.title}
 								size={item.size}
+								quantity={item.quantity}
+								id={item.uniqueId}
+								changeSize={handleChildComponentSizeChange}
+								changeQuantity={handleChildComponentQuantityChange}
 							/>
 						</td>
 						<td>
@@ -171,7 +222,17 @@ const Cart = props => {
 								type='number'
 								name='Quantity'
 								id='quantity-input'
-								value={item.quantity}
+								value={
+									itemQuantities === {}
+										? item.quantity
+										: itemQuantities[`${item.uniqueId}`]
+								}
+								onChange={e => {
+									setItemQuantities({
+										...itemQuantities,
+										[`${item.uniqueId}`]: e.target.value,
+									});
+								}}
 								min='1'
 								step='1'
 							/>
@@ -187,10 +248,10 @@ const Cart = props => {
 										icon={faTrash}
 										onClick={e => {
 											e.preventDefault();
-											removeFromCart(item.data._id);
+											removeFromCart(item.data._id, item.uniqueId, item.size);
 										}}
 									/>
-									<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
+									<span>{removeText === {} ? '' : removeText[`${item.uniqueId}`]}</span>
 								</div>
 							</div>
 						</td>
@@ -208,6 +269,10 @@ const Cart = props => {
 							image={baseUrl + item.data.fileName}
 							title={item.data.title}
 							size={item.size}
+							quantity={item.quantity}
+							id={item.uniqueId}
+							changeSize={handleChildComponentSizeChange}
+							changeQuantity={handleChildComponentQuantityChange}
 						/>
 						<div id='price-section'>
 							<p>
@@ -219,10 +284,10 @@ const Cart = props => {
 									icon={faTrash}
 									onClick={e => {
 										e.preventDefault();
-										removeFromCart(item.data._id);
+										removeFromCart(item.data._id, item.uniqueId, item.size);
 									}}
 								/>
-								<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
+								<span>{removeText === {} ? '' : removeText[`${item.uniqueId}`]}</span>
 							</div>
 						</div>
 					</div>
@@ -234,6 +299,10 @@ const Cart = props => {
 							image={baseUrl + item.data.fileName}
 							title={item.data.title}
 							size={item.size}
+							quantity={item.quantity}
+							id={item.uniqueId}
+							changeSize={handleChildComponentSizeChange}
+							changeQuantity={handleChildComponentQuantityChange}
 						/>
 						<div id='price-section'>
 							<p>
@@ -245,10 +314,10 @@ const Cart = props => {
 									icon={faTrash}
 									onClick={e => {
 										e.preventDefault();
-										removeFromCart(item.data._id);
+										removeFromCart(item.data._id, item.uniqueId, item.size);
 									}}
 								/>
-								<span>{removeText === {} ? '' : removeText[`${item.data._id}`]}</span>
+								<span>{removeText === {} ? '' : removeText[`${item.uniqueId}`]}</span>
 							</div>
 						</div>
 					</div>
@@ -258,15 +327,97 @@ const Cart = props => {
 	}
 
 	function calculatePrice() {
-		let x = products;
+		let items = products;
 		let price = 0;
 
 		if (products.length !== 0) {
-			for (const item of x) {
-				price += Number(item.data.price) * Number(item.quantity);
+			for (const item of items) {
+				price += Number(item.data.price) * Number(itemQuantities[`${item.uniqueId}`]);
 			}
 		}
 		return price;
+	}
+
+	async function handleCheckout() {
+		setShow(true);
+		setModalStatus({
+			...modalStatus,
+			loading: true,
+		});
+		let items = products;
+
+		for (const item of products) {
+			if (itemQuantities[`${item.uniqueId}`] !== item.quantity) {
+				if (isAuthenticated) {
+					let response = await api
+						.cart()
+						.updateItem(item.uniqueId, 'quantity', itemQuantities[`${item.uniqueId}`]);
+					if (response.error) {
+						setModalStatus({
+							loading: false,
+							error: true,
+							success: false,
+						});
+						break;
+					}
+				} else {
+					try {
+						db.update('cartItem', { ID: item.uniqueId }, function (row) {
+							row.quantity = itemQuantities[`${item.uniqueId}`];
+							return row;
+						});
+						db.commit();
+					} catch (error) {
+						setModalStatus({
+							loading: false,
+							error: true,
+							success: false,
+						});
+						break;
+					}
+				}
+			}
+			if (itemSizes[`${item.uniqueId}`] !== item.size) {
+				if (isAuthenticated) {
+					let response = await api
+						.cart()
+						.updateItem(item.uniqueId, 'size', itemSizes[`${item.uniqueId}`]);
+					if (response.error) {
+						setModalStatus({
+							loading: false,
+							error: true,
+							success: false,
+						});
+						break;
+					}
+				} else {
+					try {
+						db.update('cartItem', { ID: item.uniqueId }, function (row) {
+							row.size = itemSizes[`${item.uniqueId}`];
+							return row;
+						});
+						db.commit();
+					} catch (error) {
+						setModalStatus({
+							loading: false,
+							error: true,
+							success: false,
+						});
+						break;
+					}
+				}
+			}
+		}
+		if (!modalStatus.error) {
+			setModalStatus({
+				loading: false,
+				error: false,
+				success: true,
+			});
+			setTimeout(() => {
+				history.push('/checkout');
+			}, 1500);
+		}
 	}
 
 	return (
@@ -297,9 +448,53 @@ const Cart = props => {
 			</div>
 			<hr />
 			<p id='total-price'>Total: RD${calculatePrice()}.00</p>
-			<Link to={{ pathname: '/checkout' }}>
-				<button id='checkout-button'>CHECKOUT</button>
-			</Link>
+			<button
+				id='checkout-button'
+				onClick={e => {
+					e.preventDefault();
+					handleCheckout();
+				}}>
+				CHECKOUT
+			</button>
+			<Modal
+				show={show}
+				onHide={e => {
+					setShow(false);
+				}}
+				backdrop='static'
+				keyboard={false}>
+				<Modal.Header closeButton>
+					<strong>Proceding to Checkout</strong>
+				</Modal.Header>
+				<Modal.Body>
+					{modalStatus.loading && (
+						<>
+							<Spinner style={{ marginLeft: '45%' }} animation='border' variant='primary' />
+							<p style={{ textAlign: 'center' }}>Proceding to Checkout...</p>
+						</>
+					)}
+					{modalStatus.error && (
+						<>
+							<FontAwesomeIcon
+								style={{ marginLeft: '45%', color: 'red' }}
+								size='3x'
+								icon={faTimes}
+							/>
+							<p style={{ textAlign: 'center' }}>Error Processing Cart.</p>
+						</>
+					)}
+					{modalStatus.success && (
+						<>
+							<FontAwesomeIcon
+								style={{ marginLeft: '45%', color: 'green' }}
+								size='3x'
+								icon={faCheck}
+							/>
+							<p style={{ textAlign: 'center' }}>Cart Processed Succesfully!</p>
+						</>
+					)}
+				</Modal.Body>
+			</Modal>
 			<Footer position='relative' bottom='0' />
 		</div>
 	);

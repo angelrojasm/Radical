@@ -77,6 +77,17 @@ exports.clearCart = async (req, res) => {
 	}
 };
 
+exports.updateCartItem = async (req, res) => {
+	try {
+		await CartItem.findByIdAndUpdate(req.body.cartItemId, {
+			[req.body.attribute]: req.body.value,
+		});
+		res.send({ eror: false });
+	} catch (e) {
+		res.send({ error: true, details: e });
+	}
+};
+
 const getCartItem = async (cartId, itemId) => {
 	return await CartItem.findOne({ cartId: cartId, itemId: itemId });
 };

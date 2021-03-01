@@ -27,6 +27,18 @@
 				margin-right: 15px;
 			}
 		}
+		#quantity-section {
+			display: none;
+			margin-bottom: 10%;
+
+			p {
+				margin: auto 0;
+				margin-right: 15px;
+			}
+			input {
+				width: 7.5vw;
+			}
+		}
 	}
 }
 @media only screen and (max-width: 450px) {
@@ -47,6 +59,9 @@
 		#item-meta {
 			font-size: 3vw;
 			width: fit-content;
+			#quantity-section {
+				display: flex;
+			}
 			#title {
 				font-weight: bold;
 				font-size: 3.25vw;
