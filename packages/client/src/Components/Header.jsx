@@ -7,13 +7,21 @@ import '../scss/Header.scss';
 
 const Header = props => {
 	const [logoPosition, setLogoPosition] = useState(0);
-	const { loginWithRedirect, loginWithPopup, isAuthenticated, logout, user } = useAuth0();
+	const { loginWithPopup, isAuthenticated, logout } = useAuth0();
+	const [refresh, setRefresh] = useState(false);
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
 		isAuthenticated ? setLoggedIn(true) : setLoggedIn(false);
 	}, [isAuthenticated]);
 
+	useEffect(() => {
+		if (refresh) {
+			if (isAuthenticated) {
+				window.location = window.location.origin;
+			}
+		}
+	}, [refresh]);
 	function handleMouseOver() {
 		props.showSlider();
 	}
@@ -65,7 +73,12 @@ const Header = props => {
 								Logout
 							</button>
 						) : (
-							<button className='my-dropdown-item' onClick={() => loginWithPopup()}>
+							<button
+								className='my-dropdown-item'
+								onClick={async () => {
+									await loginWithPopup();
+									setRefresh(true);
+								}}>
 								Log in
 							</button>
 						)}

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { TopNav, Footer, OrderRecap, ModalPopup } from '../Components/index';
-import useForm from '../hooks/useForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
 import { faInfoCircle, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
@@ -10,13 +8,18 @@ import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import api from '../api/api';
+import db from '../localdb';
 import '../scss/Checkout.scss';
 
 const Checkout = props => {
 	const { user, isAuthenticated } = useAuth0();
 	const history = useHistory();
-	const [loading, setLoading] = useState();
-	const [show, setShow] = useState();
+	const [modalStatus, setModalStatus] = useState({
+		show: false,
+		loading: false,
+		error: false,
+		success: false,
+	});
 	const [billingInfo, setBillingInfo] = useState({
 		name: '',
 		email: '',
@@ -25,10 +28,20 @@ const Checkout = props => {
 		city: '',
 		residency: '',
 	});
+	const [errorFlags, setErrorFlags] = useState({
+		name: false,
+		email: false,
+		street: false,
+		city: false,
+		sector: false,
+		residency: false,
+	});
 	const [paymentOption, setPaymentOption] = useState('paypal');
 	const [shippingOption, setShippingOption] = useState('delivery');
-	const [shippingCost, setShippingCost] = useState('200.00');
+	const [shippingCost, setShippingCost] = useState(0);
 	const [file, setFile] = useState();
+	const [products, setProducts] = useState([]);
+	const [canLoad, setCanLoad] = useState(false);
 
 	function handleApprove() {
 		alert('ute pago');
@@ -36,27 +49,116 @@ const Checkout = props => {
 	}
 
 	useEffect(() => {
-		async function getdata() {
-			if (isAuthenticated) {
-				let userId = user.sub.split('|')[1];
-				let obj = await api.user().get(userId);
-				setBillingInfo({
-					name: `${obj.content.firstName} ${obj.content.lastName}`,
-					email: obj.content.email,
-					street: obj.content.street,
-					sector: obj.content.sector,
-					city: obj.content.city,
-					residency: obj.content.residency,
-				});
-			}
+		if (props.location.state !== undefined) {
+			setProducts(props.location.state.products);
 		}
-		getdata();
+		setTimeout(() => {
+			setCanLoad(true);
+		}, 1400);
 	}, []);
 
 	useEffect(() => {
-		shippingOption === 'delivery' ? setShippingCost('200.00') : setShippingCost('0.00');
+		async function getUserdata() {
+			let userId = user.sub.split('|')[1];
+			let obj = await api.user().get(userId);
+			setBillingInfo({
+				name: `${obj.content.firstName} ${obj.content.lastName}`,
+				email: obj.content.email,
+				street: obj.content.street,
+				sector: obj.content.sector,
+				city: obj.content.city,
+				residency: obj.content.residency,
+			});
+		}
+		async function getOnlineData() {
+			let productsArr = await api.cart().getItems(user.sub.split('|')[1]);
+			let temp = [];
+			for (let i = 0; i < productsArr.content.length; i++) {
+				let entry = await api.item().getItem(productsArr.content[i].itemId);
+				temp.push({
+					data: entry.item,
+					size: productsArr.content[i].size,
+					quantity: productsArr.content[i].quantity,
+					uniqueId: productsArr.content[i]._id,
+				});
+			}
+			setProducts(temp);
+		}
+		async function getLocalData() {
+			let productsArr = db.queryAll('cartItem');
+			let temp = [];
+
+			for (let i = 0; i < productsArr.length; i++) {
+				let entry = await api.item().getItem(productsArr[i].itemId);
+				temp.push({
+					data: entry.item,
+					size: productsArr[i].size,
+					quantity: productsArr[i].quantity,
+					uniqueId: productsArr[i].ID,
+				});
+			}
+			setProducts(temp);
+		}
+
+		async function getData() {
+			if (canLoad) {
+				if (isAuthenticated) {
+					await getUserdata();
+					if (props.location.state === undefined) {
+						await getOnlineData();
+					}
+				} else {
+					if (props.location.state === undefined) {
+						await getLocalData();
+					}
+				}
+			}
+		}
+
+		getData();
+	}, [canLoad]);
+
+	useEffect(() => {
+		shippingOption === 'delivery' ? setShippingCost(200) : setShippingCost(0);
 	}, [shippingOption]);
 
+	function validateInput() {
+		let error = false;
+		for (const [key] of Object.entries(billingInfo)) {
+			if (billingInfo[key] === '') {
+				error = true;
+				setErrorFlags({
+					[key]: true,
+				});
+			}
+			if (error) {
+				break;
+			}
+		}
+		if (!error) {
+			if (
+				!billingInfo.email.match(
+					/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+				)
+			) {
+				setErrorFlags({
+					emailNotValid: true,
+				});
+				error = true;
+			} else {
+				setErrorFlags({});
+			}
+		}
+		return error;
+	}
+
+	function handleOrderPlacement() {
+		let error = validateInput();
+
+		if (!error) {
+			console.log('nice');
+		}
+	}
 	return (
 		<div id='checkout'>
 			<TopNav isBordered={true} />
@@ -65,7 +167,12 @@ const Checkout = props => {
 					<div className='section'>
 						<p className='section-title'>Billing Information</p>
 						<div className='attribute'>
-							<p className='attribute-title'>Name</p>
+							<p className='attribute-title'>
+								Name{' '}
+								{errorFlags.name && (
+									<span className='input-error'>* Please fill out your name.</span>
+								)}
+							</p>
 							<input
 								type='text'
 								className='input'
@@ -81,7 +188,17 @@ const Checkout = props => {
 						</div>
 
 						<div className='attribute'>
-							<p className='attribute-title'>Email</p>
+							<p className='attribute-title'>
+								Email{' '}
+								{errorFlags.email && (
+									<span className='input-error'>* Please fill out your email.</span>
+								)}
+								{errorFlags.emailNotValid && (
+									<span className='input-error'>
+										* Please enter a valid email address.
+									</span>
+								)}
+							</p>
 							<input
 								type='email'
 								className='input'
@@ -96,7 +213,12 @@ const Checkout = props => {
 							/>
 						</div>
 						<div className='attribute'>
-							<p className='attribute-title'>Address</p>
+							<p className='attribute-title'>
+								Address{' '}
+								{errorFlags.street && (
+									<span className='input-error'>* Please fill out your address.</span>
+								)}
+							</p>
 							<input
 								type='text'
 								className='input'
@@ -112,7 +234,12 @@ const Checkout = props => {
 						</div>
 						<div id='city-info'>
 							<div className='attribute'>
-								<p className='attribute-title'>City</p>
+								<p className='attribute-title'>
+									City{' '}
+									{errorFlags.city && (
+										<span className='input-error'>* Please fill out your city.</span>
+									)}
+								</p>
 								<input
 									type='text'
 									className='input'
@@ -127,7 +254,12 @@ const Checkout = props => {
 								/>
 							</div>
 							<div className='attribute'>
-								<p className='attribute-title'>Sector</p>
+								<p className='attribute-title'>
+									Sector{' '}
+									{errorFlags.sector && (
+										<span className='input-error'>* Please fill out your sector.</span>
+									)}
+								</p>
 								<input
 									type='text'
 									className='input'
@@ -143,7 +275,14 @@ const Checkout = props => {
 							</div>
 						</div>
 						<div className='attribute'>
-							<p className='attribute-title'>Residency</p>
+							<p className='attribute-title'>
+								Residency{' '}
+								{errorFlags.residency && (
+									<span className='input-error'>
+										* Please fill out your place of residency.
+									</span>
+								)}
+							</p>
 							<input
 								type='text'
 								className='input'
@@ -159,31 +298,10 @@ const Checkout = props => {
 						</div>
 					</div>
 					<div className='section'>
-						<div id='payment-popup-div'>
-							<p className='section-title' id='payment-title'>
-								Payment Information
-							</p>
-							<Popup
-								trigger={
-									<button
-										style={{
-											border: 'none',
-											background: 'none',
-											outline: 'none',
-											height: 'fit-content',
-										}}>
-										<FontAwesomeIcon icon={faInfoCircle} />
-									</button>
-								}
-								position='right center'>
-								<p style={{ fontSize: '0.75em' }}>
-									Radical only accepts bank transfers made to: <br />
-									Bank X <br />
-									Account Number #1111111 <br />
-									Titular Name: John Smith
-								</p>
-							</Popup>
-						</div>
+						<p className='section-title' id='payment-title'>
+							Payment Information
+						</p>
+
 						<div className='radio-option'>
 							<input
 								type='radio'
@@ -224,6 +342,12 @@ const Checkout = props => {
 										}}
 									/>
 								</div>
+								<p id='transfer-bank-info'>
+									** Radical only accepts bank transfers made to: <br />
+									Bank X <br />
+									Account Number #1111111 <br />
+									Titular Name: John Smith
+								</p>
 							</div>
 						)}
 					</div>
@@ -267,15 +391,17 @@ const Checkout = props => {
 									fontSize: '1.15em',
 								}}
 								onClick={e => {
-									setShow(true);
-									setLoading(true);
+									handleOrderPlacement();
 								}}>
 								Place Order
 							</Button>
 							<Modal
-								show={show}
+								show={modalStatus.show}
 								onHide={e => {
-									setShow(false);
+									setModalStatus({
+										...modalStatus,
+										show: false,
+									});
 								}}
 								backdrop='static'
 								keyboard={false}>
@@ -283,7 +409,7 @@ const Checkout = props => {
 									<strong>Payment Section</strong>
 								</Modal.Header>
 								<Modal.Body>
-									{loading && (
+									{modalStatus.loading && (
 										<>
 											<Spinner
 												style={{ marginLeft: '45%' }}
@@ -299,10 +425,14 @@ const Checkout = props => {
 					)}
 
 					{paymentOption === 'paypal' && (
-						<ModalPopup shippingCost={shippingCost} onApprove={handleApprove} />
+						<ModalPopup
+							shippingCost={shippingCost}
+							onApprove={handleApprove}
+							validateInput={validateInput}
+						/>
 					)}
 				</div>
-				<OrderRecap shippingCost={shippingCost} />
+				<OrderRecap shippingCost={shippingCost} productsProp={products} />
 			</div>
 			<Footer />
 		</div>

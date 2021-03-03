@@ -6,10 +6,13 @@ const CartItem = props => {
 	const history = useHistory();
 	const [sizeSelect, setSizeSelect] = useState(props.size);
 	const [quantity, setQuantity] = useState(props.quantity);
-	function redirect(title, link) {
+	function redirect(title) {
+		let tempItem = props.item;
+
+		tempItem.fileName = props.image;
 		history.push({
 			pathname: `/categories/Tops/${title}`,
-			state: { image: link },
+			state: { item: tempItem },
 		});
 	}
 
@@ -23,32 +26,35 @@ const CartItem = props => {
 	return (
 		<div id='cart-item'>
 			<img
+				style={{ cursor: 'pointer' }}
 				src={props.image}
 				onClick={e => {
 					e.preventDefault();
-					redirect(props.title, props.image);
+					redirect(props.title);
 				}}
 			/>
 
 			<div id='item-meta'>
 				<p id='title'>{props.title}</p>
 				{props.likes || <p>Color: Orange</p>}
-				<div id='quantity-section'>
-					<p>Quantity:</p>
-					<input
-						type='number'
-						name='Quantity'
-						id='quantity-input'
-						value={quantity}
-						onChange={e => {
-							e.preventDefault();
-							setQuantity(e.target.value);
-							handleQuantityChange(e.target.value);
-						}}
-						min='1'
-						step='1'
-					/>
-				</div>
+				{props.likes || (
+					<div id='quantity-section'>
+						<p>Quantity:</p>
+						<input
+							type='number'
+							name='Quantity'
+							id='quantity-input'
+							value={quantity}
+							onChange={e => {
+								e.preventDefault();
+								setQuantity(e.target.value);
+								handleQuantityChange(e.target.value);
+							}}
+							min='1'
+							step='1'
+						/>
+					</div>
+				)}
 
 				{props.likes || (
 					<div id='size-section'>

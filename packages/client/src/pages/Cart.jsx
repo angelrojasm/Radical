@@ -19,12 +19,60 @@ const Cart = props => {
 	const { user, isAuthenticated } = useAuth0();
 	const [products, setProducts] = useState([]);
 	const [canLoad, setCanLoad] = useState(false);
+	const [canSendInfo, setCanSendInfo] = useState(false);
 	const [removeText, setRemoveText] = useState({});
 	const [itemQuantities, setItemQuantities] = useState({});
 	const [itemSizes, setItemSizes] = useState({});
 	const [cartMessage, setCartMessage] = useState('Loading Cart...');
 	const [modalStatus, setModalStatus] = useState({ loading: false, error: false, success: false });
 	const [show, setShow] = useState();
+
+	async function getOnlineData() {
+		let productsArr = await api.cart().getItems(user.sub.split('|')[1]);
+		let temp = [];
+		let tempText = {};
+		let tempQuantities = {};
+		let tempSizes = {};
+		for (let i = 0; i < productsArr.content.length; i++) {
+			let entry = await api.item().getItem(productsArr.content[i].itemId);
+			temp.push({
+				data: entry.item,
+				size: productsArr.content[i].size,
+				quantity: productsArr.content[i].quantity,
+				uniqueId: productsArr.content[i]._id,
+			});
+			tempText[`${productsArr.content[i]._id}`] = 'Remove';
+			tempQuantities[`${productsArr.content[i]._id}`] = productsArr.content[i].quantity;
+			tempSizes[`${productsArr.content[i]._id}`] = productsArr.content[i].size;
+		}
+		setProducts(temp);
+		setRemoveText(tempText);
+		setItemQuantities(tempQuantities);
+		setItemSizes(tempSizes);
+	}
+	async function getLocalData() {
+		let productsArr = db.queryAll('cartItem');
+		let temp = [];
+		let tempText = {};
+		let tempQuantities = {};
+		let tempSizes = {};
+		for (let i = 0; i < productsArr.length; i++) {
+			let entry = await api.item().getItem(productsArr[i].itemId);
+			temp.push({
+				data: entry.item,
+				size: productsArr[i].size,
+				quantity: productsArr[i].quantity,
+				uniqueId: productsArr[i].ID,
+			});
+			tempText[`${productsArr[i].ID}`] = 'Remove';
+			tempQuantities[`${productsArr[i].ID}`] = productsArr[i].quantity;
+			tempSizes[`${productsArr[i].ID}`] = productsArr[i].size;
+		}
+		setProducts(temp);
+		setRemoveText(tempText);
+		setItemQuantities(tempQuantities);
+		setItemSizes(tempSizes);
+	}
 	useEffect(() => {
 		setTimeout(() => {
 			setCanLoad(true);
@@ -32,62 +80,32 @@ const Cart = props => {
 	}, []);
 
 	useEffect(() => {
+		if (canSendInfo) {
+			setTimeout(() => {
+				history.push({
+					pathname: '/checkout',
+					state: {
+						products: products,
+					},
+				});
+			}, 1000);
+		}
+	}, [canSendInfo]);
+	useEffect(() => {
 		if (canLoad) {
 			if (products.length === 0) {
 				setCartMessage('Cart is Empty!');
 			}
 		}
 	}, [products]);
+
 	useEffect(() => {
-		async function getOnlineData() {
-			let productsArr = await api.cart().getItems(user.sub.split('|')[1]);
-			let temp = [];
-			let tempText = {};
-			let tempQuantities = {};
-			let tempSizes = {};
-			for (let i = 0; i < productsArr.content.length; i++) {
-				let entry = await api.item().getItem(productsArr.content[i].itemId);
-				temp.push({
-					data: entry.item,
-					size: productsArr.content[i].size,
-					quantity: productsArr.content[i].quantity,
-					uniqueId: productsArr.content[i]._id,
-				});
-				tempText[`${productsArr.content[i]._id}`] = 'Remove';
-				tempQuantities[`${productsArr.content[i]._id}`] = productsArr.content[i].quantity;
-				tempSizes[`${productsArr.content[i]._id}`] = productsArr.content[i].size;
+		async function getData() {
+			if (canLoad) {
+				isAuthenticated ? await getOnlineData() : await getLocalData();
 			}
-			setProducts(temp);
-			setRemoveText(tempText);
-			setItemQuantities(tempQuantities);
-			setItemSizes(tempSizes);
 		}
-		async function getLocalData() {
-			let productsArr = db.queryAll('cartItem');
-			let temp = [];
-			let tempText = {};
-			let tempQuantities = {};
-			let tempSizes = {};
-			for (let i = 0; i < productsArr.length; i++) {
-				let entry = await api.item().getItem(productsArr[i].itemId);
-				temp.push({
-					data: entry.item,
-					size: productsArr[i].size,
-					quantity: productsArr[i].quantity,
-					uniqueId: productsArr[i].ID,
-				});
-				tempText[`${productsArr[i].ID}`] = 'Remove';
-				tempQuantities[`${productsArr[i].ID}`] = productsArr[i].quantity;
-				tempSizes[`${productsArr[i].ID}`] = productsArr[i].size;
-			}
-			setProducts(temp);
-			setRemoveText(tempText);
-			setItemQuantities(tempQuantities);
-			setItemSizes(tempSizes);
-		}
-		if (canLoad) {
-			isAuthenticated ? getOnlineData() : getLocalData();
-		}
+		getData();
 	}, [canLoad]);
 
 	async function removeFromCart(itemId, id, size) {
@@ -154,6 +172,7 @@ const Cart = props => {
 					<tr key={index} style={{ marginRight: '10vw' }}>
 						<td>
 							<CartItem
+								item={item.data}
 								image={baseUrl + item.data.fileName}
 								title={item.data.title}
 								size={item.size}
@@ -208,6 +227,7 @@ const Cart = props => {
 					<tr className='body' key={index} style={{ marginRight: '10vw' }}>
 						<td>
 							<CartItem
+								item={item.data}
 								image={baseUrl + item.data.fileName}
 								title={item.data.title}
 								size={item.size}
@@ -266,6 +286,7 @@ const Cart = props => {
 				return (
 					<div key={index} id='cart-item-entry'>
 						<CartItem
+							item={item.data}
 							image={baseUrl + item.data.fileName}
 							title={item.data.title}
 							size={item.size}
@@ -296,6 +317,7 @@ const Cart = props => {
 				return (
 					<div key={index} className='body' id='cart-item-entry'>
 						<CartItem
+							item={item.data}
 							image={baseUrl + item.data.fileName}
 							title={item.data.title}
 							size={item.size}
@@ -346,7 +368,7 @@ const Cart = props => {
 		});
 		let items = products;
 
-		for (const item of products) {
+		for (const item of items) {
 			if (itemQuantities[`${item.uniqueId}`] !== item.quantity) {
 				if (isAuthenticated) {
 					let response = await api
@@ -410,13 +432,12 @@ const Cart = props => {
 		}
 		if (!modalStatus.error) {
 			setModalStatus({
-				loading: false,
+				loading: true,
 				error: false,
-				success: true,
+				success: false,
 			});
-			setTimeout(() => {
-				history.push('/checkout');
-			}, 1500);
+			isAuthenticated ? await getOnlineData() : await getLocalData();
+			setCanSendInfo(true);
 		}
 	}
 

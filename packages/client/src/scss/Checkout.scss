@@ -1,4 +1,24 @@
 #checkout {
+	/* width */
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: lightgray;
+		border-radius: 5px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #bcbcbc;
+	}
 	background-color: #f4f4f4;
 	width: 100vw;
 	height: 108vh;
@@ -22,11 +42,17 @@
 			height: 90vh;
 
 			.section {
+				position: relative;
 				* {
 					margin: 0;
 				}
 				margin-bottom: 5%;
 
+				#transfer-bank-info {
+					margin: 2% 0;
+					font-size: 0.75em;
+					color: orange;
+				}
 				label {
 					font-size: 0.85em;
 				}
@@ -51,6 +77,11 @@
 			.attribute-title {
 				margin-left: 1%;
 				font-size: 0.85em;
+
+				.input-error {
+					color: red;
+					font-size: 0.75em;
+				}
 			}
 
 			.icon {

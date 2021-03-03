@@ -35,7 +35,7 @@ const Likes = props => {
 				if (products.length === 0) {
 					setLikesMessage('No Items in Likes!');
 				}
-			}, 200);
+			}, 600);
 		}
 	}, [isAuthenticated]);
 
@@ -79,7 +79,12 @@ const Likes = props => {
 			if (index === products.length - 1) {
 				return (
 					<div key={index} id='likes-item-entry' className='body'>
-						<CartItem likes={true} image={baseUrl + item.fileName} title={item.title} />
+						<CartItem
+							likes={true}
+							image={baseUrl + item.fileName}
+							title={item.title}
+							item={item}
+						/>
 						<div id='price-section'>
 							<p>
 								<strong>RD${item.price}.00</strong>
@@ -101,7 +106,12 @@ const Likes = props => {
 			} else {
 				return (
 					<div key={index} className='body' id='likes-item-entry'>
-						<CartItem likes={true} image={baseUrl + item.fileName} title={item.title} />
+						<CartItem
+							likes={true}
+							image={baseUrl + item.fileName}
+							title={item.title}
+							item={item}
+						/>
 						<div id='price-section'>
 							<p>
 								<strong>RD${item.price}.00</strong>

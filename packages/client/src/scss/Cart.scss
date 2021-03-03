@@ -2,6 +2,27 @@ html {
 	overflow-x: hidden;
 }
 #cart {
+	/* width */
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f4f4f4;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: lightgray;
+		border-radius: 5px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #bcbcbc;
+	}
+
 	& > * {
 		position: relative;
 		top: 10vh;

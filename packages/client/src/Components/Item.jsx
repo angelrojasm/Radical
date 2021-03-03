@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import '../scss/Item.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as regHeart } from '@fortawesome/free-regular-svg-icons';
-import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import api from '../api/api';
 import { useAuth0 } from '@auth0/auth0-react';
 import db from '../localdb';
@@ -12,23 +9,7 @@ const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
 
 const Item = props => {
 	const { user, isAuthenticated } = useAuth0();
-	const [isHovering, setIsHovering] = useState(false);
-	const [isLiked, setIsLiked] = useState(false);
 	const [cartText, setCartText] = useState('Add to Cart');
-
-	function handleMouseIn(e) {
-		e.preventDefault();
-		if (!isHovering) {
-			setIsHovering(true);
-		}
-	}
-
-	function handleMouseOut(e) {
-		e.preventDefault();
-		if (isHovering) {
-			setIsHovering(false);
-		}
-	}
 
 	async function addToCart() {
 		const defaultText = cartText;
@@ -74,14 +55,6 @@ const Item = props => {
 		}
 	}
 
-	async function addToLikes() {
-		if (isAuthenticated) {
-			let response = await api.likes().addItem(user.sub.split('|')[1], props.item._id);
-			if (!response.error) {
-				setIsLiked(true);
-			}
-		}
-	}
 	return (
 		<div id='item'>
 			<div id='image-container'>
