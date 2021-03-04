@@ -3,7 +3,7 @@ import 'reactjs-popup/dist/index.css';
 import { TopNav, Footer, OrderRecap, ModalPopup } from '../Components/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
-import { faInfoCircle, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyBill, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -23,6 +23,7 @@ const Checkout = props => {
 	const [billingInfo, setBillingInfo] = useState({
 		name: '',
 		email: '',
+		phone: '',
 		street: '',
 		sector: '',
 		city: '',
@@ -31,15 +32,17 @@ const Checkout = props => {
 	const [errorFlags, setErrorFlags] = useState({
 		name: false,
 		email: false,
+		phone: false,
 		street: false,
 		city: false,
 		sector: false,
 		residency: false,
+		image: false,
 	});
 	const [paymentOption, setPaymentOption] = useState('paypal');
 	const [shippingOption, setShippingOption] = useState('delivery');
 	const [shippingCost, setShippingCost] = useState(0);
-	const [file, setFile] = useState();
+	const [file, setFile] = useState(null);
 	const [products, setProducts] = useState([]);
 	const [canLoad, setCanLoad] = useState(false);
 
@@ -64,6 +67,7 @@ const Checkout = props => {
 			setBillingInfo({
 				name: `${obj.content.firstName} ${obj.content.lastName}`,
 				email: obj.content.email,
+				phone: obj.content.phone,
 				street: obj.content.street,
 				sector: obj.content.sector,
 				city: obj.content.city,
@@ -124,6 +128,7 @@ const Checkout = props => {
 
 	function validateInput() {
 		let error = false;
+		let phone = billingInfo.phone.replace(/-/g, '');
 		for (const [key] of Object.entries(billingInfo)) {
 			if (billingInfo[key] === '') {
 				error = true;
@@ -136,13 +141,23 @@ const Checkout = props => {
 			}
 		}
 		if (!error) {
-			if (
+			if (!file && paymentOption === 'transfer') {
+				setErrorFlags({
+					image: true,
+				});
+				error = true;
+			} else if (
 				!billingInfo.email.match(
 					/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 				)
 			) {
 				setErrorFlags({
 					emailNotValid: true,
+				});
+				error = true;
+			} else if (!phone.match(/^(809|829|849)[0-9]{7}$/)) {
+				setErrorFlags({
+					phoneNotValid: true,
 				});
 				error = true;
 			} else {
@@ -152,11 +167,40 @@ const Checkout = props => {
 		return error;
 	}
 
-	function handleOrderPlacement() {
+	function calculateTotal() {
+		let items = products;
+		let price = 0;
+
+		if (products.length !== 0) {
+			for (const item of items) {
+				price += Number(item.data.price) * Number(item.quantity);
+			}
+		}
+		return price + shippingCost;
+	}
+	async function handleOrderPlacement() {
 		let error = validateInput();
 
 		if (!error) {
-			console.log('nice');
+			setModalStatus({
+				show: true,
+				loading: true,
+			});
+			let total = calculateTotal();
+			let formData = new FormData();
+			formData.append('userId', user.sub.split('|')[1]);
+			formData.append('billingInfo', JSON.stringify(billingInfo));
+			formData.append('products', JSON.stringify(products));
+			formData.append('shippingMethod', shippingOption);
+			formData.append('paymentMethod', paymentOption);
+			formData.append('total', total);
+			formData.append('image', file);
+			let response = await api.order().create(formData);
+			if (response.error) {
+				setModalStatus({ show: true, error: true });
+			} else {
+				setModalStatus({ show: true, success: true });
+			}
 		}
 	}
 	return (
@@ -211,6 +255,35 @@ const Checkout = props => {
 									});
 								}}
 							/>
+						</div>
+						<div id='phone-info'>
+							<div className='attribute'>
+								<p className='attribute-title'>
+									Phone (DO){' '}
+									{errorFlags.phone && (
+										<span className='input-error'>
+											* Please fill out your phone number.
+										</span>
+									)}
+									{errorFlags.phoneNotValid && (
+										<span className='input-error'>
+											* Please enter a valid phone number.
+										</span>
+									)}
+								</p>
+								<input
+									type='text'
+									className='input'
+									value={billingInfo.phone}
+									name='phone'
+									onChange={e => {
+										setBillingInfo({
+											...billingInfo,
+											[e.target.name]: e.target.value,
+										});
+									}}
+								/>
+							</div>
 						</div>
 						<div className='attribute'>
 							<p className='attribute-title'>
@@ -334,11 +407,19 @@ const Checkout = props => {
 						{paymentOption === 'transfer' && (
 							<div>
 								<div className='attribute'>
-									<p className='attribute-title'>Transfer Receipt:</p>
+									<p className='attribute-title'>
+										Transfer Receipt:{' '}
+										{errorFlags.image && (
+											<span className='input-error'>
+												* Please Attach the payment receipt
+											</span>
+										)}
+									</p>
 									<input
 										type='file'
+										accept='image/*'
 										onChange={e => {
-											setFile(e.target.value);
+											setFile(e.target.files[0]);
 										}}
 									/>
 								</div>
@@ -398,10 +479,14 @@ const Checkout = props => {
 							<Modal
 								show={modalStatus.show}
 								onHide={e => {
-									setModalStatus({
-										...modalStatus,
-										show: false,
-									});
+									if (modalStatus.error || modalStatus.loading) {
+										setModalStatus({
+											...modalStatus,
+											show: false,
+										});
+									} else if (modalStatus.success) {
+										window.location = window.location.origin;
+									}
 								}}
 								backdrop='static'
 								keyboard={false}>
@@ -417,6 +502,29 @@ const Checkout = props => {
 												variant='primary'
 											/>
 											<p style={{ textAlign: 'center' }}>Placing Order...</p>
+										</>
+									)}
+									{modalStatus.error && (
+										<>
+											<FontAwesomeIcon
+												style={{ marginLeft: '45%', color: 'red' }}
+												size='3x'
+												icon={faTimes}
+											/>
+											<p style={{ textAlign: 'center' }}>Error Placing Order.</p>
+										</>
+									)}
+									{modalStatus.success && (
+										<>
+											<FontAwesomeIcon
+												style={{ marginLeft: '45%', color: 'green' }}
+												size='3x'
+												icon={faCheck}
+											/>
+											<p style={{ textAlign: 'center' }}>
+												Order has been placed Succesfully! <br />
+												We will verify your transfer receipt and contact you shortly!
+											</p>
 										</>
 									)}
 								</Modal.Body>

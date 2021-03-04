@@ -1,11 +1,6 @@
 const Order = require('../models/order');
 const CartController = require('./cartController');
 const nodeMailer = require('nodemailer');
-const s3 = require('../../aws/controller/s3');
-const Cart = require('../models/cart');
-const CartItem = require('../models/cartItem');
-const Item = require('../models/item');
-const User = require('../models/user');
 
 exports.createOrder = async (req, res) => {
 	let currDate = new Date();
@@ -14,9 +9,9 @@ exports.createOrder = async (req, res) => {
 			userId: req.body.userId,
 			total: req.body.total,
 			date: currDate,
-			items: req.body.items,
+			paymentMethod: req.body.method,
 		});
-		res.send({ error: false });
+		emailOrderInfo(req, res);
 	} catch (e) {
 		console.log(e);
 		res.send({ error: true, details: e });
@@ -36,22 +31,15 @@ exports.getOrderItems = async (req, res) => {
 	await CartController.getCart(req, res);
 };
 
-exports.emailOrderInfo = async (req, res) => {
+const emailOrderInfo = (req, res) => {
 	var mailOptions;
-	let userData = await User.findOne({ userId: req.body.userId });
-	let cart = await Cart.findOne({ userId: req.body.userId });
-	let cartItems = await CartItem.find({ cartId: cart._id });
+	let userData = JSON.parse(req.body.billingInfo);
+	let cartItems = JSON.parse(req.body.products);
 	let itemsArray = [];
 	for (const item of cartItems) {
-		itemsArray.push(await Item.findById(item.itemId));
-	}
-
-	let orderInfo = [];
-	for (let i = 0; i < itemsArray.length; i++) {
-		orderInfo.push({
-			imageBuffer: 'http://du9yuz2ex8zdk.cloudfront.net/' + itemsArray[i].fileName,
-			size: cartItems[i].size,
-		});
+		let x = item.data;
+		x.fileName = 'http://du9yuz2ex8zdk.cloudfront.net/' + x.fileName;
+		itemsArray.push(x);
 	}
 
 	const transporter = nodeMailer.createTransport({
@@ -68,31 +56,35 @@ exports.emailOrderInfo = async (req, res) => {
 		New Order!
 	</h1>
 	<h2>Client Details:</h2>
-		<h3>Client: <span>${userData.firstName} ${userData.lastName}</span></h3>
+		<h3>Client: <span>${userData.name}</span></h3>
 		<h3>Email: <span>${userData.email}</span></h3>
 		<h3>Phone: <span>${userData.phone}</span></h3>
 		<h3>Address:</h3>
 			<p>${userData.residency}, ${userData.street}, ${userData.sector}. ${userData.city}</p>
+		<h3>Order Type: ${req.body.shippingMethod}
 	<h2>Order Details:</h2>
 
 	`;
 
-	for (let i = 0; i < orderInfo.length; i++) {
+	for (let i = 0; i < itemsArray.length; i++) {
 		html += `
-    <h3>Item #${i + 1}<h3>
-    <img height="400" width="250" src="${orderInfo[i].imageBuffer}"/>
-    <p>replace with item name: ${itemsArray[i].fileName}</p>
+    <h2>Item #${i + 1}</h2>
+    <img height="400" width="250" src="${itemsArray[i].fileName}"/>
+    <p>${itemsArray[i].title}</p>
+	<p>Quantity: ${cartItems[i].quantity}</p>
     <p>Size: ${cartItems[i].size}</p>
     `;
 	}
-	html += `Payment Method: ${req.body.method}`;
-	if (req.body.method === 'transfer') {
+	html += `<h3>Order Total: ${req.body.total}</h3>`;
+
+	html += `Payment Method: ${req.body.paymentMethod}`;
+	if (req.body.paymentMethod === 'transfer') {
 		html += `
 		<h2>Payment Receipt:</h2>
 		`;
 	}
 
-	if (req.body.method === 'transfer') {
+	if (req.body.paymentMethod === 'transfer') {
 		mailOptions = {
 			from: 'watuchiha@gmail.com',
 			to: 'angelrojasm6@gmail.com',
@@ -114,9 +106,9 @@ exports.emailOrderInfo = async (req, res) => {
 	}
 	transporter.sendMail(mailOptions, function (error, info) {
 		if (error) {
-			res.send(error);
+			res.send({ error: true, details: error });
 		} else {
-			res.send(info);
+			res.send({ error: false });
 		}
 	});
 };

@@ -142,11 +142,8 @@ export default {
 			getItems: async userId => {
 				return this.cart.getItems(userId);
 			},
-			create: async (userId, total) => {
-				let response = await axios.post(route, {
-					userId: userId,
-					total: total,
-				});
+			create: async formData => {
+				let response = await axios.post(route, formData);
 				return response.data;
 			},
 		};
