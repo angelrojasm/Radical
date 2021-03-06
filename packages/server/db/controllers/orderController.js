@@ -5,12 +5,20 @@ const nodeMailer = require('nodemailer');
 exports.createOrder = async (req, res) => {
 	let currDate = new Date();
 	try {
-		await Order.create({
-			userId: req.body.userId,
-			total: req.body.total,
-			date: currDate,
-			paymentMethod: req.body.method,
-		});
+		if (req.body.userId) {
+			await Order.create({
+				userId: req.body.userId,
+				total: req.body.total,
+				date: currDate,
+				paymentMethod: req.body.method,
+			});
+		} else {
+			await Order.create({
+				total: req.body.total,
+				date: currDate,
+				paymentMethod: req.body.method,
+			});
+		}
 		emailOrderInfo(req, res);
 	} catch (e) {
 		console.log(e);

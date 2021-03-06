@@ -13,7 +13,6 @@ import '../scss/Checkout.scss';
 
 const Checkout = props => {
 	const { user, isAuthenticated } = useAuth0();
-	const history = useHistory();
 	const [modalStatus, setModalStatus] = useState({
 		show: false,
 		loading: false,
@@ -45,11 +44,6 @@ const Checkout = props => {
 	const [file, setFile] = useState(null);
 	const [products, setProducts] = useState([]);
 	const [canLoad, setCanLoad] = useState(false);
-
-	function handleApprove() {
-		alert('ute pago');
-		history.push('/');
-	}
 
 	useEffect(() => {
 		if (props.location.state !== undefined) {
@@ -188,21 +182,61 @@ const Checkout = props => {
 			});
 			let total = calculateTotal();
 			let formData = new FormData();
-			formData.append('userId', user.sub.split('|')[1]);
-			formData.append('billingInfo', JSON.stringify(billingInfo));
-			formData.append('products', JSON.stringify(products));
-			formData.append('shippingMethod', shippingOption);
-			formData.append('paymentMethod', paymentOption);
-			formData.append('total', total);
-			formData.append('image', file);
+			if (isAuthenticated) {
+				formData.append('userId', user.sub.split('|')[1]);
+				formData.append('billingInfo', JSON.stringify(billingInfo));
+				formData.append('products', JSON.stringify(products));
+				formData.append('shippingMethod', shippingOption);
+				formData.append('paymentMethod', paymentOption);
+				formData.append('total', total);
+				formData.append('image', file);
+			} else {
+				formData.append('billingInfo', JSON.stringify(billingInfo));
+				formData.append('products', JSON.stringify(products));
+				formData.append('shippingMethod', shippingOption);
+				formData.append('paymentMethod', paymentOption);
+				formData.append('total', total);
+				formData.append('image', file);
+			}
 			let response = await api.order().create(formData);
 			if (response.error) {
 				setModalStatus({ show: true, error: true });
 			} else {
-				setModalStatus({ show: true, success: true });
+				if (isAuthenticated) {
+					await api.cart().clear(user.sub.split('|')[1]);
+					setModalStatus({ show: true, success: true });
+				} else {
+					db.deleteRows('cartItem');
+					db.commit();
+					setModalStatus({ show: true, success: true });
+				}
 			}
 		}
 	}
+
+	function getOrderInfo() {
+		let total = calculateTotal();
+		let orderInfo = {
+			userId: user.sub.split('|')[1],
+			billingInfo: JSON.stringify(billingInfo),
+			products: JSON.stringify(products),
+			shippingMethod: shippingOption,
+			paymentMethod: paymentOption,
+			total: total,
+		};
+
+		return orderInfo;
+	}
+	function updateModal(newStatus) {
+		if (newStatus === 'loading') {
+			setModalStatus({ show: true, loading: true });
+		} else if (newStatus === 'error') {
+			setModalStatus({ show: true, error: true });
+		} else if (newStatus === 'success') {
+			setModalStatus({ show: true, success: true });
+		}
+	}
+
 	return (
 		<div id='checkout'>
 			<TopNav isBordered={true} />
@@ -533,11 +567,69 @@ const Checkout = props => {
 					)}
 
 					{paymentOption === 'paypal' && (
-						<ModalPopup
-							shippingCost={shippingCost}
-							onApprove={handleApprove}
-							validateInput={validateInput}
-						/>
+						<>
+							<ModalPopup
+								shippingCost={shippingCost}
+								validateInput={validateInput}
+								getOrderInfo={getOrderInfo}
+								productsProp={products}
+								updateModal={updateModal}
+								calculateTotal={calculateTotal}
+							/>
+							<Modal
+								show={modalStatus.show}
+								onHide={e => {
+									if (modalStatus.error || modalStatus.loading) {
+										setModalStatus({
+											...modalStatus,
+											show: false,
+										});
+									} else if (modalStatus.success) {
+										window.location = window.location.origin;
+									}
+								}}
+								backdrop='static'
+								keyboard={false}>
+								<Modal.Header closeButton>
+									<strong>Payment Section</strong>
+								</Modal.Header>
+								<Modal.Body>
+									{modalStatus.loading && (
+										<>
+											<Spinner
+												style={{ marginLeft: '45%' }}
+												animation='border'
+												variant='primary'
+											/>
+											<p style={{ textAlign: 'center' }}>Placing Order...</p>
+										</>
+									)}
+									{modalStatus.error && (
+										<>
+											<FontAwesomeIcon
+												style={{ marginLeft: '45%', color: 'red' }}
+												size='3x'
+												icon={faTimes}
+											/>
+											<p style={{ textAlign: 'center' }}>Error Placing Order.</p>
+										</>
+									)}
+									{modalStatus.success && (
+										<>
+											<FontAwesomeIcon
+												style={{ marginLeft: '45%', color: 'green' }}
+												size='3x'
+												icon={faCheck}
+											/>
+											<p style={{ textAlign: 'center' }}>
+												Order has been placed Succesfully! <br />
+												We will verify your transfer receipt and contact you shortly!
+											</p>
+										</>
+									)}
+								</Modal.Body>
+							</Modal>
+						</>
 					)}
 				</div>
 				<OrderRecap shippingCost={shippingCost} productsProp={products} />
