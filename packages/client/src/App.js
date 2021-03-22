@@ -9,6 +9,7 @@ import {
 	UserProfile,
 	Likes,
 	Checkout,
+	AdminPanel,
 } from './pages/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import api from './api/api';
@@ -60,11 +61,11 @@ function App() {
 					<Route path='/myprofile' exact component={UserProfile} />
 					<Route path='/likes' exact component={Likes} />
 					<Route path='/checkout' exact component={Checkout} />
+					<Route path='/admin/panel' exact component={AdminPanel} />
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>
 		</>
-		//<Testing/>
 	);
 }
 

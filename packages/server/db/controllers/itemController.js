@@ -4,8 +4,18 @@ const s3 = require('../../aws/controller/s3');
 
 exports.createItem = async (req, res) => {
 	try {
-		await Item.create({ fileName: req.body.fileName });
-		res.send({ error: false });
+		let uploaded = await s3.uploadFile(req.files.image, req.body.fileName);
+		if (uploaded.error) {
+			res.send({ error: true, details: uploaded.details });
+		} else {
+			await Item.create({
+				fileName: req.body.fileName,
+				title: req.body.title,
+				category: req.body.category,
+				price: req.body.price,
+			});
+			res.send({ error: false });
+		}
 	} catch (e) {
 		console.log(e);
 		res.send({ error: true, details: e });

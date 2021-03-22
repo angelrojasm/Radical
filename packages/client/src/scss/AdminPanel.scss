@@ -1,0 +1,72 @@
+$hyperlink-color: #1976d2;
+
+#admin-panel {
+	.input-error {
+		font-size: 0.75em;
+		color: red;
+		font-weight: normal;
+	}
+	#login-header {
+		text-align: center;
+		margin: 0 auto;
+		position: relative;
+		top: 3%;
+	}
+
+	#admin-panel-container {
+		position: relative;
+		top: 15vh;
+		margin: 0 auto;
+		background-color: white;
+		width: 35vw;
+		height: 80vh;
+		box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+		overflow: auto;
+
+		#panel-title {
+			margin-top: 5%;
+			margin-bottom: 5%;
+			text-align: center;
+		}
+
+		#add-item-section {
+			h3 {
+				text-align: center;
+			}
+
+			button {
+				width: 40%;
+				margin-left: 30%;
+				margin-top: 5%;
+			}
+		}
+	}
+
+	label {
+		font-weight: 500;
+	}
+
+	.section {
+		text-align: center;
+		margin: 0 auto;
+		margin-top: 8%;
+		width: 70%;
+		font-size: large;
+
+		label {
+			margin-right: 3%;
+		}
+
+		input {
+			margin-bottom: 3%;
+		}
+	}
+
+	@media only screen and (max-width: 450px) {
+		#admin-panel-container {
+			position: relative;
+			width: 85%;
+			top: 17.5vh;
+		}
+	}
+}

@@ -13,7 +13,7 @@ exports.uploadFile = (file, fileName) => {
 	return new Promise((resolve, reject) => {
 		let fileParts = file.name.split('.');
 		let fileType = fileParts[1];
-		let filename = file.name
+		let filename = file.name;
 		s3.putObject(
 			{
 				Bucket: s3Bucket,
@@ -24,16 +24,16 @@ exports.uploadFile = (file, fileName) => {
 			},
 			function (err) {
 				if (err) {
-					return reject(err);
+					return reject({ error: true, details: err });
 				} else {
-					return resolve('Ok');
+					return resolve({ error: false });
 				}
 			}
 		);
 	});
 };
 exports.getFile = (fileName, res) => {
-	return new Promise((resolve,reject) => {
+	return new Promise((resolve, reject) => {
 		s3.getObject(
 			{
 				Bucket: s3Bucket,
@@ -46,6 +46,6 @@ exports.getFile = (fileName, res) => {
 					return resolve(data.Body);
 				}
 			}
-	)
-})
-}
+		);
+	});
+};

@@ -13,7 +13,7 @@ import WithAlert from '../hoc/withAlert';
 const Category = props => {
 	const history = useHistory();
 	const [paginationIndex, setPaginationIndex] = useState(1);
-	const [itemCount, setItemCount] = useState(6);
+	const [itemCount, setItemCount] = useState(16);
 	const [products, setProducts] = useState([]);
 	const [showAlert, setShowAlert] = useState(false);
 
@@ -25,6 +25,31 @@ const Category = props => {
 			let products = itemArr.filter(element => {
 				return element.category === type.toLowerCase();
 			});
+			if (props.location.search !== '') {
+				let filter = props.location.search.split('=')[1];
+				switch (filter) {
+					case 'Name':
+						products.sort((a, b) => {
+							if (a.title < b.title) {
+								return -1;
+							}
+							if (a.title > b.title) {
+								return 1;
+							}
+							return 0;
+						});
+						break;
+					case 'Recent':
+						products.reverse();
+						break;
+					case 'Price':
+						products.sort((a, b) => {
+							return a.price - b.price;
+						});
+						break;
+					default:
+				}
+			}
 			setProducts(products);
 		}
 		getData();
@@ -67,20 +92,30 @@ const Category = props => {
 								className='dropdown-button btn-sm dropdown-toggle'
 								data-toggle='dropdown'>
 								{props.location.search === ''
-									? 'Sample Data'
-									: props.location.search.split('=')[1]}{' '}
+									? 'Oldest to Newest'
+									: props.location.search.split('=')[1]}
 							</button>
 							<div className='dropdown-menu'>
 								<a
 									className='dropdown-item'
-									href={`/categories/${props.match.params.name}?order=Option1`}>
-									Option 1
+									href={`/categories/${props.match.params.name}?order=Name`}>
+									Name
 								</a>
 
 								<a
 									className='dropdown-item'
-									href={`/categories/${props.match.params.name}?order=Option2`}>
-									Option 2
+									href={`/categories/${props.match.params.name}?order=Recent`}>
+									Newest
+								</a>
+								<a
+									className='dropdown-item'
+									href={`/categories/${props.match.params.name}?order=Oldest`}>
+									Oldest
+								</a>
+								<a
+									className='dropdown-item'
+									href={`/categories/${props.match.params.name}?order=Price`}>
+									Price (Lowest to highest)
 								</a>
 							</div>
 						</div>

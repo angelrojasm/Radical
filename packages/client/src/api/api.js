@@ -148,4 +148,16 @@ export default {
 			},
 		};
 	},
+	admin(route = '/admin') {
+		return {
+			isAdmin: async email => {
+				let response = await axios.get(`${route}/verify?email=${email}`);
+				return response.data;
+			},
+			create: async email => {
+				let response = await axios.post(route, { email: email });
+				return response.data;
+			},
+		};
+	},
 };
