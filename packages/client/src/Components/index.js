@@ -20,6 +20,8 @@ import Slider from './Slider';
 import TopNav from './TopNav';
 import User from './User';
 import ModalPopup from './ModalPopup';
+import CustomItemForm from './CustomItemForm';
+import CollapsableItem from './CollapsableItem';
 
 export {
 	BackgroundCarousel,
@@ -44,4 +46,6 @@ export {
 	TopNav,
 	User,
 	ModalPopup,
+	CollapsableItem,
+	CustomItemForm,
 };

@@ -10,6 +10,7 @@ import {
 	Likes,
 	Checkout,
 	AdminPanel,
+	Personalized,
 } from './pages/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import api from './api/api';
@@ -62,6 +63,7 @@ function App() {
 					<Route path='/likes' exact component={Likes} />
 					<Route path='/checkout' exact component={Checkout} />
 					<Route path='/admin/panel' exact component={AdminPanel} />
+					<Route path='/Personalized' exact component={Personalized} />
 					<Redirect to={'/'} />
 				</Switch>
 			</Router>

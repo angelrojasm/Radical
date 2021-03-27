@@ -62,10 +62,10 @@ const Slider = props => {
 					<a href='/categories/Jean Jackets'>JEAN JACKETS</a>
 				</li>
 				<li>
-					<a href='/categories/Caps'>GORRAS</a>
+					<a href='/categories/Caps'>CAPS</a>
 				</li>
 				<li>
-					<a href='/categories/Custom Designs'>PERSONALIZADOS</a>
+					<a href='/Personalized'>PERSONALIZED</a>
 				</li>
 			</ul>
 			{isAdmin && (

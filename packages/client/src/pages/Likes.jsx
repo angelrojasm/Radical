@@ -143,7 +143,11 @@ const Likes = props => {
 			</div>
 			<div id='likes-items'>{fillItemList()}</div>
 			{products.length === 0 && <h4 style={{ textAlign: 'center' }}>{likesMessage}</h4>}
-			<Footer id='footer' position='relative' bottom='0' />
+			{products.length <= 1 ? (
+				<Footer id='footer' position='fixed' bottom='-80vh' />
+			) : (
+				<Footer id='footer' position='relative' bottom='0' />
+			)}
 		</div>
 	);
 };

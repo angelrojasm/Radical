@@ -1,0 +1,23 @@
+#custom-form {
+	background-color: white;
+	width: 450px;
+	height: 600px;
+
+	.section {
+		width: 90%;
+		margin: 0 auto;
+		margin-top: 5%;
+
+		.attribute-title {
+			margin-right: 2.5%;
+		}
+
+		.comment-section {
+			margin-top: 5.5%;
+		}
+
+		#qty-select {
+			border: 1px solid gray;
+		}
+	}
+}
