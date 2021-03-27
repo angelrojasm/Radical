@@ -16,9 +16,13 @@ const ItemProfile = props => {
 		const defaultText = cartText;
 		setCartText('Adding ...');
 		if (isAuthenticated) {
-			let response = await api
-				.cart()
-				.addItem(user.sub.split('|')[1], props.location.state.item._id, 1, sizeSelect);
+			let form = new FormData();
+			form.append('userId', user.sub.split('|')[1]);
+			form.append('itemId', props.location.state.item._id);
+			form.append('quantity', '1');
+			form.append('size', sizeSelect);
+
+			let response = await api.cart().addItem(form);
 			console.log(response);
 			if (response.error) {
 				setCartText('Error adding item');

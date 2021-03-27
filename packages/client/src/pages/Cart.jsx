@@ -35,12 +35,22 @@ const Cart = props => {
 		let tempSizes = {};
 		for (let i = 0; i < productsArr.content.length; i++) {
 			let entry = await api.item().getItem(productsArr.content[i].itemId);
-			temp.push({
-				data: entry.item,
-				size: productsArr.content[i].size,
-				quantity: productsArr.content[i].quantity,
-				uniqueId: productsArr.content[i]._id,
-			});
+			if (productsArr.content[i].price) {
+				temp.push({
+					data: entry.item,
+					size: productsArr.content[i].size,
+					quantity: productsArr.content[i].quantity,
+					uniqueId: productsArr.content[i]._id,
+					price: productsArr.content[i].price,
+				});
+			} else {
+				temp.push({
+					data: entry.item,
+					size: productsArr.content[i].size,
+					quantity: productsArr.content[i].quantity,
+					uniqueId: productsArr.content[i]._id,
+				});
+			}
 			tempText[`${productsArr.content[i]._id}`] = 'Remove';
 			tempQuantities[`${productsArr.content[i]._id}`] = productsArr.content[i].quantity;
 			tempSizes[`${productsArr.content[i]._id}`] = productsArr.content[i].size;
@@ -58,12 +68,22 @@ const Cart = props => {
 		let tempSizes = {};
 		for (let i = 0; i < productsArr.length; i++) {
 			let entry = await api.item().getItem(productsArr[i].itemId);
-			temp.push({
-				data: entry.item,
-				size: productsArr[i].size,
-				quantity: productsArr[i].quantity,
-				uniqueId: productsArr[i].ID,
-			});
+			if (productsArr[i].price) {
+				temp.push({
+					data: entry.item,
+					size: productsArr[i].size,
+					quantity: productsArr[i].quantity,
+					uniqueId: productsArr[i].ID,
+					price: productsArr[i].price,
+				});
+			} else {
+				temp.push({
+					data: entry.item,
+					size: productsArr[i].size,
+					quantity: productsArr[i].quantity,
+					uniqueId: productsArr[i].ID,
+				});
+			}
 			tempText[`${productsArr[i].ID}`] = 'Remove';
 			tempQuantities[`${productsArr[i].ID}`] = productsArr[i].quantity;
 			tempSizes[`${productsArr[i].ID}`] = productsArr[i].size;
@@ -205,7 +225,7 @@ const Cart = props => {
 						<td>
 							<div id='price-section'>
 								<p>
-									<strong>RD${item.data.price}.00</strong>
+									<strong>RD${(item.price || item.data.price) * item.quantity}.00</strong>
 								</p>
 								<div id='delete-icon'>
 									<FontAwesomeIcon
@@ -260,7 +280,7 @@ const Cart = props => {
 						<td>
 							<div id='price-section'>
 								<p>
-									<strong>RD${item.data.price}.00</strong>
+									<strong>RD${(item.price || item.data.price) * item.quantity}.00</strong>
 								</p>
 								<div id='delete-icon'>
 									<FontAwesomeIcon
@@ -297,7 +317,7 @@ const Cart = props => {
 						/>
 						<div id='price-section'>
 							<p>
-								<strong>RD${item.data.price}.00</strong>
+								<strong>RD${(item.price || item.data.price) * item.quantity}.00</strong>
 							</p>
 							<div id='delete-icon'>
 								<FontAwesomeIcon
@@ -328,7 +348,7 @@ const Cart = props => {
 						/>
 						<div id='price-section'>
 							<p>
-								<strong>RD${item.data.price}.00</strong>
+								<strong>RD${(item.price || item.data.price) * item.quantity}.00</strong>
 							</p>
 							<div id='delete-icon'>
 								<FontAwesomeIcon
@@ -354,7 +374,11 @@ const Cart = props => {
 
 		if (products.length !== 0) {
 			for (const item of items) {
-				price += Number(item.data.price) * Number(itemQuantities[`${item.uniqueId}`]);
+				if (item.price) {
+					price += Number(item.price) * Number(itemQuantities[`${item.uniqueId}`]);
+				} else {
+					price += Number(item.data.price) * Number(itemQuantities[`${item.uniqueId}`]);
+				}
 			}
 		}
 		return price;

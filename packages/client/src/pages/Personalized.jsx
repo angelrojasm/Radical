@@ -14,22 +14,29 @@ const Personalized = props => {
 				<div className='custom-item-section'>
 					<p className='item-caption'>Jean Jacket</p>
 					<CollapsableItem
-						itemImage={process.env.REACT_APP_BASE_URL + 'Jean-Jacket-base.png'}
+						itemImage={process.env.REACT_APP_BASE_URL + 'jean-jackets.png'}
 						itemType='jean-jacket'
 					/>
 				</div>
 				<div className='custom-item-section'>
 					<p className='item-caption'>Caps</p>
 					<CollapsableItem
-						itemImage={process.env.REACT_APP_BASE_URL + 'caps.jpeg'}
+						itemImage={process.env.REACT_APP_BASE_URL + 'caps.png'}
 						itemType='cap'
 					/>
 				</div>
 				<div className='custom-item-section'>
 					<p className='item-caption'>Shirts</p>
 					<CollapsableItem
-						itemImage={process.env.REACT_APP_BASE_URL + 'Jean-Jacket-base.png'}
+						itemImage={process.env.REACT_APP_BASE_URL + 'shirts.png'}
 						itemType='shirt'
+					/>
+				</div>
+				<div className='custom-item-section'>
+					<p className='item-caption'>Hoodies</p>
+					<CollapsableItem
+						itemImage={process.env.REACT_APP_BASE_URL + 'hoodies.png'}
+						itemType='hoodie'
 					/>
 				</div>
 			</div>

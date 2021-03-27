@@ -19,7 +19,7 @@ const OrderRecap = ({ shippingCost = 0, isPopup = false, productsProp = [] }) =>
 								</p>
 								<p className='item-desc'>Size: {item.size}</p>
 							</div>
-							<p>RD${item.data.price}.00</p>
+							<p>RD${(item.price || item.data.price) * item.quantity}.00</p>
 						</div>
 						<hr style={{ width: '100%' }} />
 					</div>
@@ -34,7 +34,7 @@ const OrderRecap = ({ shippingCost = 0, isPopup = false, productsProp = [] }) =>
 								</p>
 								<p className='item-desc'>Size: {item.size}</p>
 							</div>
-							<p>RD${item.data.price}.00</p>
+							<p>RD${(item.price || item.data.price) * item.quantity}.00</p>
 						</div>
 						<hr />
 					</div>
@@ -48,7 +48,11 @@ const OrderRecap = ({ shippingCost = 0, isPopup = false, productsProp = [] }) =>
 
 		if (products.length !== 0) {
 			for (const item of items) {
-				price += Number(item.data.price) * Number(item.quantity);
+				if (item.price) {
+					price += Number(item.price) * Number(item.quantity);
+				} else {
+					price += Number(item.data.price) * Number(item.quantity);
+				}
 			}
 		}
 		return price;

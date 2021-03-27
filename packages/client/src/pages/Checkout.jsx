@@ -73,12 +73,22 @@ const Checkout = props => {
 			let temp = [];
 			for (let i = 0; i < productsArr.content.length; i++) {
 				let entry = await api.item().getItem(productsArr.content[i].itemId);
-				temp.push({
-					data: entry.item,
-					size: productsArr.content[i].size,
-					quantity: productsArr.content[i].quantity,
-					uniqueId: productsArr.content[i]._id,
-				});
+				if (productsArr.content[i].price) {
+					temp.push({
+						data: entry.item,
+						size: productsArr.content[i].size,
+						quantity: productsArr.content[i].quantity,
+						uniqueId: productsArr.content[i]._id,
+						price: productsArr.content[i].price,
+					});
+				} else {
+					temp.push({
+						data: entry.item,
+						size: productsArr.content[i].size,
+						quantity: productsArr.content[i].quantity,
+						uniqueId: productsArr.content[i]._id,
+					});
+				}
 			}
 			setProducts(temp);
 		}
@@ -88,12 +98,22 @@ const Checkout = props => {
 
 			for (let i = 0; i < productsArr.length; i++) {
 				let entry = await api.item().getItem(productsArr[i].itemId);
-				temp.push({
-					data: entry.item,
-					size: productsArr[i].size,
-					quantity: productsArr[i].quantity,
-					uniqueId: productsArr[i].ID,
-				});
+				if (productsArr[i].price) {
+					temp.push({
+						data: entry.item,
+						size: productsArr[i].size,
+						quantity: productsArr[i].quantity,
+						uniqueId: productsArr[i].ID,
+						price: productsArr[i].price,
+					});
+				} else {
+					temp.push({
+						data: entry.item,
+						size: productsArr[i].size,
+						quantity: productsArr[i].quantity,
+						uniqueId: productsArr[i].ID,
+					});
+				}
 			}
 			setProducts(temp);
 		}
@@ -167,7 +187,11 @@ const Checkout = props => {
 
 		if (products.length !== 0) {
 			for (const item of items) {
-				price += Number(item.data.price) * Number(item.quantity);
+				if (item.price) {
+					price += Number(item.price) * Number(item.quantity);
+				} else {
+					price += Number(item.data.price) * Number(item.quantity);
+				}
 			}
 		}
 		return price + shippingCost;

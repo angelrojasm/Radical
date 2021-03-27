@@ -63,6 +63,14 @@ export default {
 					});
 				return data;
 			},
+			addDesign: async form => {
+				let response = await axios.post(`${route}/add-design`, form);
+				return response.data;
+			},
+			deleteDesign: async form => {
+				let response = await axios.post(`${route}/delete-design`, form);
+				return response.data;
+			},
 		};
 	},
 	cart(route = '/cart') {
@@ -75,13 +83,8 @@ export default {
 				let response = await axios.post(route, { userId: userId });
 				return response.data;
 			},
-			addItem: async (userId, itemId, quantity, size) => {
-				let response = await axios.post(`${route}/add`, {
-					userId: userId,
-					itemId: itemId,
-					quantity: quantity,
-					size: size,
-				});
+			addItem: async form => {
+				let response = await axios.post(`${route}/add`, form);
 				return response.data;
 			},
 			removeItem: async (userId, itemId) => {

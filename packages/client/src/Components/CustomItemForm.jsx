@@ -2,19 +2,24 @@ import React, { useState, useEffect } from 'react';
 import '../scss/CustomItemForm.scss';
 import api from '../api/api';
 import db from '../localdb';
-import { faBreadSlice } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Spinner } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { useAuth0 } from '@auth0/auth0-react';
 const CustomItemForm = ({ itemType }) => {
+	const { user, isAuthenticated } = useAuth0();
 	const [itemInfo, SetItemInfo] = useState({
 		type: itemType,
 		size: 'S',
 		qty: 1,
 		color: 'White',
 		designType: 'Graphic',
-		image: {},
+		designImage: null,
 		comments: '',
 		price: 0,
 	});
-	const [errorFlags, setErrorFlags] = useState();
+	const [modalStatus, setModalStatus] = useState({});
+
 	function handleInputChange(e) {
 		SetItemInfo({
 			...itemInfo,
@@ -36,22 +41,124 @@ const CustomItemForm = ({ itemType }) => {
 			case 'shirt':
 				price = 300 + designPrice;
 				break;
-			case 'sweater':
+			case 'hoodie':
 				price = 650 + designPrice;
 				break;
 		}
 		return price;
 	}
+	function getItemId() {
+		let itemId;
+		let type = itemInfo.type;
+		switch (type) {
+			case 'cap':
+				itemId = '605f9785126573cce280d00e';
+				break;
+			case 'jean-jacket':
+				itemId = '605f9866126573cce280d00f';
+				break;
+			case 'shirt':
+				itemId = '605f9890126573cce280d010';
+				break;
+			case 'hoodie':
+				itemId = '605f98aa126573cce280d011';
+				break;
+		}
+		return itemId;
+	}
 
-	async function addToCart() {}
+	async function addToCart() {
+		let designImageFileName;
+		setModalStatus({
+			show: true,
+			loading: true,
+		});
+
+		if (itemInfo.designImage) {
+			designImageFileName = itemInfo.designImage.name;
+			let form = new FormData();
+			form.append('image', itemInfo.designImage);
+			let uploaded = await api.item().addDesign(form);
+			if (uploaded.error) {
+				setModalStatus({
+					show: true,
+					error: true,
+				});
+			}
+		}
+		if (isAuthenticated) {
+			let form = new FormData();
+			form.append('userId', user.sub.split('|')[1]);
+			form.append('itemId', getItemId());
+			form.append('quantity', itemInfo.qty);
+			form.append('size', itemInfo.size);
+			form.append('color', itemInfo.color);
+			form.append('designType', itemInfo.designType);
+			form.append('price', calculatePrice());
+			form.append('comments', itemInfo.comments);
+			if (itemInfo.designImage) {
+				form.append('designImage', designImageFileName);
+			}
+
+			let response = await api.cart().addItem(form);
+			if (response.error) {
+				setModalStatus({
+					show: true,
+					error: true,
+				});
+			} else {
+				setModalStatus({
+					show: true,
+					success: true,
+				});
+			}
+		} else {
+			let records = db.queryAll('cartItem', {
+				query: { itemId: getItemId(), size: itemInfo.size },
+			});
+			if (records.length > 0) {
+				db.update('cartItem', { itemId: getItemId(), size: itemInfo.size }, function (row) {
+					row.quantity += 1;
+
+					return row;
+				});
+				db.commit();
+			} else {
+				if (itemInfo.designImage) {
+					db.insert('cartItem', {
+						itemId: getItemId(),
+						quantity: itemInfo.qty,
+						size: itemInfo.size,
+						color: itemInfo.color,
+						designType: itemInfo.designType,
+						price: calculatePrice(),
+						comments: itemInfo.comments,
+						designImage: designImageFileName,
+					});
+				} else {
+					db.insert('cartItem', {
+						itemId: getItemId(),
+						quantity: itemInfo.qty,
+						size: itemInfo.size,
+						color: itemInfo.color,
+						designType: itemInfo.designType,
+						price: calculatePrice(),
+						comments: itemInfo.comments,
+					});
+				}
+				db.commit();
+				setModalStatus({
+					show: true,
+					success: true,
+				});
+			}
+		}
+	}
 	return (
 		<div id='custom-form'>
 			<p className='card-header text-center font-weight-bold'>Customize your Item!</p>
 			<div className='section'>
-				<form
-					onSubmit={e => {
-						addToCart();
-					}}>
+				<form>
 					<div className='attribute form-group'>
 						<label htmlFor='size-select' className='attribute-title'>
 							Size:
@@ -128,7 +235,7 @@ const CustomItemForm = ({ itemType }) => {
 						<label htmlFor='exampleFormControlFile1'>Design Image Example:</label>
 						<input
 							type='file'
-							name='image'
+							name='designImage'
 							className='form-control-file'
 							id='exampleFormControlFile1'
 							onChange={e => {
@@ -148,11 +255,59 @@ const CustomItemForm = ({ itemType }) => {
 							id='exampleFormControlTextarea1'
 							rows='3'></textarea>
 					</div>
-					<button type='submit' className='btn btn-primary'>
-						{' '}
-						Add to Cart
-					</button>
 				</form>
+				<button
+					onClick={e => {
+						e.preventDefault();
+						addToCart();
+					}}
+					className='btn btn-primary'>
+					{' '}
+					Add to Cart
+				</button>
+				<Modal
+					show={modalStatus.show}
+					onHide={e => {
+						setModalStatus({ show: false });
+					}}
+					backdrop='static'
+					keyboard={false}>
+					<Modal.Header closeButton>
+						<strong>Proceding to Checkout</strong>
+					</Modal.Header>
+					<Modal.Body>
+						{modalStatus.loading && (
+							<>
+								<Spinner
+									style={{ marginLeft: '45%' }}
+									animation='border'
+									variant='primary'
+								/>
+								<p style={{ textAlign: 'center' }}>Proceding to Checkout...</p>
+							</>
+						)}
+						{modalStatus.error && (
+							<>
+								<FontAwesomeIcon
+									style={{ marginLeft: '45%', color: 'red' }}
+									size='3x'
+									icon={faTimes}
+								/>
+								<p style={{ textAlign: 'center' }}>Error Processing Cart.</p>
+							</>
+						)}
+						{modalStatus.success && (
+							<>
+								<FontAwesomeIcon
+									style={{ marginLeft: '45%', color: 'green' }}
+									size='3x'
+									icon={faCheck}
+								/>
+								<p style={{ textAlign: 'center' }}>Cart Processed Succesfully!</p>
+							</>
+						)}
+					</Modal.Body>
+				</Modal>
 			</div>
 		</div>
 	);

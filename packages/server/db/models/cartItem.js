@@ -7,6 +7,11 @@ var cartItemSchema = new Schema({
 	cartId: String,
 	quantity: Number,
 	size: String,
+	comments: String,
+	price: Number,
+	designType: String,
+	designImage: Number,
+	color: String,
 });
 
 var cartItem = mongoose.model('cartItem', cartItemSchema);

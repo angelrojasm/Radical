@@ -23,7 +23,16 @@ function App() {
 	useEffect(() => {
 		if (!isAuthenticated) {
 			if (db.isNew()) {
-				db.createTable('cartItem', ['itemId', 'quantity', 'size']);
+				db.createTable('cartItem', [
+					'itemId',
+					'quantity',
+					'size',
+					'color',
+					'comments',
+					'designType',
+					'price',
+					'designImage',
+				]);
 				db.commit();
 			}
 		}

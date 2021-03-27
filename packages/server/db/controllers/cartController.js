@@ -30,12 +30,26 @@ exports.addItemToCart = async (req, res) => {
 		try {
 			let x = await updateCartItemQuantity(cart._id, req.body.itemId, req.body.size);
 			if (x === null) {
-				await CartItem.create({
-					itemId: req.body.itemId,
-					cartId: cart._id,
-					quantity: req.body.quantity,
-					size: req.body.size,
-				});
+				if (req.body.designType) {
+					await CartItem.create({
+						itemId: req.body.itemId,
+						cartId: cart._id,
+						quantity: req.body.quantity,
+						size: req.body.size,
+						color: req.body.color,
+						comments: req.body.comments,
+						designType: req.body.designType,
+						designImage: req.body.designImage,
+						price: req.body.price,
+					});
+				} else {
+					await CartItem.create({
+						itemId: req.body.itemId,
+						cartId: cart._id,
+						quantity: req.body.quantity,
+						size: req.body.size,
+					});
+				}
 			}
 			res.send({ eror: false });
 		} catch (e) {

@@ -16,7 +16,13 @@ const Item = props => {
 		setCartText('Adding ...');
 		if (isAuthenticated) {
 			console.log('entre');
-			let response = await api.cart().addItem(user.sub.split('|')[1], props.item._id, 1, 'S');
+			let form = new FormData();
+			form.append('userId', user.sub.split('|')[1]);
+			form.append('itemId', props.item._id);
+			form.append('quantity', '1');
+			form.append('size', 'S');
+
+			let response = await api.cart().addItem(form);
 			console.log(response);
 			if (response.error) {
 				setCartText('Error adding item');

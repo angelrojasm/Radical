@@ -39,3 +39,31 @@ exports.getItemById = async (req, res) => {
 		res.send({ error: true, details: e });
 	}
 };
+
+exports.addDesignFile = async (req, res) => {
+	try {
+		let uploaded = await s3.uploadDesignFile(req.files.image);
+		if (uploaded.error) {
+			res.send({ error: true, details: uploaded.details });
+		} else {
+			res.send({ error: false });
+		}
+	} catch (e) {
+		console.log(e);
+		res.send({ error: true, details: e });
+	}
+};
+
+exports.deleteDesignFile = async (req, res) => {
+	try {
+		let deleted = await s3.deleteDesignFile(req.body.fileName);
+		if (deleted.error) {
+			res.send({ error: true, details: deleted.details });
+		} else {
+			res.send({ error: false });
+		}
+	} catch (e) {
+		console.log(e);
+		res.send({ error: true, details: e });
+	}
+};
