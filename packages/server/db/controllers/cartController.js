@@ -53,6 +53,7 @@ exports.addItemToCart = async (req, res) => {
 			}
 			res.send({ eror: false });
 		} catch (e) {
+			console.log(e);
 			res.send({ error: true, details: e });
 		}
 	}

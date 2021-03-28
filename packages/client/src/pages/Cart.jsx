@@ -42,6 +42,10 @@ const Cart = props => {
 					quantity: productsArr.content[i].quantity,
 					uniqueId: productsArr.content[i]._id,
 					price: productsArr.content[i].price,
+					comments: productsArr.content[i].comments,
+					color: productsArr.content[i].color,
+					designType: productsArr.content[i].designType,
+					designImage: productsArr.content[i].designImage,
 				});
 			} else {
 				temp.push({
@@ -62,6 +66,7 @@ const Cart = props => {
 	}
 	async function getLocalData() {
 		let productsArr = db.queryAll('cartItem');
+		console.log(productsArr);
 		let temp = [];
 		let tempText = {};
 		let tempQuantities = {};
@@ -75,6 +80,10 @@ const Cart = props => {
 					quantity: productsArr[i].quantity,
 					uniqueId: productsArr[i].ID,
 					price: productsArr[i].price,
+					comments: productsArr[i].comments,
+					color: productsArr[i].color,
+					designType: productsArr[i].designType,
+					designImage: productsArr[i].designImage,
 				});
 			} else {
 				temp.push({

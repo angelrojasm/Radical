@@ -67,8 +67,8 @@ export default {
 				let response = await axios.post(`${route}/add-design`, form);
 				return response.data;
 			},
-			deleteDesign: async form => {
-				let response = await axios.post(`${route}/delete-design`, form);
+			deleteDesign: async fileName => {
+				let response = await axios.post(`${route}/delete-design`, { fileName: fileName });
 				return response.data;
 			},
 		};

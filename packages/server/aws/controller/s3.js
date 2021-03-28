@@ -65,6 +65,7 @@ exports.uploadDesignFile = file => {
 			},
 			function (err) {
 				if (err) {
+					console.log(err);
 					return reject({ error: true, details: err });
 				} else {
 					return resolve({ error: false });

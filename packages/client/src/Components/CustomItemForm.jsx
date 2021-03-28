@@ -75,7 +75,7 @@ const CustomItemForm = ({ itemType }) => {
 		});
 
 		if (itemInfo.designImage) {
-			designImageFileName = itemInfo.designImage.name;
+			designImageFileName = process.env.REACT_APP_DESIGN_URL + itemInfo.designImage.name;
 			let form = new FormData();
 			form.append('image', itemInfo.designImage);
 			let uploaded = await api.item().addDesign(form);
@@ -135,6 +135,7 @@ const CustomItemForm = ({ itemType }) => {
 						comments: itemInfo.comments,
 						designImage: designImageFileName,
 					});
+					db.commit();
 				} else {
 					db.insert('cartItem', {
 						itemId: getItemId(),
@@ -145,8 +146,9 @@ const CustomItemForm = ({ itemType }) => {
 						price: calculatePrice(),
 						comments: itemInfo.comments,
 					});
+					db.commit();
 				}
-				db.commit();
+
 				setModalStatus({
 					show: true,
 					success: true,
@@ -158,7 +160,11 @@ const CustomItemForm = ({ itemType }) => {
 		<div id='custom-form'>
 			<p className='card-header text-center font-weight-bold'>Customize your Item!</p>
 			<div className='section'>
-				<form>
+				<form
+					onSubmit={e => {
+						e.preventDefault();
+						addToCart();
+					}}>
 					<div className='attribute form-group'>
 						<label htmlFor='size-select' className='attribute-title'>
 							Size:
@@ -253,27 +259,31 @@ const CustomItemForm = ({ itemType }) => {
 							required
 							className='form-control'
 							id='exampleFormControlTextarea1'
-							rows='3'></textarea>
+							rows='3'
+							name='comments'
+							value={itemInfo.comments}
+							onChange={e => {
+								e.preventDefault();
+								handleInputChange(e);
+							}}></textarea>
 					</div>
+					<button type='submit' className='btn btn-primary'>
+						{' '}
+						Add to Cart
+					</button>
 				</form>
-				<button
-					onClick={e => {
-						e.preventDefault();
-						addToCart();
-					}}
-					className='btn btn-primary'>
-					{' '}
-					Add to Cart
-				</button>
 				<Modal
 					show={modalStatus.show}
 					onHide={e => {
+						if (modalStatus.success) {
+							window.location.reload();
+						}
 						setModalStatus({ show: false });
 					}}
 					backdrop='static'
 					keyboard={false}>
 					<Modal.Header closeButton>
-						<strong>Proceding to Checkout</strong>
+						<strong>Adding to Cart</strong>
 					</Modal.Header>
 					<Modal.Body>
 						{modalStatus.loading && (
@@ -283,7 +293,7 @@ const CustomItemForm = ({ itemType }) => {
 									animation='border'
 									variant='primary'
 								/>
-								<p style={{ textAlign: 'center' }}>Proceding to Checkout...</p>
+								<p style={{ textAlign: 'center' }}>Adding to Cart...</p>
 							</>
 						)}
 						{modalStatus.error && (
@@ -293,7 +303,7 @@ const CustomItemForm = ({ itemType }) => {
 									size='3x'
 									icon={faTimes}
 								/>
-								<p style={{ textAlign: 'center' }}>Error Processing Cart.</p>
+								<p style={{ textAlign: 'center' }}>Error Adding to Cart.</p>
 							</>
 						)}
 						{modalStatus.success && (
@@ -303,7 +313,7 @@ const CustomItemForm = ({ itemType }) => {
 									size='3x'
 									icon={faCheck}
 								/>
-								<p style={{ textAlign: 'center' }}>Cart Processed Succesfully!</p>
+								<p style={{ textAlign: 'center' }}>Added to Cart!</p>
 							</>
 						)}
 					</Modal.Body>

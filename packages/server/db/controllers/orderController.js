@@ -47,7 +47,13 @@ const emailOrderInfo = (req, res) => {
 	for (const item of cartItems) {
 		let x = item.data;
 		x.fileName = 'http://du9yuz2ex8zdk.cloudfront.net/' + x.fileName;
-		itemsArray.push(x);
+		if (item.price) {
+			let y = item;
+			y.data = x;
+			itemsArray.push(y);
+		} else {
+			itemsArray.push(x);
+		}
 	}
 
 	const transporter = nodeMailer.createTransport({
@@ -75,13 +81,41 @@ const emailOrderInfo = (req, res) => {
 	`;
 
 	for (let i = 0; i < itemsArray.length; i++) {
-		html += `
-    <h2>Item #${i + 1}</h2>
-    <img height="400" width="250" src="${itemsArray[i].fileName}"/>
-    <p>${itemsArray[i].title}</p>
-	<p>Quantity: ${cartItems[i].quantity}</p>
-    <p>Size: ${cartItems[i].size}</p>
-    `;
+		if (itemsArray[i].designType) {
+			if (itemsArray[i].designImage) {
+				html += `
+				<h2>Item #${i + 1}</h2>
+				<img height="400" width="250" src="${itemsArray[i].data.fileName}"/>
+				<p>${itemsArray[i].data.title}</p>
+				<p>Quantity: ${itemsArray[i].quantity}</p>
+				<p>Size: ${itemsArray[i].size}</p>
+				<p>Color: ${itemsArray[i].color}</p>
+				<p>Design Image: </p>
+				<img height="300" width="250" src="${itemsArray[i].designImage}"/>
+				<p>Design Type: ${itemsArray[i].designType}</p>
+				<p>Additional Comments: ${itemsArray[i].comments}</p>
+				`;
+			} else {
+				html += `
+				<h2>Item #${i + 1}</h2>
+				<img height="400" width="250" src="${itemsArray[i].data.fileName}"/>
+				<p>${itemsArray[i].data.title}</p>
+				<p>Quantity: ${itemsArray[i].quantity}</p>
+				<p>Size: ${itemsArray[i].size}</p>
+				<p>Color: ${itemsArray[i].color}</p>
+				<p>Design Type: ${itemsArray[i].designType}</p>
+				<p>Additional Comments: ${itemsArray[i].comments}</p>
+				`;
+			}
+		} else {
+			html += `
+		<h2>Item #${i + 1}</h2>
+		<img height="400" width="250" src="${itemsArray[i].fileName}"/>
+		<p>${itemsArray[i].title}</p>
+		<p>Quantity: ${cartItems[i].quantity}</p>
+		<p>Size: ${cartItems[i].size}</p>
+		`;
+		}
 	}
 	html += `<h3>Order Total: ${req.body.total}</h3>`;
 

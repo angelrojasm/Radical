@@ -10,10 +10,12 @@ const CartItem = props => {
 		let tempItem = props.item;
 
 		tempItem.fileName = props.image;
-		history.push({
-			pathname: `/categories/Tops/${title}`,
-			state: { item: tempItem },
-		});
+		if (title[0] !== 'P') {
+			history.push({
+				pathname: `/categories/Tops/${title}`,
+				state: { item: tempItem },
+			});
+		}
 	}
 
 	function handleSizeChange(value) {

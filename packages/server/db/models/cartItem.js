@@ -10,7 +10,7 @@ var cartItemSchema = new Schema({
 	comments: String,
 	price: Number,
 	designType: String,
-	designImage: Number,
+	designImage: String,
 	color: String,
 });
 

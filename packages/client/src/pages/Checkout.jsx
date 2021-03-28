@@ -80,6 +80,10 @@ const Checkout = props => {
 						quantity: productsArr.content[i].quantity,
 						uniqueId: productsArr.content[i]._id,
 						price: productsArr.content[i].price,
+						comments: productsArr.content[i].comments,
+						color: productsArr.content[i].color,
+						designType: productsArr.content[i].designType,
+						designImage: productsArr.content[i].designImage,
 					});
 				} else {
 					temp.push({
@@ -105,6 +109,10 @@ const Checkout = props => {
 						quantity: productsArr[i].quantity,
 						uniqueId: productsArr[i].ID,
 						price: productsArr[i].price,
+						comments: productsArr[i].comments,
+						color: productsArr[i].color,
+						designType: productsArr[i].designType,
+						designImage: productsArr[i].designImage,
 					});
 				} else {
 					temp.push({
@@ -228,10 +236,22 @@ const Checkout = props => {
 			} else {
 				if (isAuthenticated) {
 					await api.cart().clear(user.sub.split('|')[1]);
+					for (let i = 0; i < products.length; i++) {
+						if (products[i].designImage) {
+							let fileName = products[i].designImage.slice(37);
+							await api.item().deleteDesign(fileName);
+						}
+					}
 					setModalStatus({ show: true, success: true });
 				} else {
 					db.deleteRows('cartItem');
 					db.commit();
+					for (let i = 0; i < products.length; i++) {
+						if (products[i].designImage) {
+							let fileName = products[i].designImage.slice(37);
+							await api.item().deleteDesign(fileName);
+						}
+					}
 					setModalStatus({ show: true, success: true });
 				}
 			}
@@ -240,14 +260,25 @@ const Checkout = props => {
 
 	function getOrderInfo() {
 		let total = calculateTotal();
-		let orderInfo = {
-			userId: user.sub.split('|')[1],
-			billingInfo: JSON.stringify(billingInfo),
-			products: JSON.stringify(products),
-			shippingMethod: shippingOption,
-			paymentMethod: paymentOption,
-			total: total,
-		};
+		let orderInfo;
+		if (isAuthenticated) {
+			orderInfo = {
+				userId: user.sub.split('|')[1],
+				billingInfo: JSON.stringify(billingInfo),
+				products: JSON.stringify(products),
+				shippingMethod: shippingOption,
+				paymentMethod: paymentOption,
+				total: total,
+			};
+		} else {
+			orderInfo = {
+				billingInfo: JSON.stringify(billingInfo),
+				products: JSON.stringify(products),
+				shippingMethod: shippingOption,
+				paymentMethod: paymentOption,
+				total: total,
+			};
+		}
 
 		return orderInfo;
 	}
