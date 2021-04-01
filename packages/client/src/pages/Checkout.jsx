@@ -236,22 +236,10 @@ const Checkout = props => {
 			} else {
 				if (isAuthenticated) {
 					await api.cart().clear(user.sub.split('|')[1]);
-					for (let i = 0; i < products.length; i++) {
-						if (products[i].designImage) {
-							let fileName = products[i].designImage.slice(37);
-							await api.item().deleteDesign(fileName);
-						}
-					}
 					setModalStatus({ show: true, success: true });
 				} else {
 					db.deleteRows('cartItem');
 					db.commit();
-					for (let i = 0; i < products.length; i++) {
-						if (products[i].designImage) {
-							let fileName = products[i].designImage.slice(37);
-							await api.item().deleteDesign(fileName);
-						}
-					}
 					setModalStatus({ show: true, success: true });
 				}
 			}
@@ -689,7 +677,11 @@ const Checkout = props => {
 				</div>
 				<OrderRecap shippingCost={shippingCost} productsProp={products} />
 			</div>
-			<Footer />
+			{paymentOption === 'transfer' ? (
+				<Footer position='relative' bottom='-20vh' />
+			) : (
+				<Footer position='relative' bottom='-10vh' />
+			)}
 		</div>
 	);
 };

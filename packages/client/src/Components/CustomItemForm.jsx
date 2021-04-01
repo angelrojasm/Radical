@@ -242,6 +242,7 @@ const CustomItemForm = ({ itemType }) => {
 						<input
 							type='file'
 							name='designImage'
+							accept='image/*'
 							className='form-control-file'
 							id='exampleFormControlFile1'
 							onChange={e => {

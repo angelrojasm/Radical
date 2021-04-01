@@ -23,7 +23,7 @@
 	width: 100vw;
 	height: 108vh;
 
-	& > * {
+	& > *:not(#footer) {
 		position: relative;
 		top: 12vh;
 	}
