@@ -84,39 +84,41 @@ const Category = props => {
 						</p>
 					</div>
 					<div id='sort-bar'>
-						<p>Sort By</p>
-						<div className='dropdown'>
-							<button
-								type='button'
-								id='sort-dropdown'
-								className='dropdown-button btn-sm dropdown-toggle'
-								data-toggle='dropdown'>
-								{props.location.search === ''
-									? 'Oldest to Newest'
-									: props.location.search.split('=')[1]}
-							</button>
-							<div className='dropdown-menu'>
-								<a
-									className='dropdown-item'
-									href={`/categories/${props.match.params.name}?order=Name`}>
-									Name
-								</a>
+						<div id='sort-bar-content'>
+							<p>Sort By</p>
+							<div className='dropdown'>
+								<button
+									type='button'
+									id='sort-dropdown'
+									className='dropdown-button btn-sm dropdown-toggle'
+									data-toggle='dropdown'>
+									{props.location.search === ''
+										? 'Oldest to Newest'
+										: props.location.search.split('=')[1]}
+								</button>
+								<div className='dropdown-menu'>
+									<a
+										className='dropdown-item'
+										href={`/categories/${props.match.params.name}?order=Name`}>
+										Name
+									</a>
 
-								<a
-									className='dropdown-item'
-									href={`/categories/${props.match.params.name}?order=Recent`}>
-									Newest
-								</a>
-								<a
-									className='dropdown-item'
-									href={`/categories/${props.match.params.name}?order=Oldest`}>
-									Oldest
-								</a>
-								<a
-									className='dropdown-item'
-									href={`/categories/${props.match.params.name}?order=Price`}>
-									Price (Lowest to highest)
-								</a>
+									<a
+										className='dropdown-item'
+										href={`/categories/${props.match.params.name}?order=Recent`}>
+										Newest
+									</a>
+									<a
+										className='dropdown-item'
+										href={`/categories/${props.match.params.name}?order=Oldest`}>
+										Oldest
+									</a>
+									<a
+										className='dropdown-item'
+										href={`/categories/${props.match.params.name}?order=Price`}>
+										Price (Lowest to highest)
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>

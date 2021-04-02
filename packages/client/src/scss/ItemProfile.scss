@@ -13,8 +13,8 @@
 
 			#profile-image {
 				height: 100%;
-				//     width: 35%;
-				margin-left: 15%;
+				max-width: 50%;
+				margin-left: 5%;
 				margin-right: 5%;
 			}
 			#product-info-body {
@@ -28,18 +28,6 @@
 					margin: 1.5% 0;
 				}
 
-				#ratings {
-					display: flex;
-					justify-content: space-between;
-					width: 60%;
-
-					#stars {
-						display: inline-block;
-						.star {
-							color: gold;
-						}
-					}
-				}
 				#price {
 					color: red;
 					font-weight: bold;
@@ -57,24 +45,33 @@
 					}
 				}
 				#options {
-					margin-top: 11.5%;
+					margin-top: 2%;
 					display: flex;
-					justify-content: space-between;
-					height: 50%;
+					flex-direction: column-reverse;
+					justify-content: flex-end;
+					height: fit-content;
+					width: fit-content;
 
 					button {
+						box-sizing: border-box;
 						border: none;
 						color: white;
 						background-color: black;
 						font-size: 1.5vw;
 						font-weight: bold;
-						height: 25%;
-						width: 40%;
+						height: fit-content;
+						width: fit-content;
+						padding: 15px 30px;
 					}
 
 					#icon-div {
 						display: flex;
 						justify-content: flex-start;
+						margin-bottom: 7.5%;
+
+						& > * {
+							margin-left: 2.5%;
+						}
 					}
 				}
 			}
@@ -94,23 +91,31 @@
 				height: fit-content;
 
 				#profile-image {
-					margin: 0 auto;
-					width: 85vw;
-					height: 50vh;
+					max-width: 90vw;
+
+					margin: 0 auto 5% auto;
+
+					height: 60vh;
 				}
 
 				#product-info-body {
 					text-align: center;
-					width: 100vw;
+					width: 90vw;
+
+					p {
+						text-align: justify;
+					}
 
 					h2 {
-						font-size: 2em;
+						font-size: 1.75em;
 					}
-					h3 {
-						font-size: 1.5em;
+					#price {
+						font-size: 1.25em;
+						text-align: center;
+						margin: 2.5% 0;
 					}
 					h4 {
-						font-size: 1em;
+						font-size: 1.15em;
 					}
 
 					#ratings {
@@ -121,34 +126,33 @@
 						}
 					}
 					#size {
-						width: 80%;
-						margin: 0 auto;
-						margin-top: 5%;
+						width: fit-content;
+						margin: 5% auto;
 						h4 {
 							position: relative;
 							top: 0.75vh;
 						}
 					}
 					#options {
+						margin: 5% auto;
 						display: flex;
-						flex-direction: column;
+						flex-direction: column-reverse;
 						justify-content: flex-start;
 						align-items: center;
 
 						button {
-							margin-bottom: 4%;
-							height: 7vh;
-							width: 50vw;
+							margin: 4% 0;
 							font-size: 1.35em;
 							font-weight: normal;
 						}
+
 						#icon-div {
 							width: 100%;
 							justify-content: center;
 							* {
 								margin: 0 2%;
 							}
-							h4 {
+							h5 {
 								position: relative;
 								top: 0.5vh;
 								font-size: 1.05em;

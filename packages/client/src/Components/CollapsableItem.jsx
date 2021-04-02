@@ -12,7 +12,7 @@ const CollapsableItem = ({ itemImage, itemType }) => {
 					let x = !active;
 					setActive(x);
 				}}>
-				<img src={itemImage} width='450px' height='600px' />
+				<img src={itemImage} />
 			</div>
 			<div className='collapsable-content'>
 				<CustomItemForm itemType={itemType} />

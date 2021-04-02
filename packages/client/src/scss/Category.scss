@@ -37,15 +37,16 @@
 		box-sizing: border-box;
 		line-height: 200%;
 		width: fit-content;
-		border: 1.5px solid black;
+		border: 2px solid black;
 		border-radius: 5px;
-
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		margin-right: 5%;
 
 		p {
 			margin: auto 0;
+			width: fit-content;
 		}
 
 		button {
@@ -54,12 +55,20 @@
 			background-color: transparent;
 			outline: none;
 		}
+
+		.dropdown {
+			width: fit-content;
+		}
+		#sort-bar-content {
+			padding: 10px 7.5px;
+			display: flex;
+		}
 	}
 
 	@media only screen and (max-width: 450px) {
 		#intro {
 			display: flex;
-			justify-content: flex-start;
+			justify-content: space-between;
 		}
 		#products-meta {
 			h1 {
@@ -70,9 +79,22 @@
 			}
 		}
 		#sort-bar {
-			p {
-				margin-left: 2.5%;
-				font-size: 3.75vw;
+			margin-right: 0;
+			margin-top: 7.5%;
+			.dropdown {
+				.dropdown-menu {
+					a {
+						padding: 4px 12px;
+						font-size: 14px;
+						white-space: normal;
+					}
+				}
+			}
+			#sort-bar-content {
+				p {
+					white-space: nowrap;
+				}
+				padding: 7.5px;
 			}
 		}
 	}

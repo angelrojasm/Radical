@@ -85,16 +85,6 @@ const ItemProfile = props => {
 					/>
 					<div id='product-info-body'>
 						<h2>{props.location.state.item.title}</h2>
-						<div id='ratings'>
-							<div id='stars'>
-								<FontAwesomeIcon className='star' icon={faStar} size='2x' />
-								<FontAwesomeIcon className='star' icon={faStar} size='2x' />
-								<FontAwesomeIcon className='star' icon={faStar} size='2x' />
-								<FontAwesomeIcon className='star' icon={faStar} size='2x' />
-								<FontAwesomeIcon className='star' icon={faStar} size='2x' />
-							</div>
-							<h3>35 Reviews</h3>
-						</div>
 						<h3 id='price'>RD${props.location.state.item.price}.00</h3>
 						<div id='size'>
 							<h4>Size: </h4>
@@ -119,13 +109,21 @@ const ItemProfile = props => {
 							</button>
 							<div id='icon-div'>
 								<LikesHeart itemId={props.location.state.item._id} />
-								<h4>Add to Wishlist</h4>
+								<h5>Add to Wishlist</h5>
 							</div>
 						</div>
+						<p id='comments'>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+							incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+							nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+							fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+							culpa qui officia deserunt mollit anim id est laborum.
+						</p>
 					</div>
 				</div>
 			</div>
-			<Footer position='relative' bottom='-10vh' />
+			<Footer position='relative' bottom='-12vh' />
 		</div>
 	);
 };
