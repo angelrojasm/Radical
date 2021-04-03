@@ -88,7 +88,7 @@ const ModalPopup = ({
 					</p>
 					<Modal.Footer>
 						<div style={{ width: '80%', margin: '0 auto' }}>
-							<PayPalButtons orderAmount={total} onApprove={onApprove} />
+							<PayPalButtons orderAmount={1} onApprove={onApprove} />
 						</div>
 					</Modal.Footer>
 				</Modal>
