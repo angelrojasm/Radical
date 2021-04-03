@@ -48,6 +48,7 @@ html {
 		border-bottom: 1px solid black;
 	}
 	#cart-meta {
+		white-space: nowrap;
 		display: flex;
 		flex-direction: column;
 		width: 20vw;
@@ -62,8 +63,13 @@ html {
 		width: fit-content;
 		height: 60vh;
 		margin: 0 auto;
-		padding-right: 2vw;
+		padding-right: 10px;
 		overflow-y: scroll;
+
+		#cart-item {
+			width: 50vw;
+		}
+
 		#table-header {
 			th {
 				padding: 5px;
@@ -78,7 +84,7 @@ html {
 	}
 
 	#price-section {
-		height: 30vh;
+		height: 42.5vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -96,7 +102,7 @@ html {
 		span {
 			color: gray;
 			margin-top: 5%;
-			font-size: 1vw;
+			font-size: 13px;
 		}
 	}
 	#total-price {
@@ -107,15 +113,23 @@ html {
 	}
 	#checkout-button {
 		box-sizing: border-box;
-		margin-left: 70%;
-		padding: 1%;
+		margin-left: 75%;
+		/* padding: 1%;
 		width: fit-content;
 		background-color: lightcoral;
 		line-height: 1.25em;
-		border: 1px solid black;
+		border: 1px solid black; */
 	}
 
-	@media only screen and (max-width: 450px) {
+	@media only screen and (max-width: 750px) {
+		#price-section {
+			height: 27.5vh;
+			p {
+				font-size: 14px;
+			}
+		}
+	}
+	@media only screen and (max-width: 500px) {
 		html {
 			overflow-x: hidden;
 		}
@@ -146,12 +160,15 @@ html {
 
 		#cart-items {
 			height: 60vh;
+			width: 95vw;
+			margin: 0 auto;
 			overflow-y: scroll;
 			overflow-x: hidden;
 		}
 
 		#price-section {
 			height: 40vh;
+			margin-left: 2.5%;
 
 			p {
 				font-size: 3.5vw;
@@ -168,7 +185,7 @@ html {
 		}
 		#checkout-button {
 			width: fit-content;
-			margin-left: 61.5%;
+			margin-left: 60%;
 		}
 	}
 }

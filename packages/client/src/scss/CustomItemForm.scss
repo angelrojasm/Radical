@@ -1,7 +1,7 @@
 #custom-form {
 	background-color: white;
 	width: 450px;
-	height: 600px;
+	height: 650px;
 
 	.section {
 		width: 90%;
@@ -22,9 +22,8 @@
 	}
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 500px) {
 	#custom-form {
 		width: 90vw;
-		height: 600px;
 	}
 }

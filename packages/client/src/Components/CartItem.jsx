@@ -38,11 +38,12 @@ const CartItem = props => {
 
 			<div id='item-meta'>
 				<p id='title'>{props.title}</p>
-				{props.likes || <p>Color: Orange</p>}
+
 				{props.likes || (
 					<div id='quantity-section'>
 						<p>Quantity:</p>
 						<input
+							className='form-control-sm'
 							type='number'
 							name='Quantity'
 							id='quantity-input'
@@ -62,6 +63,7 @@ const CartItem = props => {
 					<div id='size-section'>
 						<p>Size:</p>
 						<select
+							className='form-control-sm'
 							id='size-select'
 							value={sizeSelect}
 							onChange={e => {

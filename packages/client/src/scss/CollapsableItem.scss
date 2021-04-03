@@ -5,7 +5,7 @@
 	width: fit-content;
 	max-width: 450px;
 	overflow: hidden;
-	height: 600px;
+	height: 650px;
 	box-sizing: border-box;
 	display: flex;
 	border: 1px solid lightgrey;
@@ -19,7 +19,7 @@
 
 		img {
 			width: 450px;
-			height: 600px;
+			height: 650px;
 		}
 	}
 
@@ -31,20 +31,13 @@
 }
 
 @media only screen and (max-width: 980px) {
-	#collapsable-item {
-	}
-}
-
-@media only screen and (max-width: 450px) {
 	.collapsed {
-		max-height: 1100px !important;
+		max-height: 1300px !important;
 	}
 	#collapsable-item {
-		max-height: 500px;
+		max-height: 650px;
 		overflow: hidden;
-		width: 90vw !important;
 		height: fit-content;
-		margin: 0 auto;
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
@@ -52,11 +45,18 @@
 		border-radius: 10px;
 		transition: max-height 200ms linear;
 		margin-bottom: 50px;
+	}
 
+	@media only screen and (max-width: 500px) {
+		#collapsable-item {
+			padding: 0%;
+			width: 90vw !important;
+			margin: 0 auto;
+		}
 		.item-title {
 			img {
 				width: 90vw;
-				height: 500px;
+				height: 60vw;
 			}
 		}
 	}

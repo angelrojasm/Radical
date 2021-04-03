@@ -237,7 +237,7 @@ const CustomItemForm = ({ itemType }) => {
 							<option value='Embroidered'>Embroidered</option>
 						</select>
 					</div>
-					<div clasName='form-group'>
+					<div className='form-group'>
 						<label htmlFor='exampleFormControlFile1'>Design Image Example:</label>
 						<input
 							type='file'

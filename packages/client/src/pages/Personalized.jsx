@@ -12,7 +12,7 @@ const Personalized = props => {
 					<p>Which item would you like to personalize?</p>
 				</div>
 				<div className='custom-item-section'>
-					<p className='item-caption'>Jean Jacket</p>
+					<p className='item-caption'>Jean Jackets</p>
 					<CollapsableItem
 						itemImage={process.env.REACT_APP_BASE_URL + 'jean-jackets.png'}
 						itemType='jean-jacket'

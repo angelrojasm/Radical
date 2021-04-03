@@ -315,6 +315,7 @@ const Cart = props => {
 				return (
 					<div key={index} id='cart-item-entry'>
 						<CartItem
+							id='cart-item'
 							item={item.data}
 							image={baseUrl + item.data.fileName}
 							title={item.data.title}
@@ -504,6 +505,7 @@ const Cart = props => {
 			<p id='total-price'>Total: RD${calculatePrice()}.00</p>
 			<button
 				id='checkout-button'
+				className='btn btn-info '
 				onClick={e => {
 					e.preventDefault();
 					handleCheckout();
