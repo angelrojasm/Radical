@@ -18,6 +18,6 @@
 		"dev:server": "yarn workspace @radical/server dev",
 		"start:server": "yarn workspace @radical/server start",
 		"dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
-		"start": "yarn start:server && yarn build:client"
+		"start": "yarn build:client && yarn start:server"
 	}
 }
