@@ -29,7 +29,7 @@ app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
-app.listen('process.env.PORT', '0.0.0.0', () => {
+app.listen(process.env.PORT, '0.0.0.0', () => {
 	console.log('app is running on port ' + port);
 });
 
