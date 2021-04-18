@@ -1,23 +1,24 @@
 {
-	"name": "radical",
-	"version": "1.0.0",
-	"main": "index.js",
-	"repository": "https://github.com/angelrojasm/Radical.git",
-	"author": "angelrojasm <angelrojasm6@gmail.com>",
-	"license": "MIT",
-	"private": "true",
-	"workspaces": [
-		"packages/*"
-	],
-	"devDependencies": {
-		"concurrently": "^5.2.0"
-	},
-	"scripts": {
-		"dev:client": "yarn workspace @radical/client dev",
-		"build:client": "yarn workspace @radical/client build",
-		"dev:server": "yarn workspace @radical/server dev",
-		"start:server": "yarn workspace @radical/server start",
-		"dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
-		"start": "yarn build:client && yarn start:server"
-	}
+  "name": "radical",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/angelrojasm/Radical.git",
+  "author": "angelrojasm <angelrojasm6@gmail.com>",
+  "license": "MIT",
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  },
+  "scripts": {
+    "dev:client": "yarn workspace @radical/client dev",
+    "build:client": "yarn workspace @radical/client build",
+    "dev:server": "yarn workspace @radical/server dev",
+    "start:server": "yarn workspace @radical/server start",
+    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "start": "yarn start:server"
+  },
+  "dependencies": {}
 }
