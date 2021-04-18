@@ -8,7 +8,7 @@ import '../scss/likes.scss';
 import api from '../api/api';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const baseUrl = process.env.REACT_APP_BASE_URL;
+const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
 
 const Likes = props => {
 	const { user, isAuthenticated } = useAuth0();
