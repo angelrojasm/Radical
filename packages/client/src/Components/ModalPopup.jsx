@@ -25,7 +25,7 @@ const ModalPopup = ({
 		let error = validateInput();
 		if (!error) {
 			setShow(true);
-			setTotal(`${Math.floor(calculateTotal() / 60)}`);
+			setTotal(`${Math.floor(calculateTotal() / 58)}`);
 		}
 	}
 	async function onApprove() {
@@ -84,11 +84,11 @@ const ModalPopup = ({
 					</Modal.Body>
 					<p style={{ fontSize: '0.7em', color: 'red', textAlign: 'center' }}>
 						* Payments made through paypal will be charged in USD. <br />* Paypal orders are
-						valued at 60.0 $DOP = 1.0 $USD
+						valued at 58.0 $DOP = 1.0 $USD
 					</p>
 					<Modal.Footer>
 						<div style={{ width: '80%', margin: '0 auto' }}>
-							<PayPalButtons orderAmount={1} onApprove={onApprove} />
+							<PayPalButtons orderAmount={total} onApprove={onApprove} />
 						</div>
 					</Modal.Footer>
 				</Modal>
