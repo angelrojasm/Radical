@@ -84,6 +84,7 @@ const Header = props => {
 						)}
 						<Link
 							className='dropdown-item'
+							style={{ width: '90%', margin: '0 auto', textAlign: 'center' }}
 							to={{
 								pathname: '/myprofile',
 							}}>

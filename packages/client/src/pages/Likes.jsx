@@ -40,11 +40,9 @@ const Likes = props => {
 	}, [isAuthenticated]);
 
 	useEffect(() => {
-		setTimeout(() => {
-			if (!isAuthenticated) {
-				setLikesMessage('You must log in first in order to like items!');
-			}
-		}, 2000);
+		if (!isAuthenticated) {
+			setLikesMessage('You must log in first in order to like items!');
+		}
 	}, []);
 	async function removeFromLikes(itemId) {
 		setLikeText({

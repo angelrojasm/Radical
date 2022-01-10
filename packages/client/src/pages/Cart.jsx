@@ -502,16 +502,20 @@ const Cart = props => {
 				{products.length === 0 && <h4 style={{ textAlign: 'center' }}>{cartMessage}</h4>}
 			</div>
 			<hr />
-			<p id='total-price'>Total: RD${calculatePrice()}.00</p>
-			<button
-				id='checkout-button'
-				className='btn btn-info '
-				onClick={e => {
-					e.preventDefault();
-					handleCheckout();
-				}}>
-				CHECKOUT
-			</button>
+			{products.length && (
+				<>
+					<p id='total-price'>Total: RD${calculatePrice()}.00</p>
+					<button
+						id='checkout-button'
+						className='btn btn-info '
+						onClick={e => {
+							e.preventDefault();
+							handleCheckout();
+						}}>
+						CHECKOUT
+					</button>
+				</>
+			)}
 			<Modal
 				show={show}
 				onHide={e => {

@@ -501,10 +501,15 @@ const Checkout = props => {
 									/>
 								</div>
 								<p id='transfer-bank-info'>
-									** Radical only accepts bank transfers made to: <br />
-									Bank X <br />
-									Account Number #1111111 <br />
-									Titular Name: John Smith
+									** Radical only accepts bank transfers made to the appropriate bank
+									information as stated in our page.
+									<br />
+									<a
+										target='_blank'
+										rel='noopener norefferer'
+										href='https://www.instagram.com/radical_rd/'>
+										Find out more information
+									</a>
 								</p>
 							</div>
 						)}
