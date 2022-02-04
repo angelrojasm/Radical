@@ -38,45 +38,46 @@ const CartItem = props => {
 
 			<div id='item-meta'>
 				<p id='title'>{props.title}</p>
+				<div id='quantity-size'>
+					{props.likes || (
+						<div id='quantity-section'>
+							<p>Quantity:</p>
+							<input
+								className='form-control-sm'
+								type='number'
+								name='Quantity'
+								id='quantity-input'
+								value={quantity}
+								onChange={e => {
+									e.preventDefault();
+									setQuantity(e.target.value);
+									handleQuantityChange(e.target.value);
+								}}
+								min='1'
+								step='1'
+							/>
+						</div>
+					)}
 
-				{props.likes || (
-					<div id='quantity-section'>
-						<p>Quantity:</p>
-						<input
-							className='form-control-sm'
-							type='number'
-							name='Quantity'
-							id='quantity-input'
-							value={quantity}
-							onChange={e => {
-								e.preventDefault();
-								setQuantity(e.target.value);
-								handleQuantityChange(e.target.value);
-							}}
-							min='1'
-							step='1'
-						/>
-					</div>
-				)}
-
-				{props.likes || (
-					<div id='size-section'>
-						<p>Size:</p>
-						<select
-							className='form-control-sm'
-							id='size-select'
-							value={sizeSelect}
-							onChange={e => {
-								e.preventDefault();
-								setSizeSelect(e.target.value);
-								handleSizeChange(e.target.value);
-							}}>
-							<option value='S'>S</option>
-							<option value='M'>M</option>
-							<option value='L'>L</option>
-						</select>
-					</div>
-				)}
+					{props.likes || (
+						<div id='size-section'>
+							<p>Size:</p>
+							<select
+								className='form-control-sm'
+								id='size-select'
+								value={sizeSelect}
+								onChange={e => {
+									e.preventDefault();
+									setSizeSelect(e.target.value);
+									handleSizeChange(e.target.value);
+								}}>
+								<option value='S'>S</option>
+								<option value='M'>M</option>
+								<option value='L'>L</option>
+							</select>
+						</div>
+					)}
+				</div>
 			</div>
 		</div>
 	);

@@ -5,7 +5,7 @@ import api from '../api/api';
 import { useAuth0 } from '@auth0/auth0-react';
 import db from '../localdb';
 import { LikesHeart } from './index';
-const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const Item = props => {
 	const { user, isAuthenticated } = useAuth0();

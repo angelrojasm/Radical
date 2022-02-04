@@ -46,7 +46,7 @@ const emailOrderInfo = (req, res) => {
 	let itemsArray = [];
 	for (const item of cartItems) {
 		let x = item.data;
-		x.fileName = 'http://du9yuz2ex8zdk.cloudfront.net/' + x.fileName;
+		x.fileName = process.env.REACT_APP_BASE_URL + x.fileName;
 		if (item.price) {
 			let y = item;
 			y.data = x;

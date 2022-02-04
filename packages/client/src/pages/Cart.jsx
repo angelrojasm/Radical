@@ -12,7 +12,7 @@ import db from '../localdb';
 import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-const baseUrl = 'http://du9yuz2ex8zdk.cloudfront.net/';
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const Cart = props => {
 	const history = useHistory();
@@ -502,7 +502,7 @@ const Cart = props => {
 				{products.length === 0 && <h4 style={{ textAlign: 'center' }}>{cartMessage}</h4>}
 			</div>
 			<hr />
-			{products.length && (
+			{products.length ? (
 				<>
 					<p id='total-price'>Total: RD${calculatePrice()}.00</p>
 					<button
@@ -515,7 +515,7 @@ const Cart = props => {
 						CHECKOUT
 					</button>
 				</>
-			)}
+			) : null}
 			<Modal
 				show={show}
 				onHide={e => {

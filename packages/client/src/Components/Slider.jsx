@@ -52,7 +52,7 @@ const Slider = props => {
 			onMouseLeave={handleMouseLeave}>
 			<FontAwesomeIcon className='exit' icon={faTimes} size='lg' onClick={handleClick} />
 			<h2>
-				<strong>Categorias</strong>
+				<strong>Categories</strong>
 			</h2>
 			<ul className='categories'>
 				<li id='hello'>

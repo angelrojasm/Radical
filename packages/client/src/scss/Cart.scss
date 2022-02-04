@@ -152,10 +152,10 @@ html {
 		#cart-item-entry {
 			box-sizing: border-box;
 			width: 90vw;
-			height: 40vh;
+			height: fit-content;
 			display: flex;
-			justify-content: space-between;
-			padding: 2% 0;
+			flex-direction: column;
+			margin-top: 10px;
 		}
 
 		#cart-items {
@@ -167,8 +167,10 @@ html {
 		}
 
 		#price-section {
-			height: 40vh;
-			margin-left: 2.5%;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			height: fit-content;
 
 			p {
 				font-size: 3.5vw;

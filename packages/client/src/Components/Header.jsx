@@ -3,13 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBars, faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import db from '../localdb';
+import api from '../api/api';
 import '../scss/Header.scss';
 
 const Header = props => {
 	const [logoPosition, setLogoPosition] = useState(0);
-	const { loginWithPopup, isAuthenticated, logout } = useAuth0();
+	const { user, loginWithPopup, isAuthenticated, logout } = useAuth0();
 	const [refresh, setRefresh] = useState(false);
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [cartNum, setCartNum] = useState(0);
 
 	useEffect(() => {
 		isAuthenticated ? setLoggedIn(true) : setLoggedIn(false);
@@ -22,6 +25,19 @@ const Header = props => {
 			}
 		}
 	}, [refresh]);
+
+	useEffect(() => {
+		const getData = async () => {
+			if (isAuthenticated) {
+				const userId = user.sub.split('|')[1];
+				setCartNum(await api.cart().getItems(userId).length);
+			} else {
+				let productsArr = db.queryAll('cartItem');
+				setCartNum(productsArr.length);
+			}
+		};
+		getData();
+	}, []);
 	function handleMouseOver() {
 		props.showSlider();
 	}
@@ -99,7 +115,10 @@ const Header = props => {
 					<FontAwesomeIcon className='icon' id='heart' icon={faHeart} />
 				</Link>
 				<Link to={{ pathname: '/cart' }}>
-					<FontAwesomeIcon className='icon' icon={faShoppingCart} />
+					<div id='cart-container'>
+						<FontAwesomeIcon className='icon' icon={faShoppingCart} />
+						{cartNum > 0 && <p class='cart-num'>{cartNum}</p>}
+					</div>
 				</Link>
 			</div>
 		</div>

@@ -11,10 +11,10 @@ const TopNav = props => {
 	const { height, width } = useWindowDimensions();
 
 	useEffect(() => {
-		if (width > 500 && width < 850) {
+		if (width > 560 && width < 850) {
 			setSliderWidth('30vw');
 		}
-		if (width < 450) {
+		if (width < 550) {
 			setSliderWidth('100vw');
 		}
 	});

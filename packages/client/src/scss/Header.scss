@@ -100,4 +100,20 @@
 			width: 175px;
 		}
 	}
+
+	#cart-container {
+		position: relative;
+
+		.cart-num {
+			position: absolute;
+			top: -15px;
+			right: -2.5px;
+			color: white;
+			border-radius: 100%;
+			background-color: red;
+			padding: 0 7px;
+			margin: 0;
+			font-size: 14px;
+		}
+	}
 }
